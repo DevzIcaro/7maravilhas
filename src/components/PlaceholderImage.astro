@@ -1,0 +1,36 @@
+---
+/**
+ * Placeholder visual para slots de imagem sem asset real ainda importado.
+ * Ver Apêndice A do PROMPT-DEV: os assets reais devem ser baixados do site
+ * atual e colocados em src/assets/, substituindo este componente pela tag <img>.
+ */
+interface Props {
+  alt: string;
+  label?: string;
+  class?: string;
+  ratio?: "square" | "wide" | "portrait";
+}
+
+const { alt, label = "[A CONFIRMAR]", class: className = "", ratio = "wide" } = Astro.props;
+
+const ratioClass = {
+  square: "aspect-square",
+  wide: "aspect-video",
+  portrait: "aspect-[3/4]",
+}[ratio];
+---
+
+<div
+  class={`relative flex items-center justify-center overflow-hidden rounded-[var(--raio)] bg-superficie border border-borda ${ratioClass} ${className}`}
+  role="img"
+  aria-label={alt}
+>
+  <svg viewBox="0 0 24 24" width="28%" height="28%" class="text-secundaria/25" fill="none" stroke="currentColor" stroke-width="1.5">
+    <rect x="3" y="3" width="18" height="18" rx="2" />
+    <circle cx="8.5" cy="8.5" r="1.5" />
+    <path d="M21 15l-5-5L5 21" />
+  </svg>
+  <span class="absolute bottom-2 right-2 rounded bg-rodape/85 px-2 py-0.5 text-[10px] font-bold tracking-wide text-branco">
+    {label}
+  </span>
+</div>

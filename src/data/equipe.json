@@ -1,0 +1,34 @@
+[
+  { "id": "diego-parisati--sao-jose-do-rio-preto", "nome": "Dr. Diego Parisati", "especialidade": "Implantodontista", "cro": "CRO/SP 124590", "cidade": "sao-jose-do-rio-preto" },
+  { "id": "fernando-correia--sao-jose-do-rio-preto", "nome": "Dr. Fernando Correia", "especialidade": "Avaliador", "cro": "CRO/SP 112277", "cidade": "sao-jose-do-rio-preto" },
+  { "id": "valdemilson-dos-reis-rodrigues-filho--sao-jose-do-rio-preto", "nome": "Dr. Valdemilson dos Reis Rodrigues Filho", "especialidade": "Responsável Técnico", "cro": "CRO/SP 153201", "cidade": "sao-jose-do-rio-preto" },
+  { "id": "caroliny-ramos-barbosa-laveso--sao-jose-do-rio-preto", "nome": "Dra. Caroliny Ramos Barbosa Laveso", "especialidade": "Avaliadora e Clínico Geral", "cro": "CRO/SP 153990", "cidade": "sao-jose-do-rio-preto" },
+  { "id": "emilly-almeida-silva--sao-jose-do-rio-preto", "nome": "Dra. Emilly Almeida Silva", "especialidade": "Dentística Restauradora", "cro": "CRO/SP 158057", "cidade": "sao-jose-do-rio-preto" },
+  { "id": "isabele-fernanda-boldrin--sao-jose-do-rio-preto", "nome": "Dra. Isabele Fernanda Boldrin", "especialidade": "Ortodontia", "cro": "CRO/SP 161077", "cidade": "sao-jose-do-rio-preto" },
+
+  { "id": "joao-vitor-montilha--votuporanga", "nome": "Dr. João Vitor Montilha", "especialidade": "Clínico Geral", "cro": "CRO/SP 158209", "cidade": "votuporanga" },
+  { "id": "leandro-costa-lima--votuporanga", "nome": "Dr. Leandro Costa Lima", "especialidade": "Cirurgia e Traumatologia Bucomaxilofacial e Implantodontia", "cro": "CRO/SP 153764", "cidade": "votuporanga" },
+  { "id": "renato-alves-yanes--votuporanga", "nome": "Dr. Renato Alves Yanes", "especialidade": "Clínico Geral", "cro": "CRO/SP 126558", "cidade": "votuporanga" },
+  { "id": "emilly-almeida-silva--votuporanga", "nome": "Dra. Emilly Almeida Silva", "especialidade": "Facetas em Resina, Toxina Botulínica, Preenchimento, Clínico Geral e Prótese", "cro": "CRO/SP 158057", "cidade": "votuporanga" },
+  { "id": "isabele-fernanda-boldrin--votuporanga", "nome": "Dra. Isabele Fernanda Boldrin", "especialidade": "Ortodontia", "cro": "CRO/SP 161077", "cidade": "votuporanga" },
+  { "id": "isabella-grippe-pinhatari--votuporanga", "nome": "Dra. Isabella Grippe Pinhatari", "especialidade": "Endodontia, Clínico Geral e Prótese", "cro": "CRO/AC 152475", "cidade": "votuporanga" },
+
+  { "id": "arthur-silva-zanetoni--jales", "nome": "Dr. Arthur Silva Zanetoni", "especialidade": "Cirurgião Dentista", "cro": "CRO/SP 143282", "cidade": "jales" },
+  { "id": "fernando-correia--jales", "nome": "Dr. Fernando Correia", "especialidade": "Responsável Técnico", "cro": "CRO/SP 112277", "cidade": "jales" },
+  { "id": "rafael-bonetti-azevedo-agostinho--jales", "nome": "Dr. Rafael Bonetti Azevedo Agostinho", "especialidade": "Cirurgião Dentista", "cro": "CRO/SP 127447", "cidade": "jales" },
+  { "id": "valdemilson-dos-reis-rodrigues-filho--jales", "nome": "Dr. Valdemilson dos Reis Rodrigues Filho", "especialidade": "Clínico Geral", "cro": "CRO/SP 153201", "cidade": "jales" },
+  { "id": "adrielly-da-costa-ferreira--jales", "nome": "Dra. Adrielly da Costa Ferreira", "especialidade": "Implantodontista", "cro": "CRO/SP 135899", "cidade": "jales" },
+  { "id": "isabele-f-boldrin--jales", "nome": "Dra. Isabele F. Boldrin", "especialidade": "Facetas", "cro": "CRO/SP 161077", "cidade": "jales" },
+  { "id": "pamela-zulin-da-silva--jales", "nome": "Dra. Pamela Zulin da Silva", "especialidade": "Cirurgiã Dentista", "cro": "CRO/SP 149967", "cidade": "jales" },
+
+  { "id": "ademar-santana-neto--santa-fe-do-sul", "nome": "Dr. Ademar Santana Neto", "especialidade": "Avaliador", "cro": "CRO/SP 164268", "cidade": "santa-fe-do-sul" },
+  { "id": "bruno-trivelato-rodrigues--santa-fe-do-sul", "nome": "Dr. Bruno Trivelato Rodrigues", "especialidade": "Clínico Geral / Protesista", "cro": "CRO/SP 176023", "cidade": "santa-fe-do-sul" },
+  { "id": "lucas-vilela-f-de-carvalho--santa-fe-do-sul", "nome": "Dr. Lucas Vilela F. de Carvalho", "especialidade": "Implantodontista / Protesista", "cro": "CRO/SP 156196", "cidade": "santa-fe-do-sul" },
+  { "id": "pablo-henrique-frasson--santa-fe-do-sul", "nome": "Dr. Pablo Henrique Frasson", "especialidade": "Diretor Clínico / Protesista", "cro": "CRO/SP 167222", "cidade": "santa-fe-do-sul" },
+  { "id": "leticia-schippa-miguel-correia--santa-fe-do-sul", "nome": "Dra. Letícia Schippa Miguel Correia", "especialidade": "Responsável Técnica", "cro": "CRO/SP 129476", "cidade": "santa-fe-do-sul" },
+
+  { "id": "felippe-nagamachi-chaves--tres-lagoas", "nome": "Dr. Felippe Nagamachi Chaves", "especialidade": "Protesista", "cro": "CRO/SP 162524", "cidade": "tres-lagoas" },
+  { "id": "mario-eugenio-zaparoli--tres-lagoas", "nome": "Dr. Mario Eugênio Zaparoli", "especialidade": "Implantodontista", "cro": "CRO/MS 6501", "cidade": "tres-lagoas" },
+  { "id": "ana-laura-silva-balbino--tres-lagoas", "nome": "Dra. Ana Laura Silva Balbino", "especialidade": "Avaliadora", "cro": "CRO/MS 8666", "cidade": "tres-lagoas" },
+  { "id": "milena-freire-barbosa--tres-lagoas", "nome": "Dra. Milena Freire Barbosa", "especialidade": "Clínico Geral", "cro": "CRO/MS 09195", "cidade": "tres-lagoas" }
+]

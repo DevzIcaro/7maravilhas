@@ -1,0 +1,45 @@
+---
+import { Mail, Phone } from "lucide-react";
+import FacebookIcon from "./icons/FacebookIcon.astro";
+import InstagramIcon from "./icons/InstagramIcon.astro";
+
+const telefones = [
+  { cidade: "Rio Preto", itens: ["WhatsApp (17) 99783-7994", "Tel (17) 3641-0544", "WhatsApp (17) 99674-4146"] },
+  { cidade: "Santa Fé do Sul", itens: ["WhatsApp (17) 3632-0199", "Tel (17) 3632-0198"] },
+  { cidade: "Jales", itens: ["WhatsApp (67) 9208-7829"] },
+  { cidade: "Três Lagoas", itens: ["WhatsApp (17) 3421-3421"] },
+  { cidade: "Votuporanga", itens: [] },
+];
+---
+
+<div class="w-full bg-rodape text-branco text-xs">
+  <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-2 lg:px-8">
+    <div class="flex flex-wrap items-center gap-x-5 gap-y-1">
+      <span class="whitespace-nowrap">Rua 17, nº 996 - Centro, Santa Fé do Sul - SP</span>
+      <a href="mailto:agendamento@correiaodontologia.com.br" class="inline-flex items-center gap-1 text-branco/90 transition-colors duration-200 hover:text-primaria">
+        <Mail className="h-3.5 w-3.5" aria-hidden="true" />
+        agendamento@correiaodontologia.com.br
+      </a>
+      <a href="https://www.facebook.com/clinica.correia" target="_blank" rel="noopener noreferrer" aria-label="Facebook da Correia Odontologia" class="cursor-pointer text-branco/90 transition-colors duration-200 hover:text-primaria">
+        <FacebookIcon class="h-3.5 w-3.5" />
+      </a>
+      <a href="https://www.instagram.com/clinica.correia/" target="_blank" rel="noopener noreferrer" aria-label="Instagram da Correia Odontologia" class="cursor-pointer text-branco/90 transition-colors duration-200 hover:text-primaria">
+        <InstagramIcon class="h-3.5 w-3.5" />
+      </a>
+    </div>
+
+    <div class="hidden flex-wrap items-center gap-x-4 gap-y-1 xl:flex">
+      {telefones.map((t) => (
+        <span class="whitespace-nowrap text-branco/80">
+          <strong class="text-ouro-claro">{t.cidade}</strong>
+          {t.itens.length > 0 ? ` — ${t.itens.join(" · ")}` : " —"}
+        </span>
+      ))}
+    </div>
+
+    <a href="#bookform1" class="btn btn-primaria !py-1.5 !px-3 !text-xs cursor-pointer" data-booking-trigger>
+      <Phone className="h-3.5 w-3.5" aria-hidden="true" />
+      + Agende uma consulta
+    </a>
+  </div>
+</div>

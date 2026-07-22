@@ -1,0 +1,108 @@
+[
+  {
+    "id": "3",
+    "numero": 3,
+    "slug": "dentes-brancos-e-saudaveis-dicas-para-um-sorriso-radiante",
+    "titulo": "Dentes brancos e saudáveis: Dicas para um sorriso radiante",
+    "data": "2024-03-04T16:57:00",
+    "resumo": "Aprenda dicas simples e eficazes para manter seus dentes brancos e saudáveis, desde a escovação correta até a escolha da pasta de dente ideal.",
+    "imagem": "noticias-3_50509201.png",
+    "autor": "Suporte",
+    "corpo": [
+      { "type": "p", "text": "Um sorriso bonito e saudável é um importante cartão de visitas. Para conquistar essa meta, alguns cuidados básicos são essenciais. Neste artigo, você encontrará dicas valiosas para manter seus dentes brancos e saudáveis:" },
+      { "type": "ul", "items": [
+        "Escove os dentes pelo menos três vezes ao dia, com movimentos circulares e por no mínimo dois minutos.",
+        "Utilize fio dental diariamente para remover restos de alimentos entre os dentes.",
+        "Visite seu dentista regularmente para realizar limpezas e exames preventivos.",
+        "Evite o consumo excessivo de alimentos e bebidas que mancham os dentes, como café, chá, vinho e refrigerantes.",
+        "Opte por uma pasta de dente com flúor, que ajuda a fortalecer os dentes e prevenir cáries.",
+        "Consulte um dentista para saber se você é um candidato ao clareamento dental profissional."
+      ] }
+    ]
+  },
+  {
+    "id": "4",
+    "numero": 4,
+    "slug": "a-importancia-da-odontopediatria-para-a-saude-bucal-das-criancas",
+    "titulo": "A importância da odontopediatria para a saúde bucal das crianças",
+    "data": "2024-03-04T17:14:00",
+    "resumo": "Entenda como a odontopediatria pode prevenir problemas bucais e garantir um sorriso saudável para seus filhos.",
+    "imagem": "noticias-4_140516222.png",
+    "autor": "Suporte",
+    "corpo": [
+      { "type": "p", "text": "A odontopediatria é a área da odontologia especializada na saúde bucal das crianças. O atendimento odontológico desde cedo é fundamental para prevenir problemas bucais, como cáries, gengivite e má oclusão." },
+      { "type": "p", "text": "Os benefícios da odontopediatria incluem:" },
+      { "type": "ul", "items": [
+        "Prevenção de cáries e outras doenças bucais.",
+        "Detecção precoce de problemas de desenvolvimento dos dentes e da arcada dentária.",
+        "Orientação sobre higiene bucal adequada para crianças.",
+        "Criação de um ambiente positivo e acolhedor para que a criança se sinta confortável no dentista."
+      ] }
+    ]
+  },
+  {
+    "id": "5",
+    "numero": 5,
+    "slug": "aparelho-ortodontico-transformando-sorrisos-e-autoestima",
+    "titulo": "Aparelho ortodôntico: Transformando sorrisos e autoestima",
+    "data": "2024-03-04T17:16:00",
+    "resumo": "Descubra as diferentes opções de aparelhos ortodônticos disponíveis no mercado e como eles podem transformar seu sorriso e sua autoestima.",
+    "imagem": "noticias-5_110518313.png",
+    "autor": "Suporte",
+    "corpo": [
+      { "type": "p", "text": "Os aparelhos ortodônticos são utilizados para corrigir problemas de posicionamento dos dentes, como apinhamento, mordida cruzada, diastema e outros. Além de melhorar a estética do sorriso, o tratamento ortodôntico também pode trazer benefícios para a saúde bucal, como a melhora da mastigação e da fonética." },
+      { "type": "p", "text": "Existem diversos tipos de aparelhos ortodônticos disponíveis, como os metálicos, os de cerâmica, os de safira e os invisíveis. A escolha do tipo de aparelho ideal dependerá das necessidades de cada paciente." }
+    ]
+  },
+  {
+    "id": "6",
+    "numero": 6,
+    "slug": "implantes-dentarios-solucao-para-a-perda-de-dentes",
+    "titulo": "Implantes dentários: Solução para a perda de dentes",
+    "data": "2024-03-04T17:19:00",
+    "resumo": "Conheça os benefícios dos implantes dentários e como eles podem restaurar sua qualidade de vida.",
+    "imagem": "noticias-6_100521074.png",
+    "autor": "Suporte",
+    "corpo": [
+      { "type": "p", "text": "Os implantes dentários são uma solução eficaz para a perda de dentes. São estruturas de titânio que são implantadas no osso maxilar ou mandibular para servir de suporte para próteses dentárias." },
+      { "type": "p", "text": "Os implantes dentários oferecem diversos benefícios, como:" },
+      { "type": "ul", "items": [
+        "Restauração da função mastigatória e da fonética.",
+        "Melhora da estética do sorriso.",
+        "Aumento da autoestima e da qualidade de vida.",
+        "Solução duradoura para a perda de dentes."
+      ] }
+    ]
+  },
+  {
+    "id": "7",
+    "numero": 7,
+    "slug": "clareamento-dental-dicas-para-um-sorriso-mais-branco",
+    "titulo": "Clareamento dental: Dicas para um sorriso mais branco",
+    "data": "2024-03-04T17:21:00",
+    "resumo": "Descubra as diferentes técnicas de clareamento dental disponíveis e como obter um sorriso mais branco e brilhante.",
+    "imagem": "noticias-7_100523325.png",
+    "autor": "Suporte",
+    "corpo": [
+      { "type": "p", "text": "Manter um sorriso branco e radiante é um desejo comum. O clareamento dental é um procedimento estético que visa clarear a cor dos dentes, tornando-os mais brancos e uniformes. Existem diferentes técnicas de clareamento dental disponíveis, como:" },
+      { "type": "ul", "items": [
+        "Clareamento caseiro: realizado em casa com o uso de moldeiras personalizadas e gel clareador prescritos pelo dentista.",
+        "Clareamento profissional: realizado no consultório odontológico por um profissional qualificado, podendo ser feito em uma única sessão ou em sessões múltiplas."
+      ] }
+    ]
+  },
+  {
+    "id": "8",
+    "numero": 8,
+    "slug": "saude-bucal-e-saude-geral-uma-conexao-importante",
+    "titulo": "Saúde bucal e saúde geral: Uma conexão importante",
+    "data": "2024-03-04T17:23:00",
+    "resumo": "Entenda a relação entre a saúde bucal e a saúde geral do corpo e a importância de cuidar dos dentes para uma vida saudável.",
+    "imagem": "noticias-8_60525206.png",
+    "autor": "Suporte",
+    "corpo": [
+      { "type": "p", "text": "A saúde bucal é um aspecto fundamental da saúde geral do corpo. Muitas pesquisas demonstram a relação entre a má saúde bucal e o aumento do risco de diversas doenças sistêmicas, como diabetes, doenças cardíacas e AVC." },
+      { "type": "p", "text": "Cuidar da saúde bucal é importante para prevenir problemas bucais e também para promover a sua saúde geral. Ao escovar os dentes regularmente, usar fio dental e visitar o dentista regularmente, você está investindo em sua saúde e bem-estar." }
+    ]
+  }
+]

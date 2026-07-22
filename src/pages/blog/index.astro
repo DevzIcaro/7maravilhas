@@ -1,0 +1,35 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import PlaceholderImage from "../../components/PlaceholderImage.astro";
+
+const posts = (await getCollection("posts")).sort((a, b) => a.data.numero - b.data.numero);
+
+const formatarData = (d: Date) =>
+  new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" }).format(d);
+---
+
+<Layout
+  title="Blog — Correia Odontologia"
+  description="Dicas de saúde bucal, novidades em tratamentos odontológicos e cuidados com o sorriso no blog da Correia Odontologia."
+  path="/blog"
+>
+  <section class="mx-auto max-w-7xl px-4 py-10 lg:px-8">
+    <nav aria-label="Breadcrumb" class="mb-4 text-sm text-texto/60">
+      <a href="/" class="cursor-pointer hover:text-primaria">Home</a> <span aria-hidden="true">›</span> Blog
+    </nav>
+    <h1 class="section-title">Blog</h1>
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {posts.map((p) => (
+        <a href={`/blog/ver/${p.data.id}/${p.data.slug}`} class="card cursor-pointer">
+          <PlaceholderImage alt={p.data.titulo} ratio="wide" class="mb-4" />
+          <p class="text-xs font-bold uppercase tracking-wide text-secundaria">{formatarData(p.data.data)}</p>
+          <h2 class="mt-1 text-base font-bold">{p.data.titulo}</h2>
+          <p class="mt-2 text-sm text-texto/80">{p.data.resumo}</p>
+          <span class="mt-4 inline-block text-sm font-bold text-primaria">LER MAIS</span>
+        </a>
+      ))}
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,175 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import PlaceholderImage from "../components/PlaceholderImage.astro";
+import { Phone, MessageCircle, Clock, MapPin } from "lucide-react";
+
+const unidades = (await getCollection("unidades")).sort((a, b) => a.data.ordem - b.data.ordem);
+const equipe = await getCollection("equipe");
+const depoimentos = await getCollection("depoimentos");
+const posts = (await getCollection("posts")).sort((a, b) => a.data.numero - b.data.numero);
+
+const destaques = [
+  {
+    titulo: "Clareamento",
+    texto: "Traga um brilho ao seu sorriso com o clareamento dentário. Dentes bonitos e brancos sem remover a superfície dentária!",
+    categoria: "Clínico Geral",
+  },
+  {
+    titulo: "Implantes",
+    texto: "São estruturas ou suportes de titânio posicionados na maxila e mandíbula para substituir as raízes dentárias.",
+    categoria: "Clínico Geral",
+  },
+  {
+    titulo: "Extrações",
+    texto: "Simples ou cirúrgica.",
+    categoria: "Clínico Geral",
+  },
+  {
+    titulo: "Aparelhos",
+    texto: "Trabalhamos com aparelhos dentários para fins estéticos e ortopédicos, prezando sempre pela saúde do seu sorriso.",
+    categoria: "Clínico Geral",
+  },
+];
+
+const equipeIdsHome = [
+  "mario-eugenio-zaparoli--tres-lagoas",
+  "ana-laura-silva-balbino--tres-lagoas",
+  "valdemilson-dos-reis-rodrigues-filho--sao-jose-do-rio-preto",
+  "isabele-fernanda-boldrin--sao-jose-do-rio-preto",
+  "ademar-santana-neto--santa-fe-do-sul",
+  "pablo-henrique-frasson--santa-fe-do-sul",
+];
+const equipeHome = equipeIdsHome
+  .map((id) => equipe.find((p) => p.data.id === id))
+  .filter((p): p is NonNullable<typeof p> => Boolean(p));
+---
+
+<Layout
+  title="Correia Odontologia — Clínicas em Santa Fé do Sul, Jales, Rio Preto, Votuporanga e Três Lagoas"
+  description="Correia Odontologia: atendimento humanizado, tecnologia de ponta e profissionais qualificados em Santa Fé do Sul, Jales, São José do Rio Preto, Votuporanga (SP) e Três Lagoas (MS)."
+  path="/"
+>
+  <section class="relative">
+    <PlaceholderImage
+      alt="Consultório de odontologia com uma cadeira de dentista e televisão virada para a face do cliente"
+      ratio="wide"
+      class="!aspect-auto h-[320px] w-full !rounded-none md:h-[440px]"
+    />
+  </section>
+
+  <section class="mx-auto max-w-7xl px-4 py-14 lg:px-8">
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {destaques.map((d) => (
+        <div class="card-dark">
+          <h3 class="text-lg font-extrabold">{d.titulo}</h3>
+          <p class="text-sm">{d.texto} — <strong>{d.categoria}</strong></p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="mx-auto grid max-w-7xl gap-10 px-4 py-16 lg:grid-cols-2 lg:items-center lg:px-8">
+      <PlaceholderImage alt="Clínica Correia Odontologia" ratio="wide" />
+      <div>
+        <p class="kicker">Quem somos</p>
+        <h2 class="section-title">Sobre nossa clínica</h2>
+        <p class="section-subtitle">
+          A Clínica Correia Odontologia surgiu no final de 2018. Temos compromisso constante com excelência em
+          atendimento, utilização das técnicas e tecnologias mais modernas da Odontologia e proporcionar uma vida
+          mais feliz aos nossos pacientes por meio de um novo sorriso.
+        </p>
+        <a href="/sobre-nos" class="btn btn-outline mt-6 cursor-pointer">Ler mais</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-4 py-16 lg:px-8">
+    <div class="mb-10 flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <p class="kicker">Nossos profissionais</p>
+        <h2 class="section-title">Conheça nossa equipe</h2>
+        <p class="section-subtitle">A Correia Odontologia conta com uma equipe de ponta para atender suas necessidades dentárias!</p>
+      </div>
+      <a href="/equipe" class="btn btn-outline cursor-pointer">Ver todos</a>
+    </div>
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {equipeHome.map((p) => (
+        <div class="card text-center">
+          <PlaceholderImage alt={p.data.nome} ratio="square" class="mx-auto mb-4 w-32" />
+          <h3 class="text-base font-bold">{p.data.nome}</h3>
+          <p class="text-sm text-secundaria-forte">{p.data.especialidade}</p>
+          <p class="text-xs text-texto/60">{p.data.cro}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="mx-auto max-w-7xl px-4 py-16 lg:px-8">
+      <p class="kicker">O que dizem de nós</p>
+      <h2 class="section-title">Depoimentos</h2>
+      <p class="section-subtitle max-w-3xl">
+        Na Clínica Correia Odontologia, a sua satisfação é a nossa prioridade. Sabemos que escolher um dentista é
+        uma decisão importante, por isso, ficamos felizes em compartilhar o que nossos pacientes falam sobre a gente.
+      </p>
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {depoimentos.map((d) => (
+          <div class="card">
+            <p class="text-sm italic text-texto">"{d.data.texto}"</p>
+            <p class="mt-4 text-sm font-bold text-secundaria-forte">{d.data.autor}</p>
+            <p class="text-xs text-texto/60">{d.data.papel}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-4 py-16 lg:px-8">
+    <p class="kicker">Nossas unidades</p>
+    <h2 class="section-title">Conheça nossas clínicas</h2>
+    <p class="section-subtitle">E saiba onde as encontrar!</p>
+
+    <div class="mt-10 space-y-10">
+      {unidades.map((u) => (
+        <div class="grid gap-6 rounded-[var(--raio)] border border-borda p-6 lg:grid-cols-[1fr_1fr_1.4fr] lg:items-center">
+          <PlaceholderImage alt={`Fachada da unidade ${u.data.cidade}`} ratio="wide" label="fachada" />
+          <PlaceholderImage alt={`Estabelecimento da unidade ${u.data.cidade}`} ratio="wide" label="estabelecimento" />
+          <div>
+            <h3 class="text-lg font-extrabold text-secundaria-forte">{u.data.cidade}{u.data.uf === "MS" ? " - MS" : ""}</h3>
+            <p class="mt-2 text-sm text-texto">{u.data.descricao}</p>
+            <ul class="mt-4 space-y-1.5 text-sm text-texto/80">
+              <li class="flex items-center gap-2"><MapPin className="h-4 w-4 shrink-0 text-secundaria" aria-hidden="true" client:load />{u.data.endereco}</li>
+              <li class="flex items-center gap-2"><MessageCircle className="h-4 w-4 shrink-0 text-secundaria" aria-hidden="true" client:load />WhatsApp {u.data.whatsapp}</li>
+              <li class="flex items-center gap-2"><Phone className="h-4 w-4 shrink-0 text-secundaria" aria-hidden="true" client:load />Telefone {u.data.telefone}</li>
+              <li class="flex items-start gap-2"><Clock className="mt-0.5 h-4 w-4 shrink-0 text-secundaria" aria-hidden="true" client:load /><span>{u.data.horarios}</span></li>
+            </ul>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section-alt">
+    <div class="mx-auto max-w-7xl px-4 py-16 lg:px-8">
+      <p class="kicker">Blog</p>
+      <h2 class="section-title">Últimas notícias</h2>
+      <p class="section-subtitle max-w-3xl">
+        Fique por dentro das novidades da Clínica Correia Odontologia! Encontre dicas de cuidados bucais, conheça
+        as últimas tecnologias em tratamentos, e leia sobre higiene oral e eventos interessantes do mundo da
+        odontologia e saúde.
+      </p>
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {posts.map((p) => (
+          <a href={`/blog/ver/${p.data.id}/${p.data.slug}`} class="card cursor-pointer">
+            <PlaceholderImage alt={p.data.titulo} ratio="wide" class="mb-4" />
+            <h3 class="text-base font-bold">{p.data.titulo}</h3>
+            <p class="mt-2 text-sm text-texto/80">{p.data.resumo}</p>
+            <span class="mt-4 inline-block text-sm font-bold text-primaria">LER MAIS</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

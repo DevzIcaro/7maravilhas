@@ -1,0 +1,77 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import PlaceholderImage from "../components/PlaceholderImage.astro";
+
+const equipe = await getCollection("equipe");
+
+const cidades = [
+  { id: "todas", label: "Todas" },
+  { id: "jales", label: "Jales" },
+  { id: "santa-fe-do-sul", label: "Santa Fé do Sul" },
+  { id: "sao-jose-do-rio-preto", label: "São José do Rio Preto" },
+  { id: "tres-lagoas", label: "Três Lagoas" },
+  { id: "votuporanga", label: "Votuporanga" },
+];
+---
+
+<Layout
+  title="Nossa Equipe — Correia Odontologia"
+  description="Conheça os profissionais da Correia Odontologia nas unidades de Santa Fé do Sul, Jales, São José do Rio Preto, Votuporanga e Três Lagoas."
+  path="/equipe"
+>
+  <section class="mx-auto max-w-7xl px-4 py-10 lg:px-8">
+    <nav aria-label="Breadcrumb" class="mb-4 text-sm text-texto/60">
+      <a href="/" class="cursor-pointer hover:text-primaria">Home</a> <span aria-hidden="true">›</span> Nossa Equipe
+    </nav>
+    <h1 class="section-title">Nossa Equipe</h1>
+
+    <div class="mb-10 flex flex-wrap gap-2" role="group" aria-label="Filtrar equipe por cidade">
+      {cidades.map((c, i) => (
+        <button
+          type="button"
+          class="btn btn-outline !py-2 !px-4 !text-xs cursor-pointer"
+          data-cidade={c.id}
+          aria-pressed={i === 0 ? "true" : "false"}
+        >
+          {c.label}
+        </button>
+      ))}
+    </div>
+
+    <div id="lista-equipe" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {equipe.map((p) => (
+        <div class="card text-center" data-cidade={p.data.cidade}>
+          <PlaceholderImage alt={p.data.nome} ratio="square" class="mx-auto mb-4 w-32" />
+          <h3 class="text-base font-bold">{p.data.nome}</h3>
+          <p class="text-sm text-secundaria-forte">{p.data.especialidade}</p>
+          <p class="text-xs text-texto/60">{p.data.cro}</p>
+        </div>
+      ))}
+    </div>
+
+    <p id="equipe-vazio" class="hidden text-center text-texto/70" role="status">
+      Nenhum profissional encontrado para esta cidade.
+    </p>
+  </section>
+
+  <script>
+    const buttons = document.querySelectorAll<HTMLButtonElement>("[data-cidade]");
+    const cards = document.querySelectorAll<HTMLElement>("#lista-equipe [data-cidade]");
+    const vazio = document.getElementById("equipe-vazio");
+
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const cidade = btn.dataset.cidade;
+        buttons.forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+        let visiveis = 0;
+        cards.forEach((card) => {
+          const show = cidade === "todas" || card.dataset.cidade === cidade;
+          card.style.display = show ? "" : "none";
+          if (show) visiveis += 1;
+        });
+        vazio?.classList.toggle("hidden", visiveis > 0);
+      });
+    });
+  </script>
+</Layout>

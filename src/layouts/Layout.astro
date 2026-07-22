@@ -1,0 +1,99 @@
+---
+import { getCollection } from "astro:content";
+import faviconSvg from "../assets/favicon.svg?url";
+import TopBar from "../components/TopBar.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import CTAAgende from "../components/CTAAgende.astro";
+import BookingModal from "../components/BookingModal";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  path?: string;
+}
+
+const { title, description, path = "/" } = Astro.props;
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "https://correiaodontologia.com.br";
+const canonical = new URL(path, siteUrl).toString();
+const ogImage = new URL("/og-image.jpg", siteUrl).toString();
+
+const unidades = (await getCollection("unidades")).sort((a, b) => a.data.ordem - b.data.ordem);
+
+const jsonLdOrganization = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": `${siteUrl}/#organizacao`,
+  name: "Correia Odontologia",
+  url: siteUrl,
+  logo: `${siteUrl}/logo.png`,
+  sameAs: ["https://www.facebook.com/clinica.correia", "https://www.instagram.com/clinica.correia/"],
+};
+
+const jsonLdDentists = unidades.map((u) => ({
+  "@context": "https://schema.org",
+  "@type": "Dentist",
+  "@id": `${siteUrl}/#unidade-${u.data.id}`,
+  name: `Correia Odontologia - ${u.data.cidade}`,
+  parentOrganization: { "@id": `${siteUrl}/#organizacao` },
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: u.data.endereco,
+    addressLocality: u.data.cidade,
+    addressRegion: u.data.uf,
+    addressCountry: "BR",
+  },
+  telephone: u.data.telefone,
+  ...(u.data.coordenadas
+    ? {
+        geo: {
+          "@type": "GeoCoordinates",
+          latitude: u.data.coordenadas.lat,
+          longitude: u.data.coordenadas.lng,
+        },
+      }
+    : {}),
+}));
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href={faviconSvg} />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="Correia Odontologia" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLdOrganization)} />
+    {jsonLdDentists.map((entry) => <script type="application/ld+json" set:html={JSON.stringify(entry)} />)}
+  </head>
+  <body>
+    <TopBar />
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <CTAAgende />
+    <Footer />
+    <BookingModal client:load />
+  </body>
+</html>

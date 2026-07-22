@@ -1,0 +1,109 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { User, Phone, Mail, MapPin, ArrowUp } from "lucide-react";
+import FacebookIcon from "../components/icons/FacebookIcon.astro";
+import InstagramIcon from "../components/icons/InstagramIcon.astro";
+---
+
+<Layout
+  title="Fale Conosco — Correia Odontologia"
+  description="Entre em contato com a Correia Odontologia: telefone, WhatsApp, e-mail e formulário de atendimento das clínicas em Santa Fé do Sul, Jales, Rio Preto, Votuporanga e Três Lagoas."
+  path="/fale-conosco"
+>
+  <section class="mx-auto max-w-7xl px-4 py-10 lg:px-8">
+    <nav aria-label="Breadcrumb" class="mb-4 text-sm text-texto/60">
+      <a href="/" class="cursor-pointer hover:text-primaria">Home</a> <span aria-hidden="true">›</span> Fale Conosco
+    </nav>
+    <h1 class="section-title">Fale Conosco</h1>
+
+    <ul class="mb-10 flex flex-wrap gap-x-8 gap-y-2 text-sm text-texto/80">
+      <li class="flex items-center gap-2"><Phone className="h-4 w-4 text-secundaria" aria-hidden="true" client:load />Tel (17) 3641-0544</li>
+      <li class="flex items-center gap-2"><Phone className="h-4 w-4 text-secundaria" aria-hidden="true" client:load />WhatsApp (17) 99717-8758</li>
+      <li class="flex items-center gap-2"><MapPin className="h-4 w-4 text-secundaria" aria-hidden="true" client:load />Rua 17, nº 996 - Centro, Santa Fé do Sul - SP</li>
+      <li class="flex items-center gap-2">
+        <Mail className="h-4 w-4 text-secundaria" aria-hidden="true" client:load />
+        <a href="mailto:contato@correiaodontologia.com.br" class="cursor-pointer hover:text-primaria">contato@correiaodontologia.com.br</a>
+      </li>
+      <li class="flex items-center gap-2">
+        <FacebookIcon class="h-4 w-4 text-secundaria" />
+        <a href="https://www.facebook.com/clinica.correia" target="_blank" rel="noopener noreferrer" class="cursor-pointer hover:text-primaria">Facebook</a>
+      </li>
+      <li class="flex items-center gap-2">
+        <InstagramIcon class="h-4 w-4 text-secundaria" />
+        <a href="https://www.instagram.com/clinica.correia/" target="_blank" rel="noopener noreferrer" class="cursor-pointer hover:text-primaria">Instagram</a>
+      </li>
+    </ul>
+
+    <div class="rounded-[var(--raio)] border border-borda p-6 md:p-10">
+      <h2 class="text-xl font-extrabold text-secundaria-forte">FALE CONOSCO</h2>
+      <p class="section-subtitle mb-8">Deixe seus dados de contato pra gente falar com você :)</p>
+
+      <form class="grid gap-6 md:grid-cols-2" id="fale-conosco-form">
+        <div class="space-y-4">
+          <div>
+            <label for="fc-nome" class="mb-1 block text-sm font-bold text-texto">Seu nome</label>
+            <div class="relative">
+              <User className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-secundaria" aria-hidden="true" client:load />
+              <input id="fc-nome" name="nome" type="text" required placeholder="Seu nome" class="field pl-9" />
+            </div>
+          </div>
+          <div>
+            <label for="fc-telefone" class="mb-1 block text-sm font-bold text-texto">Telefone</label>
+            <div class="relative">
+              <Phone className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-secundaria" aria-hidden="true" client:load />
+              <input id="fc-telefone" name="telefone" type="tel" required placeholder="Telefone" class="field pl-9" />
+            </div>
+          </div>
+          <div>
+            <label for="fc-email" class="mb-1 block text-sm font-bold text-texto">E-mail</label>
+            <div class="relative">
+              <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-secundaria" aria-hidden="true" client:load />
+              <input id="fc-email" name="email" type="email" required placeholder="E-mail" class="field pl-9" />
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col">
+          <label for="fc-mensagem" class="mb-1 block text-sm font-bold text-texto">Sua mensagem</label>
+          <textarea id="fc-mensagem" name="mensagem" placeholder="Sua mensagem.." class="field h-full min-h-[9.5rem]"></textarea>
+        </div>
+
+        <div class="md:col-span-2">
+          {/* Placeholder de reCAPTCHA — integrar com as chaves reais do cliente. Nunca resolver automaticamente. */}
+          <label class="mb-6 flex w-fit cursor-pointer items-center gap-3 rounded-[var(--raio)] border border-borda bg-superficie px-3 py-2.5 text-sm text-texto">
+            <input type="checkbox" required class="h-4 w-4 cursor-pointer accent-secundaria-forte" />
+            Não sou um robô
+          </label>
+          <button type="submit" class="btn btn-cta">Enviar</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <button
+    type="button"
+    id="voltar-topo"
+    aria-label="Voltar ao topo"
+    class="fixed bottom-6 right-6 z-30 hidden cursor-pointer items-center justify-center rounded-full bg-cta p-3 text-branco shadow-lg transition-colors duration-200 hover:bg-[var(--cor-cta-hover)] focus-visible:outline-3"
+  >
+    <ArrowUp className="h-5 w-5" aria-hidden="true" client:load />
+  </button>
+
+  <script>
+    const btn = document.getElementById("voltar-topo");
+    const toggle = () => {
+      if (!btn) return;
+      const show = window.scrollY > 400;
+      btn.classList.toggle("hidden", !show);
+      btn.classList.toggle("flex", show);
+    };
+    window.addEventListener("scroll", toggle, { passive: true });
+    btn?.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+    toggle();
+
+    document.getElementById("fale-conosco-form")?.addEventListener("submit", (e) => {
+      e.preventDefault();
+      (e.target as HTMLFormElement).reset();
+    });
+  </script>
+</Layout>

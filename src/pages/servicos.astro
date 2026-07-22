@@ -1,0 +1,87 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import PlaceholderImage from "../components/PlaceholderImage.astro";
+
+const servicos = await getCollection("servicos");
+
+const filtros = [
+  "Todos",
+  "Tratamento de Canal",
+  "Implantes Dentários",
+  "Odontopediatria",
+  "Ortodontia",
+  "Lentes de contato",
+  "Prótese Dental",
+  "Harmonização Facil",
+];
+---
+
+<Layout
+  title="Serviços — Correia Odontologia"
+  description="Conheça os serviços da Correia Odontologia: clínica geral, implantes, ortodontia, lentes de contato, próteses e mais, em Santa Fé do Sul, Jales, Rio Preto, Votuporanga e Três Lagoas."
+  path="/servicos"
+>
+  <section class="mx-auto max-w-7xl px-4 py-10 lg:px-8">
+    <nav aria-label="Breadcrumb" class="mb-4 text-sm text-texto/60">
+      <a href="/" class="cursor-pointer hover:text-primaria">Home</a> <span aria-hidden="true">›</span> Serviços
+    </nav>
+    <h1 class="section-title">Serviços</h1>
+
+    <div class="mb-10 grid gap-6 lg:grid-cols-[1.4fr_1fr] lg:items-center">
+      <p class="section-subtitle max-w-2xl">
+        Na Correia Odontolgia temos profissionais qualificados e equipamentos de ponta, para atender você e sua
+        família!
+      </p>
+      <PlaceholderImage alt="Cadeira de atendimento odontológico" ratio="wide" />
+    </div>
+
+    <div class="mb-10 flex flex-wrap gap-2" role="group" aria-label="Filtrar serviços por categoria">
+      {filtros.map((f, i) => (
+        <button
+          type="button"
+          class="btn btn-outline !py-2 !px-4 !text-xs cursor-pointer"
+          data-filtro={f}
+          aria-pressed={i === 0 ? "true" : "false"}
+        >
+          {f}
+        </button>
+      ))}
+    </div>
+
+    <div id="lista-servicos" class="grid gap-6 md:grid-cols-2">
+      {servicos.map((s) => (
+        <div class="card" data-categoria={s.data.categoria}>
+          <h3 class="text-lg font-bold">{s.data.titulo}</h3>
+          <p class="mt-2 text-sm text-texto/80">{s.data.descricao}</p>
+          {s.data.subitens.length > 0 && (
+            <ul class="mt-3 space-y-2 border-l-2 border-borda pl-4">
+              {s.data.subitens.map((sub) => (
+                <li>
+                  <p class="text-sm font-bold text-secundaria-forte">{sub.titulo}</p>
+                  <p class="text-sm text-texto/80">{sub.descricao}</p>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <script>
+    const buttons = document.querySelectorAll<HTMLButtonElement>("[data-filtro]");
+    const cards = document.querySelectorAll<HTMLElement>("#lista-servicos [data-categoria]");
+
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const filtro = btn.dataset.filtro;
+        buttons.forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+        cards.forEach((card) => {
+          const show = filtro === "Todos" || card.dataset.categoria === filtro;
+          card.style.display = show ? "" : "none";
+        });
+      });
+    });
+  </script>
+</Layout>
