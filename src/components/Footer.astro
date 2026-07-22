@@ -1,106 +1,163 @@
 ---
 import { getCollection } from "astro:content";
-import { Mail } from "lucide-react";
+import { Mail, MapPin, ArrowRight } from "lucide-react";
 import { Image } from "astro:assets";
 import logo from "../assets/logo.svg";
 import FacebookIcon from "./icons/FacebookIcon.astro";
 import InstagramIcon from "./icons/InstagramIcon.astro";
 
+/**
+ * Rodapé reorganizado (decisão aprovada — ver PROMPT, Seção 6.5.1).
+ * O rodapé antigo repetia, para cada uma das 5 unidades: telefone, WhatsApp,
+ * horários completos, endereço e redes, além do mapa incorporado.
+ * Mantemos o NAP (nome, endereço, telefone) das 5 unidades — relevante para
+ * SEO local — e movemos horários e mapa para a seção de unidades na home.
+ */
+
 const unidades = (await getCollection("unidades")).sort((a, b) => a.data.ordem - b.data.ordem);
 
-const mapaUnidade = unidades.find((u) => u.data.mapaEmbed);
-const mapaSrc = mapaUnidade?.data.coordenadas
-  ? `https://maps.google.com/maps?q=${mapaUnidade.data.coordenadas.lat},${mapaUnidade.data.coordenadas.lng}&z=15&output=embed`
-  : null;
-
-const mapaDoSite = [
+const navegacao = [
   { label: "Home", href: "/" },
-  { label: "Sobre Nos", href: "/sobre-nos" },
-  { label: "Servicos", href: "/servicos" },
+  { label: "Sobre nós", href: "/sobre-nos" },
+  { label: "Serviços", href: "/servicos" },
+  { label: "Equipe", href: "/equipe" },
   { label: "Blog", href: "/blog" },
-  { label: "Fale Conosco", href: "/fale-conosco" },
-  { label: "Agende sua Consulta", href: "#bookform1" },
+  { label: "Fale conosco", href: "/fale-conosco" },
 ];
 
+const apenasDigitos = (v: string) => v.replace(/\D/g, "");
 const anoAtual = new Date().getFullYear();
 ---
 
 <footer class="footer">
-  <div class="mx-auto max-w-7xl px-4 py-12 lg:px-8">
-    <div class="grid gap-10 md:grid-cols-[1.2fr_1fr_1.6fr]">
+  <div class="mx-auto max-w-7xl px-4 py-14 lg:px-8">
+    <div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
+      <!-- Marca -->
       <div>
-        <div class="mb-4 rounded-md bg-branco/5 p-2 inline-flex">
-          <Image src={logo} alt="Correia Odontologia" width={212} height={34} />
+        <Image src={logo} alt="Correia Odontologia" width={212} height={34} class="mb-4 h-9 w-auto" />
+        <p class="max-w-xs text-sm leading-relaxed text-branco/70">
+          Desde 2018 cuidando do seu sorriso, com atendimento humanizado em cinco cidades.
+        </p>
+        <div class="mt-5 flex gap-3">
+          <a
+            href="https://www.facebook.com/clinica.correia"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Facebook da Correia Odontologia"
+            class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-[var(--raio)] border border-branco/20 text-branco/85 transition-colors duration-200 hover:border-primaria hover:text-primaria"
+          >
+            <FacebookIcon class="h-4 w-4" />
+          </a>
+          <a
+            href="https://www.instagram.com/clinica.correia/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram da Correia Odontologia"
+            class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-[var(--raio)] border border-branco/20 text-branco/85 transition-colors duration-200 hover:border-primaria hover:text-primaria"
+          >
+            <InstagramIcon class="h-4 w-4" />
+          </a>
         </div>
-        <p class="footer-title mb-2 text-sm font-extrabold uppercase tracking-wide">Mapa do site</p>
-        <ul class="space-y-1.5 text-sm text-branco/85">
-          {mapaDoSite.map((item) => (
+      </div>
+
+      <!-- Navegação -->
+      <nav aria-label="Navegação do rodapé">
+        <p class="footer-title mb-4 text-xs font-extrabold uppercase tracking-[0.18em]">Navegação</p>
+        <ul class="space-y-2.5">
+          {navegacao.map((l) => (
             <li>
-              <a href={item.href} class="cursor-pointer transition-colors duration-200 hover:text-primaria" data-booking-trigger={item.href === "#bookform1" ? true : undefined}>
-                {item.label}
+              <a
+                href={l.href}
+                class="cursor-pointer text-sm text-branco/70 transition-colors duration-200 hover:text-branco"
+              >
+                {l.label}
               </a>
             </li>
           ))}
         </ul>
+      </nav>
 
-        <div class="mt-6 flex items-center gap-3">
-          <a href="https://www.facebook.com/clinica.correia" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="cursor-pointer text-branco/85 transition-colors duration-200 hover:text-primaria">
-            <FacebookIcon class="h-5 w-5" />
-          </a>
-          <a href="https://www.instagram.com/clinica.correia/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="cursor-pointer text-branco/85 transition-colors duration-200 hover:text-primaria">
-            <InstagramIcon class="h-5 w-5" />
-          </a>
-          <a href="mailto:agendamento@correiaodontologia.com.br" aria-label="E-mail" class="cursor-pointer text-branco/85 transition-colors duration-200 hover:text-primaria">
-            <Mail className="h-5 w-5" aria-hidden="true" />
-          </a>
-        </div>
-      </div>
-
+      <!-- Unidades (NAP compacto) -->
       <div>
-        <p class="footer-title mb-3 text-sm font-extrabold uppercase tracking-wide">Contatos</p>
-        <ul class="space-y-5 text-sm text-branco/85">
+        <p class="footer-title mb-4 text-xs font-extrabold uppercase tracking-[0.18em]">Unidades</p>
+        <ul class="space-y-3.5">
           {unidades.map((u) => (
-            <li>
-              <p class="font-bold text-branco">{u.data.cidade}</p>
-              <p>Tel {u.data.telefone} · WhatsApp {u.data.whatsapp}</p>
-              <p class="text-branco/70">{u.data.horarios}</p>
-              <p class="text-branco/70">{u.data.endereco}</p>
+            <li class="text-sm leading-snug">
+              <span class="font-semibold text-branco">
+                {u.data.cidade} <span class="text-xs text-branco/40">{u.data.uf}</span>
+              </span>
+              <br />
+              <span class="text-branco/60">{u.data.endereco}</span>
+              <br />
+              <a
+                href={`tel:+55${apenasDigitos(u.data.telefone)}`}
+                class="cursor-pointer text-branco/70 transition-colors duration-200 hover:text-primaria"
+              >
+                {u.data.telefone}
+              </a>
             </li>
           ))}
         </ul>
       </div>
 
+      <!-- Contato / CTA -->
       <div>
-        <p class="footer-title mb-3 text-sm font-extrabold uppercase tracking-wide">Onde estamos</p>
-        {mapaSrc && (
-          <div class="overflow-hidden rounded-[var(--raio)] border border-branco/10">
-            <iframe
-              src={mapaSrc}
-              width="100%"
-              height="220"
-              style="border:0"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              title="Mapa — Correia Odontologia, Santa Fé do Sul"
-            ></iframe>
-          </div>
-        )}
-        <p class="mt-4 text-sm text-branco/85">
-          <a href="mailto:agendamento@correiaodontologia.com.br" class="cursor-pointer inline-flex items-center gap-1.5 transition-colors duration-200 hover:text-primaria">
-            <Mail className="h-4 w-4" aria-hidden="true" />
-            agendamento@correiaodontologia.com.br
-          </a>
-        </p>
+        <p class="footer-title mb-4 text-xs font-extrabold uppercase tracking-[0.18em]">Fale com a gente</p>
+
+        <a
+          href="mailto:agendamento@correiaodontologia.com.br"
+          class="mb-3 flex cursor-pointer items-start gap-2.5 text-sm text-branco/70 transition-colors duration-200 hover:text-branco"
+        >
+          <Mail className="mt-0.5 h-4 w-4 shrink-0 text-primaria" aria-hidden="true" />
+          <span class="break-all">agendamento@correiaodontologia.com.br</span>
+        </a>
+
+        <a
+          href="/#unidades"
+          class="mb-5 flex cursor-pointer items-start gap-2.5 text-sm text-branco/70 transition-colors duration-200 hover:text-branco"
+        >
+          <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primaria" aria-hidden="true" />
+          <span>Ver todas as unidades e horários</span>
+        </a>
+
+        <a
+          href="/fale-conosco"
+          class="mb-2.5 flex cursor-pointer items-center justify-center gap-2 rounded-[var(--raio)] border-2 border-primaria px-4 py-2.5 text-sm font-bold text-primaria transition-colors duration-200 hover:bg-primaria hover:text-branco"
+        >
+          Fale conosco
+        </a>
+        <a
+          href="#bookform1"
+          data-booking-trigger
+          class="flex cursor-pointer items-center justify-center gap-2 rounded-[var(--raio)] bg-cta px-4 py-3 text-sm font-bold text-branco transition-all duration-200 hover:brightness-95"
+        >
+          Agende sua consulta
+          <ArrowRight className="h-4 w-4" aria-hidden="true" />
+        </a>
       </div>
     </div>
+  </div>
 
-    <hr class="my-8 border-branco/15" />
-
-    <div class="flex flex-col gap-2 text-xs text-branco/70 md:flex-row md:items-center md:justify-between">
+  <!-- Barra inferior — informação legal obrigatória (CRO / responsável técnica) -->
+  <div class="border-t border-branco/10">
+    <div
+      class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 py-6 text-center text-xs text-branco/50 md:flex-row md:text-left lg:px-8"
+    >
       <p>
-        © {anoAtual} | Todos os direitos reservados | Correia Odontologia CRO-SP: 20.917 RT Dra. Leticia S. M. Correia CRO/SP 129.476
+        © {anoAtual} Correia Odontologia. Todos os direitos reservados. CRO-SP: 20.917 · RT Dra. Leticia S. M.
+        Correia CRO/SP 129.476
       </p>
-      <p>Desenvolvimento: Ícaro Carneiro</p>
+      <p>
+        Desenvolvido por
+        <a
+          href="https://wa.me/5517992641230"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="cursor-pointer font-semibold text-branco/70 transition-colors duration-200 hover:text-primaria"
+        >
+          Ícaro Carneiro
+        </a>
+      </p>
     </div>
   </div>
 </footer>

@@ -6,14 +6,22 @@ import { ChevronDown, Menu, X, ArrowRight } from "lucide-react";
 
 /**
  * Navbar — padrão limpo: logo | links | ações.
+ * Substitui TopBar.astro + Header.astro.
  * Decisão aprovada: a barra de topo antiga (endereço, e-mail, redes e lista de
- * telefones das 5 unidades) foi REMOVIDA. Esses dados vivem nas páginas de
- * contato/unidades e no rodapé. Ver PROMPT, Seção 6.1.
+ * telefones das 5 unidades) foi REMOVIDA — esses dados vivem no rodapé e na
+ * seção de unidades. Ver PROMPT, Seção 6.1.
  */
 
+interface Unidade {
+  cidade: string;
+  uf: string;
+}
+
 interface NavbarProps {
-  /** URL da logo — a página Astro importa o asset e passa `logo.src` */
+  /** URL da logo — o Layout importa o asset e passa a URL */
   logoSrc: string;
+  /** Unidades vindas da content collection */
+  unidades: Unidade[];
 }
 
 const LINKS = [
@@ -24,23 +32,11 @@ const LINKS = [
   { label: "Blog", href: "/blog" },
 ];
 
-const UNIDADES = [
-  { cidade: "Santa Fé do Sul", uf: "SP" },
-  { cidade: "Jales", uf: "SP" },
-  { cidade: "São José do Rio Preto", uf: "SP" },
-  { cidade: "Votuporanga", uf: "SP" },
-  { cidade: "Três Lagoas", uf: "MS" },
-];
-
-const WHATSAPP_URL =
-  "https://api.whatsapp.com/send?phone=5517996256384&text=Ol%C3%A1%2C%20estou%20no%20site%20da%20Correia%20Odontologia%20e%20gostaria%20de%20saber%20mais!";
-
-export default function Navbar({ logoSrc }: NavbarProps) {
+export default function Navbar({ logoSrc, unidades }: NavbarProps) {
   const [openUnidades, setOpenUnidades] = useState(false);
   const [openMobile, setOpenMobile] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // fecha o dropdown ao clicar fora ou apertar Escape
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
@@ -62,13 +58,13 @@ export default function Navbar({ logoSrc }: NavbarProps) {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-branco border-b border-borda">
+    <header className="sticky top-0 z-50 w-full border-b border-borda bg-white">
       <nav
         aria-label="Navegação principal"
-        className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-4 md:px-8"
+        className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-4 lg:px-8"
       >
         {/* Logo */}
-        <a href="/" className="flex shrink-0 items-center gap-2" aria-label="Correia Odontologia — início">
+        <a href="/" className="flex shrink-0 items-center" aria-label="Correia Odontologia — página inicial">
           <img src={logoSrc} alt="Correia Odontologia" className="h-8 w-auto" />
         </a>
 
@@ -78,7 +74,7 @@ export default function Navbar({ logoSrc }: NavbarProps) {
             <a
               key={l.href}
               href={l.href}
-              className="text-sm font-medium text-texto transition-colors duration-200 hover:text-primaria"
+              className="cursor-pointer text-sm font-medium text-texto transition-colors duration-200 hover:text-primaria"
             >
               {l.label}
             </a>
@@ -108,14 +104,15 @@ export default function Navbar({ logoSrc }: NavbarProps) {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -6 }}
                   transition={{ duration: 0.18 }}
-                  className="absolute left-1/2 mt-3 w-64 -translate-x-1/2 overflow-hidden rounded-lg border border-borda bg-branco shadow-lg"
+                  className="absolute left-1/2 mt-3 w-64 -translate-x-1/2 overflow-hidden rounded-[var(--raio)] border border-borda bg-white shadow-lg"
                 >
                   <ul className="py-2">
-                    {UNIDADES.map((u) => (
+                    {unidades.map((u) => (
                       <li key={u.cidade}>
                         <a
-                          href="/unidades"
-                          className="flex items-center justify-between px-4 py-2.5 text-sm text-texto transition-colors duration-200 hover:bg-superficie hover:text-secundaria-forte"
+                          href="/#unidades"
+                          onClick={() => setOpenUnidades(false)}
+                          className="flex cursor-pointer items-center justify-between px-4 py-2.5 text-sm text-texto transition-colors duration-200 hover:bg-superficie hover:text-secundaria-forte"
                         >
                           {u.cidade}
                           <span className="text-xs text-secundaria">{u.uf}</span>
@@ -125,7 +122,7 @@ export default function Navbar({ logoSrc }: NavbarProps) {
                   </ul>
                   <a
                     href="/fale-conosco"
-                    className="block border-t border-borda px-4 py-3 text-sm font-semibold text-secundaria-forte transition-colors duration-200 hover:bg-superficie"
+                    className="block cursor-pointer border-t border-borda px-4 py-3 text-sm font-semibold text-secundaria-forte transition-colors duration-200 hover:bg-superficie"
                   >
                     Fale conosco
                   </a>
@@ -138,16 +135,15 @@ export default function Navbar({ logoSrc }: NavbarProps) {
         {/* Ações (desktop) */}
         <div className="hidden shrink-0 items-center gap-3 lg:flex">
           <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="cursor-pointer rounded-lg border-2 border-primaria px-4 py-2 text-sm font-bold text-primaria transition-colors duration-200 hover:bg-primaria hover:text-branco"
+            href="/fale-conosco"
+            className="cursor-pointer rounded-[var(--raio)] border-2 border-primaria px-4 py-2 text-sm font-bold text-primaria transition-colors duration-200 hover:bg-primaria hover:text-white"
           >
-            WhatsApp
+            Fale conosco
           </a>
           <a
-            href="/fale-conosco"
-            className="flex cursor-pointer items-center gap-2 rounded-lg bg-cta px-4 py-2.5 text-sm font-bold text-branco transition-colors duration-200 hover:brightness-95"
+            href="#bookform1"
+            data-booking-trigger
+            className="flex cursor-pointer items-center gap-2 rounded-[var(--raio)] bg-cta px-4 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:brightness-95"
           >
             Agende sua consulta
             <ArrowRight size={16} aria-hidden="true" />
@@ -174,27 +170,25 @@ export default function Navbar({ logoSrc }: NavbarProps) {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.22 }}
-            className="overflow-hidden border-t border-borda bg-branco lg:hidden"
+            className="overflow-hidden border-t border-borda bg-white lg:hidden"
           >
             <div className="flex flex-col px-4 py-3">
               {LINKS.map((l) => (
                 <a
                   key={l.href}
                   href={l.href}
-                  className="py-2.5 text-sm font-medium text-texto transition-colors duration-200 hover:text-primaria"
+                  className="cursor-pointer py-2.5 text-sm font-medium text-texto transition-colors duration-200 hover:text-primaria"
                 >
                   {l.label}
                 </a>
               ))}
 
-              <p className="mt-3 text-xs font-bold uppercase tracking-widest text-secundaria">
-                Unidades
-              </p>
-              {UNIDADES.map((u) => (
+              <p className="mt-3 text-xs font-bold uppercase tracking-[0.16em] text-secundaria">Unidades</p>
+              {unidades.map((u) => (
                 <a
                   key={u.cidade}
-                  href="/unidades"
-                  className="py-2 text-sm text-texto transition-colors duration-200 hover:text-primaria"
+                  href="/#unidades"
+                  className="cursor-pointer py-2 text-sm text-texto transition-colors duration-200 hover:text-primaria"
                 >
                   {u.cidade} <span className="text-xs text-secundaria">{u.uf}</span>
                 </a>
@@ -202,16 +196,15 @@ export default function Navbar({ logoSrc }: NavbarProps) {
 
               <div className="mt-4 flex flex-col gap-2 pb-2">
                 <a
-                  href={WHATSAPP_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-lg border-2 border-primaria px-4 py-2.5 text-center text-sm font-bold text-primaria"
+                  href="/fale-conosco"
+                  className="cursor-pointer rounded-[var(--raio)] border-2 border-primaria px-4 py-2.5 text-center text-sm font-bold text-primaria"
                 >
-                  WhatsApp
+                  Fale conosco
                 </a>
                 <a
-                  href="/fale-conosco"
-                  className="flex items-center justify-center gap-2 rounded-lg bg-cta px-4 py-3 text-center text-sm font-bold text-branco"
+                  href="#bookform1"
+                  data-booking-trigger
+                  className="flex cursor-pointer items-center justify-center gap-2 rounded-[var(--raio)] bg-cta px-4 py-3 text-sm font-bold text-white"
                 >
                   Agende sua consulta
                   <ArrowRight size={16} aria-hidden="true" />

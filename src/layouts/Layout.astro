@@ -1,8 +1,8 @@
 ---
 import { getCollection } from "astro:content";
 import faviconSvg from "../assets/favicon.svg?url";
-import TopBar from "../components/TopBar.astro";
-import Header from "../components/Header.astro";
+import logoUrl from "../assets/logo.svg?url";
+import Navbar from "../components/Navbar";
 import Footer from "../components/Footer.astro";
 import CTAAgende from "../components/CTAAgende.astro";
 import BookingModal from "../components/BookingModal";
@@ -87,8 +87,11 @@ const jsonLdDentists = unidades.map((u) => ({
     {jsonLdDentists.map((entry) => <script type="application/ld+json" set:html={JSON.stringify(entry)} />)}
   </head>
   <body>
-    <TopBar />
-    <Header />
+    <Navbar
+      client:load
+      logoSrc={logoUrl}
+      unidades={unidades.map((u) => ({ cidade: u.data.cidade, uf: u.data.uf }))}
+    />
     <main>
       <slot />
     </main>

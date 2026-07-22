@@ -161,7 +161,26 @@ Redes: "Consulte a unidade pelo WhatsApp para atendimento nas redes."
 - E-mail: agendamento@correiaodontologia.com.br
 - Créditos: "desenvolvido por Mundo Lemon" (`mundolemon.com.br`) · "Painel administracao - SGC Lemon"
 - **Mapa Google** (embed) — unidade Santa Fé do Sul (coordenadas ~ -20.2082, -50.9291)
-- **Style switcher / Choose color style** (ver Seção 10)
+- **Style switcher / Choose color style**
+
+### 6.5.1 Rodapé reorganizado (decisão aprovada — implementar esta versão)
+
+O rodapé original é um paredão: repete, para cada uma das 5 unidades, telefone, WhatsApp, horários completos, endereço, "Redes da unidade" e textos de preenchimento ("Consulte a unidade pelo WhatsApp..."), além do mapa incorporado, créditos da agência antiga e o seletor de tema. **Implementar a versão organizada abaixo.**
+
+Estrutura em 4 colunas:
+
+1. **Marca** — logo (asset importado), linha curta ("Desde 2018 cuidando do seu sorriso, com atendimento humanizado em cinco cidades.") e ícones de Facebook e Instagram institucionais.
+2. **Navegação** — Home · Sobre nós · Serviços · Equipe · Blog · Fale conosco.
+3. **Unidades (NAP compacto)** — as 5 cidades com **nome, endereço e telefone clicável**. Sem horários, sem redes por unidade, sem textos de preenchimento.
+4. **Fale com a gente** — e-mail `agendamento@correiaodontologia.com.br`, link "Ver todas as unidades e horários", botão **WhatsApp** (contorno) e botão **Agende sua consulta** (sólido `--cor-cta`).
+
+Barra inferior (obrigatória, informação legal do conselho): "© 2026 Correia Odontologia. Todos os direitos reservados. CRO-SP: 20.917 · RT Dra. Letícia S. M. Correia CRO/SP 129.476" + crédito de desenvolvimento.
+
+**Sai do rodapé (movido para as páginas de unidade):** horários de cada unidade, redes sociais por unidade e o mapa do Google. **Sai de vez:** style switcher, créditos e link de painel da agência antiga, textos de preenchimento.
+
+> O **NAP** (nome, endereço, telefone) das 5 unidades **permanece** no rodapé — é relevante para SEO local e para a confiança do paciente. O que sai é a repetição, não o dado de contato.
+
+Implementação de referência: `src/components/Footer.tsx`.
 
 ---
 
