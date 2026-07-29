@@ -1,0 +1,23 @@
+// Config auxiliar: checa apenas os componentes React (.tsx) sem passar pelo
+// Astro/rolldown. Uso: npx tsc -p tsconfig.check.json
+// Não é usado pelo build (`astro build` usa tsconfig.json). Pode ser apagado.
+{
+  "compilerOptions": {
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "strict": true,
+    "moduleResolution": "bundler",
+    "module": "esnext",
+    "target": "es2022",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": { "@/*": ["src/*"] }
+  },
+  "files": [
+    "src/components/DepoimentosCarousel.tsx",
+    "src/components/ui/carousel.tsx",
+    "src/components/ui/button.tsx"
+  ]
+}

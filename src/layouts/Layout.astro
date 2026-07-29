@@ -1,6 +1,10 @@
 ---
 import { getCollection } from "astro:content";
 import faviconSvg from "../assets/favicon.svg?url";
+import favicon16 from "../assets/favicon-16x16.png?url";
+import favicon32 from "../assets/favicon-32x32.png?url";
+import favicon96 from "../assets/favicon-96x96.png?url";
+import appleTouchIcon from "../assets/apple-touch-icon.png?url";
 import logoUrl from "../assets/logo.svg?url";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer.astro";
@@ -64,6 +68,13 @@ const jsonLdDentists = unidades.map((u) => ({
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href={faviconSvg} />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href={favicon32} />
+    <link rel="icon" type="image/png" sizes="16x16" href={favicon16} />
+    <link rel="icon" type="image/png" sizes="96x96" href={favicon96} />
+    <link rel="apple-touch-icon" sizes="180x180" href={appleTouchIcon} />
+    <link rel="manifest" href="/site.webmanifest?v=2" />
+    <meta name="theme-color" content="#9a7526" />
     <meta name="generator" content={Astro.generator} />
 
     <title>{title}</title>

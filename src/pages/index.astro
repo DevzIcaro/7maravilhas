@@ -1,7 +1,11 @@
 ---
 import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
+import { fotoDoProfissional } from "../lib/equipeFotos";
 import PlaceholderImage from "../components/PlaceholderImage.astro";
+import HeroVideo from "../components/HeroVideo.astro";
+import DepoimentosCarousel from "../components/DepoimentosCarousel";
 import { Phone, MessageCircle, Clock, MapPin } from "lucide-react";
 
 const unidades = (await getCollection("unidades")).sort((a, b) => a.data.ordem - b.data.ordem);
@@ -50,12 +54,8 @@ const equipeHome = equipeIdsHome
   description="Correia Odontologia: atendimento humanizado, tecnologia de ponta e profissionais qualificados em Santa Fé do Sul, Jales, São José do Rio Preto, Votuporanga (SP) e Três Lagoas (MS)."
   path="/"
 >
-  <section class="relative">
-    <PlaceholderImage
-      alt="Consultório de odontologia com uma cadeira de dentista e televisão virada para a face do cliente"
-      ratio="wide"
-      class="!aspect-auto h-[320px] w-full !rounded-none md:h-[440px]"
-    />
+  <section class="relative" aria-label="Apresentação da Correia Odontologia">
+    <HeroVideo class="h-[320px] md:h-[440px] lg:h-[520px]" />
   </section>
 
   <section class="mx-auto max-w-7xl px-4 py-14 lg:px-8">
@@ -95,14 +95,29 @@ const equipeHome = equipeIdsHome
       <a href="/equipe" class="btn btn-outline cursor-pointer">Ver todos</a>
     </div>
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-reveal>
-      {equipeHome.map((p) => (
-        <div class="card text-center">
-          <PlaceholderImage alt={p.data.nome} ratio="square" class="mx-auto mb-4 w-32" />
-          <h3 class="text-base font-bold">{p.data.nome}</h3>
-          <p class="text-sm text-secundaria-forte">{p.data.especialidade}</p>
-          <p class="text-xs text-texto/60">{p.data.cro}</p>
-        </div>
-      ))}
+      {equipeHome.map((p) => {
+        const foto = fotoDoProfissional(p.data.id);
+        return (
+          <div class="card text-center">
+            {foto ? (
+              <Image
+                src={foto}
+                alt={`${p.data.nome}, ${p.data.especialidade} na Correia Odontologia`}
+                widths={[320, 480, 640]}
+                sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 30vw"
+                loading="lazy"
+                decoding="async"
+                class="mb-4 aspect-[4/5] w-full rounded-[var(--raio)] bg-superficie object-cover object-top"
+              />
+            ) : (
+              <PlaceholderImage alt={p.data.nome} ratio="portrait" class="mb-4 w-full" />
+            )}
+            <h3 class="text-base font-bold">{p.data.nome}</h3>
+            <p class="text-sm text-secundaria-forte">{p.data.especialidade}</p>
+            <p class="text-xs text-texto/60">{p.data.cro}</p>
+          </div>
+        );
+      })}
     </div>
   </section>
 
@@ -114,15 +129,7 @@ const equipeHome = equipeIdsHome
         Na Clínica Correia Odontologia, a sua satisfação é a nossa prioridade. Sabemos que escolher um dentista é
         uma decisão importante, por isso, ficamos felizes em compartilhar o que nossos pacientes falam sobre a gente.
       </p>
-      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-reveal>
-        {depoimentos.map((d) => (
-          <div class="card">
-            <p class="text-sm italic text-texto">"{d.data.texto}"</p>
-            <p class="mt-4 text-sm font-bold text-secundaria-forte">{d.data.autor}</p>
-            <p class="text-xs text-texto/60">{d.data.papel}</p>
-          </div>
-        ))}
-      </div>
+      <DepoimentosCarousel client:visible depoimentos={depoimentos.map((d) => d.data)} />
     </div>
   </section>
 

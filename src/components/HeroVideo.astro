@@ -1,0 +1,110 @@
+---
+/**
+ * Banner de apresentação em vídeo (hero da home).
+ * Exibição pura: sem controles, sem áudio, sem barra de progresso, sem interação.
+ *
+ * O arquivo original permanece em src/assets/. As versões otimizadas (faixa de
+ * áudio removida, moov atom no início) ficam em public/media/ para serem
+ * servidas diretamente, com suporte a range requests.
+ *
+ * A fonte é escolhida por JS (720p em telas pequenas, 1080p no desktop) porque
+ * o atributo `media` em <source> é ignorado dentro de <video>. Enquanto o vídeo
+ * não começa, o poster serve de imagem do banner.
+ */
+interface Props {
+  /** Descrição para leitores de tela. */
+  label?: string;
+  class?: string;
+}
+
+const {
+  label = "Vídeo institucional da Correia Odontologia: fachada, recepção e consultórios das clínicas",
+  class: className = "",
+} = Astro.props;
+---
+
+<div
+  class={`hero-video relative w-full overflow-hidden bg-rodape ${className}`}
+  role="img"
+  aria-label={label}
+  data-src-desktop="/media/apresentacao.mp4"
+  data-src-mobile="/media/apresentacao-720.mp4"
+>
+  <video
+    class="h-full w-full object-cover object-center"
+    poster="/media/apresentacao-poster.jpg"
+    muted
+    loop
+    playsinline
+    preload="none"
+    tabindex="-1"
+    aria-hidden="true"
+    disablepictureinpicture
+    disableremoteplayback
+    x-webkit-airplay="deny"
+    controlslist="nodownload noplaybackrate nofullscreen noremoteplayback"></video>
+
+  <!-- Camada de bloqueio: nenhum clique, arraste ou menu de contexto chega ao vídeo -->
+  <div class="absolute inset-0" aria-hidden="true"></div>
+</div>
+
+<style>
+  .hero-video video {
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    background: var(--color-rodape);
+  }
+
+  /* Remove qualquer resquício de controle nativo (Safari/iOS e Chrome) */
+  .hero-video video::-webkit-media-controls,
+  .hero-video video::-webkit-media-controls-enclosure,
+  .hero-video video::-webkit-media-controls-panel,
+  .hero-video video::-webkit-media-controls-start-playback-button {
+    display: none !important;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>(".hero-video").forEach((bloco) => {
+    const video = bloco.querySelector("video");
+    if (!video) return;
+
+    // Nenhuma interação com o vídeo
+    bloco.addEventListener("contextmenu", (e) => e.preventDefault());
+    bloco.addEventListener("dragstart", (e) => e.preventDefault());
+
+    // Sem movimento e sem download em conexões limitadas ou por preferência do usuário
+    const conexao = (navigator as any).connection;
+    const economizarDados = Boolean(conexao?.saveData) || /2g/.test(conexao?.effectiveType ?? "");
+    const semAnimacao = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (semAnimacao || economizarDados) return; // fica apenas o poster
+
+    const mobile = window.matchMedia("(max-width: 768px)").matches;
+    const fonte = mobile ? bloco.dataset.srcMobile : bloco.dataset.srcDesktop;
+    if (!fonte) return;
+
+    video.muted = true;
+    video.volume = 0;
+    video.src = fonte;
+
+    const tocar = () => {
+      video.muted = true;
+      const p = video.play();
+      if (p && typeof p.catch === "function") p.catch(() => {});
+    };
+
+    video.addEventListener("loadeddata", tocar, { once: true });
+    tocar();
+
+    // Pausa quando o banner sai da tela (economiza bateria)
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(
+        (entradas) => entradas.forEach((e) => (e.isIntersecting ? tocar() : video.pause())),
+        { threshold: 0.1 }
+      ).observe(bloco);
+    }
+  });
+</script>
