@@ -156,6 +156,12 @@ a:hover { color: var(--cor-primaria); }
 .field:focus { border-color: var(--cor-secundaria); box-shadow: 0 0 0 3px rgba(62, 134, 168, .15); outline: none; }
 
 /* ---------------------------------------------------------------------
+   Reveal de cards (anime.js) — estado inicial oculto para os grids
+   marcados com [data-reveal]; evita "pulo" de layout antes da animação.
+   --------------------------------------------------------------------- */
+[data-reveal] > * { opacity: 0; }
+
+/* ---------------------------------------------------------------------
    Acessibilidade: respeitar preferência de movimento reduzido
    --------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
@@ -165,4 +171,5 @@ a:hover { color: var(--cor-primaria); }
     transition-duration: .01ms !important;
     scroll-behavior: auto !important;
   }
+  [data-reveal] > * { opacity: 1 !important; transform: none !important; }
 }

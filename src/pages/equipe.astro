@@ -39,7 +39,7 @@ const cidades = [
       ))}
     </div>
 
-    <div id="lista-equipe" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div id="lista-equipe" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-reveal>
       {equipe.map((p) => (
         <div class="card text-center" data-cidade={p.data.cidade}>
           <PlaceholderImage alt={p.data.nome} ratio="square" class="mx-auto mb-4 w-32" />
@@ -56,21 +56,23 @@ const cidades = [
   </section>
 
   <script>
+    import { revealOnScroll, animateFilterSwap } from "../lib/animations";
+
+    revealOnScroll();
+
     const buttons = document.querySelectorAll<HTMLButtonElement>("[data-cidade]");
-    const cards = document.querySelectorAll<HTMLElement>("#lista-equipe [data-cidade]");
+    const cards = Array.from(document.querySelectorAll<HTMLElement>("#lista-equipe [data-cidade]"));
     const vazio = document.getElementById("equipe-vazio");
 
     buttons.forEach((btn) => {
       btn.addEventListener("click", () => {
         const cidade = btn.dataset.cidade;
         buttons.forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
-        let visiveis = 0;
-        cards.forEach((card) => {
-          const show = cidade === "todas" || card.dataset.cidade === cidade;
-          card.style.display = show ? "" : "none";
-          if (show) visiveis += 1;
-        });
-        vazio?.classList.toggle("hidden", visiveis > 0);
+
+        const visiveis = cards.filter((card) => cidade === "todas" || card.dataset.cidade === cidade);
+        vazio?.classList.toggle("hidden", visiveis.length > 0);
+
+        animateFilterSwap(cards, (card) => cidade === "todas" || card.dataset.cidade === cidade);
       });
     });
   </script>

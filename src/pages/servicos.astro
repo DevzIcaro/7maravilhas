@@ -49,7 +49,7 @@ const filtros = [
       ))}
     </div>
 
-    <div id="lista-servicos" class="grid gap-6 md:grid-cols-2">
+    <div id="lista-servicos" class="grid gap-6 md:grid-cols-2" data-reveal>
       {servicos.map((s) => (
         <div class="card" data-categoria={s.data.categoria}>
           <h3 class="text-lg font-bold">{s.data.titulo}</h3>
@@ -70,17 +70,18 @@ const filtros = [
   </section>
 
   <script>
+    import { revealOnScroll, animateFilterSwap } from "../lib/animations";
+
+    revealOnScroll();
+
     const buttons = document.querySelectorAll<HTMLButtonElement>("[data-filtro]");
-    const cards = document.querySelectorAll<HTMLElement>("#lista-servicos [data-categoria]");
+    const cards = Array.from(document.querySelectorAll<HTMLElement>("#lista-servicos [data-categoria]"));
 
     buttons.forEach((btn) => {
       btn.addEventListener("click", () => {
         const filtro = btn.dataset.filtro;
         buttons.forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
-        cards.forEach((card) => {
-          const show = filtro === "Todos" || card.dataset.categoria === filtro;
-          card.style.display = show ? "" : "none";
-        });
+        animateFilterSwap(cards, (card) => filtro === "Todos" || card.dataset.categoria === filtro);
       });
     });
   </script>

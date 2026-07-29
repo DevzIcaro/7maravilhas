@@ -85,6 +85,8 @@ const jsonLdDentists = unidades.map((u) => ({
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLdOrganization)} />
     {jsonLdDentists.map((entry) => <script type="application/ld+json" set:html={JSON.stringify(entry)} />)}
+
+    <noscript><style>[data-reveal] > * { opacity: 1; }</style></noscript>
   </head>
   <body>
     <Navbar

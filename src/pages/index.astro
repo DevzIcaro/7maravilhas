@@ -59,7 +59,7 @@ const equipeHome = equipeIdsHome
   </section>
 
   <section class="mx-auto max-w-7xl px-4 py-14 lg:px-8">
-    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4" data-reveal>
       {destaques.map((d) => (
         <div class="card-dark">
           <h3 class="text-lg font-extrabold">{d.titulo}</h3>
@@ -94,7 +94,7 @@ const equipeHome = equipeIdsHome
       </div>
       <a href="/equipe" class="btn btn-outline cursor-pointer">Ver todos</a>
     </div>
-    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-reveal>
       {equipeHome.map((p) => (
         <div class="card text-center">
           <PlaceholderImage alt={p.data.nome} ratio="square" class="mx-auto mb-4 w-32" />
@@ -114,7 +114,7 @@ const equipeHome = equipeIdsHome
         Na Clínica Correia Odontologia, a sua satisfação é a nossa prioridade. Sabemos que escolher um dentista é
         uma decisão importante, por isso, ficamos felizes em compartilhar o que nossos pacientes falam sobre a gente.
       </p>
-      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-reveal>
         {depoimentos.map((d) => (
           <div class="card">
             <p class="text-sm italic text-texto">"{d.data.texto}"</p>
@@ -160,7 +160,7 @@ const equipeHome = equipeIdsHome
         as últimas tecnologias em tratamentos, e leia sobre higiene oral e eventos interessantes do mundo da
         odontologia e saúde.
       </p>
-      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-reveal>
         {posts.map((p) => (
           <a href={`/blog/ver/${p.data.id}/${p.data.slug}`} class="card cursor-pointer">
             <PlaceholderImage alt={p.data.titulo} ratio="wide" class="mb-4" />
@@ -172,4 +172,10 @@ const equipeHome = equipeIdsHome
       </div>
     </div>
   </section>
+
+  <script>
+    import { revealOnScroll } from "../lib/animations";
+
+    revealOnScroll();
+  </script>
 </Layout>
