@@ -4,6 +4,7 @@ import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import { fotoDoProfissional } from "../lib/equipeFotos";
 import { imagemDoPost } from "../lib/postImagens";
+import { mapaEmbedSrc, linkWhatsapp } from "../lib/unidadeLinks";
 import PlaceholderImage from "../components/PlaceholderImage.astro";
 import correia1 from "../assets/correia1.png";
 import HeroVideo from "../components/HeroVideo.astro";
@@ -152,20 +153,58 @@ const equipeHome = equipeIdsHome
       {unidades.map((u) => (
         <div
           id={`unidade-${u.data.id}`}
-          class="scroll-mt-24 grid gap-6 rounded-[var(--raio)] border border-borda p-6 lg:grid-cols-[1fr_1fr_1.4fr] lg:items-center"
+          class="scroll-mt-24 grid overflow-hidden rounded-[var(--raio)] border border-borda bg-white lg:grid-cols-2"
         >
-          <PlaceholderImage alt={`Fachada da unidade ${u.data.cidade}`} ratio="wide" label="fachada" />
-          <PlaceholderImage alt={`Estabelecimento da unidade ${u.data.cidade}`} ratio="wide" label="estabelecimento" />
-          <div>
-            <h3 class="text-lg font-extrabold text-secundaria-forte">{u.data.cidade}{u.data.uf === "MS" ? " - MS" : ""}</h3>
-            <p class="mt-2 text-sm text-texto">{u.data.descricao}</p>
-            <ul class="mt-4 space-y-1.5 text-sm text-texto/80">
-              <li class="flex items-center gap-2"><MapPin className="h-4 w-4 shrink-0 text-secundaria" aria-hidden="true" client:load />{u.data.endereco}</li>
-              <li class="flex items-center gap-2"><MessageCircle className="h-4 w-4 shrink-0 text-secundaria" aria-hidden="true" client:load />WhatsApp {u.data.whatsapp}</li>
-              <li class="flex items-center gap-2"><Phone className="h-4 w-4 shrink-0 text-secundaria" aria-hidden="true" client:load />Telefone {u.data.telefone}</li>
-              <li class="flex items-start gap-2"><Clock className="mt-0.5 h-4 w-4 shrink-0 text-secundaria" aria-hidden="true" client:load /><span>{u.data.horarios}</span></li>
-            </ul>
+          {/* Foto + informações */}
+          <div class="flex flex-col">
+            <PlaceholderImage
+              alt={`Unidade ${u.data.cidade}`}
+              ratio="wide"
+              class="!rounded-none !border-0"
+            />
+            <div class="flex flex-1 flex-col gap-5 p-6">
+              <div>
+                <h3 class="text-lg font-extrabold text-secundaria-forte">
+                  {u.data.cidade}{u.data.uf === "MS" ? " - MS" : ""}
+                </h3>
+                <p class="mt-2 text-sm text-texto">{u.data.descricao}</p>
+              </div>
+
+              <ul class="space-y-1.5 text-sm text-texto/80">
+                <li class="flex items-start gap-2">
+                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-secundaria" aria-hidden="true" client:load />
+                  {u.data.endereco}
+                </li>
+                <li class="flex items-center gap-2">
+                  <Phone className="h-4 w-4 shrink-0 text-secundaria" aria-hidden="true" client:load />
+                  Telefone {u.data.telefone}
+                </li>
+                <li class="flex items-start gap-2">
+                  <Clock className="mt-0.5 h-4 w-4 shrink-0 text-secundaria" aria-hidden="true" client:load />
+                  <span>{u.data.horarios}</span>
+                </li>
+              </ul>
+
+              <a
+                href={linkWhatsapp(u.data.whatsapp, `Olá! Gostaria de agendar uma consulta na unidade de ${u.data.cidade}.`)}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="mt-auto flex w-fit cursor-pointer items-center gap-2 rounded-[var(--raio)] bg-cta px-5 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:brightness-95"
+              >
+                <MessageCircle className="h-4 w-4" aria-hidden="true" client:load />
+                Falar no WhatsApp
+              </a>
+            </div>
           </div>
+
+          {/* Mapa */}
+          <iframe
+            src={mapaEmbedSrc(u.data)}
+            title={`Mapa da unidade ${u.data.cidade}`}
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            class="min-h-[280px] w-full border-0"
+          />
         </div>
       ))}
     </div>
