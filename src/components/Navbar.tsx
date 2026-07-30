@@ -2,7 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, Menu, X, ArrowRight } from "lucide-react";
+import { ChevronDown, Menu, X, ArrowRight, MapPin } from "lucide-react";
+import { irParaUnidade } from "../lib/scrollTo";
 
 /**
  * Navbar — padrão limpo: logo | links | ações.
@@ -10,11 +11,18 @@ import { ChevronDown, Menu, X, ArrowRight } from "lucide-react";
  * Decisão aprovada: a barra de topo antiga (endereço, e-mail, redes e lista de
  * telefones das 5 unidades) foi REMOVIDA — esses dados vivem no rodapé e na
  * seção de unidades. Ver PROMPT, Seção 6.1.
+ *
+ * Menu de unidades: cada item leva à âncora `#unidade-<id>` da home com
+ * scroll suave e animado (src/lib/scrollTo.ts) — inclusive vindo de outra
+ * página. No mobile, o painel do hambúrguer cobre a tela toda com rolagem
+ * interna, para caber as 5 unidades confortavelmente em qualquer altura.
  */
 
 interface Unidade {
+  id: string;
   cidade: string;
   uf: string;
+  endereco?: string;
 }
 
 interface NavbarProps {
@@ -56,6 +64,22 @@ export default function Navbar({ logoSrc, unidades }: NavbarProps) {
       document.removeEventListener("keydown", onKey);
     };
   }, []);
+
+  // Trava o scroll do body enquanto o menu mobile em tela cheia está aberto.
+  useEffect(() => {
+    if (!openMobile) return;
+    const original = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = original;
+    };
+  }, [openMobile]);
+
+  const handleUnidadeClick =
+    (id: string, fecharMenu: () => void) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+      fecharMenu();
+      irParaUnidade(id, e);
+    };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-borda bg-white">
@@ -104,18 +128,23 @@ export default function Navbar({ logoSrc, unidades }: NavbarProps) {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -6 }}
                   transition={{ duration: 0.18 }}
-                  className="absolute left-1/2 mt-3 w-64 -translate-x-1/2 overflow-hidden rounded-[var(--raio)] border border-borda bg-white shadow-lg"
+                  className="absolute left-1/2 mt-3 w-72 -translate-x-1/2 overflow-hidden rounded-[var(--raio)] border border-borda bg-white shadow-lg"
                 >
-                  <ul className="py-2">
+                  <ul className="max-h-[60vh] overflow-y-auto py-2">
                     {unidades.map((u) => (
-                      <li key={u.cidade}>
+                      <li key={u.id}>
                         <a
-                          href="/#unidades"
-                          onClick={() => setOpenUnidades(false)}
-                          className="flex cursor-pointer items-center justify-between px-4 py-2.5 text-sm text-texto transition-colors duration-200 hover:bg-superficie hover:text-secundaria-forte"
+                          href={`/#unidade-${u.id}`}
+                          onClick={handleUnidadeClick(u.id, () => setOpenUnidades(false))}
+                          className="flex cursor-pointer items-start justify-between gap-3 px-4 py-2.5 text-sm text-texto transition-colors duration-200 hover:bg-superficie hover:text-secundaria-forte"
                         >
-                          {u.cidade}
-                          <span className="text-xs text-secundaria">{u.uf}</span>
+                          <span>
+                            <span className="block font-medium">{u.cidade}</span>
+                            {u.endereco && (
+                              <span className="mt-0.5 block text-xs text-texto/55">{u.endereco}</span>
+                            )}
+                          </span>
+                          <span className="shrink-0 text-xs text-secundaria">{u.uf}</span>
                         </a>
                       </li>
                     ))}
@@ -155,6 +184,7 @@ export default function Navbar({ logoSrc, unidades }: NavbarProps) {
           type="button"
           onClick={() => setOpenMobile((v) => !v)}
           aria-expanded={openMobile}
+          aria-controls="menu-mobile"
           aria-label={openMobile ? "Fechar menu" : "Abrir menu"}
           className="cursor-pointer p-2 text-texto lg:hidden"
         >
@@ -162,39 +192,92 @@ export default function Navbar({ logoSrc, unidades }: NavbarProps) {
         </button>
       </nav>
 
-      {/* Painel mobile */}
+      {/* Painel mobile — cobre a tela toda abaixo do header, com rolagem própria */}
       <AnimatePresence>
         {openMobile && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.22 }}
-            className="overflow-hidden border-t border-borda bg-white lg:hidden"
+            id="menu-mobile"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-x-0 top-16 bottom-0 z-40 overflow-y-auto overscroll-contain bg-white lg:hidden"
           >
-            <div className="flex flex-col px-4 py-3">
+            <motion.div
+              variants={{
+                hidden: {},
+                show: { transition: { staggerChildren: 0.045, delayChildren: 0.03 } },
+              }}
+              initial="hidden"
+              animate="show"
+              className="flex min-h-full flex-col px-5 py-6"
+            >
               {LINKS.map((l) => (
-                <a
+                <motion.a
                   key={l.href}
                   href={l.href}
-                  className="cursor-pointer py-2.5 text-sm font-medium text-texto transition-colors duration-200 hover:text-primaria"
+                  variants={{
+                    hidden: { opacity: 0, y: 14 },
+                    show: { opacity: 1, y: 0 },
+                  }}
+                  transition={{ duration: 0.32, ease: "easeOut" }}
+                  className="cursor-pointer border-b border-borda py-3.5 text-base font-medium text-texto transition-colors duration-200 hover:text-primaria"
                 >
                   {l.label}
-                </a>
+                </motion.a>
               ))}
 
-              <p className="mt-3 text-xs font-bold uppercase tracking-[0.16em] text-secundaria">Unidades</p>
+              <motion.p
+                variants={{
+                  hidden: { opacity: 0, y: 14 },
+                  show: { opacity: 1, y: 0 },
+                }}
+                transition={{ duration: 0.32, ease: "easeOut" }}
+                className="mb-1 mt-6 text-xs font-bold uppercase tracking-[0.16em] text-secundaria"
+              >
+                Escolha sua unidade
+              </motion.p>
+
               {unidades.map((u) => (
-                <a
-                  key={u.cidade}
-                  href="/#unidades"
-                  className="cursor-pointer py-2 text-sm text-texto transition-colors duration-200 hover:text-primaria"
+                <motion.a
+                  key={u.id}
+                  href={`/#unidade-${u.id}`}
+                  onClick={handleUnidadeClick(u.id, () => setOpenMobile(false))}
+                  variants={{
+                    hidden: { opacity: 0, y: 14 },
+                    show: { opacity: 1, y: 0 },
+                  }}
+                  transition={{ duration: 0.32, ease: "easeOut" }}
+                  className="group flex cursor-pointer items-center gap-3 rounded-[var(--raio)] px-3 py-3 text-texto transition-colors duration-200 hover:bg-superficie active:bg-superficie"
                 >
-                  {u.cidade} <span className="text-xs text-secundaria">{u.uf}</span>
-                </a>
+                  <MapPin
+                    size={18}
+                    className="shrink-0 text-secundaria transition-transform duration-200 group-hover:scale-110"
+                    aria-hidden="true"
+                  />
+                  <span className="min-w-0 grow">
+                    <span className="flex items-baseline gap-2">
+                      <span className="text-sm font-semibold">{u.cidade}</span>
+                      <span className="text-xs text-secundaria">{u.uf}</span>
+                    </span>
+                    {u.endereco && <span className="block truncate text-xs text-texto/55">{u.endereco}</span>}
+                  </span>
+                  <ArrowRight
+                    size={16}
+                    className="shrink-0 text-secundaria/60 transition-transform duration-200 group-hover:translate-x-0.5"
+                    aria-hidden="true"
+                  />
+                </motion.a>
               ))}
 
-              <div className="mt-4 flex flex-col gap-2 pb-2">
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0, y: 14 },
+                  show: { opacity: 1, y: 0 },
+                }}
+                transition={{ duration: 0.32, ease: "easeOut" }}
+                className="mt-6 flex flex-col gap-2 pb-4"
+              >
                 <a
                   href="/fale-conosco"
                   className="cursor-pointer rounded-[var(--raio)] border-2 border-primaria px-4 py-2.5 text-center text-sm font-bold text-primaria"
@@ -204,13 +287,14 @@ export default function Navbar({ logoSrc, unidades }: NavbarProps) {
                 <a
                   href="#bookform1"
                   data-booking-trigger
+                  onClick={() => setOpenMobile(false)}
                   className="flex cursor-pointer items-center justify-center gap-2 rounded-[var(--raio)] bg-cta px-4 py-3 text-sm font-bold text-white"
                 >
                   Agende sua consulta
                   <ArrowRight size={16} aria-hidden="true" />
                 </a>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

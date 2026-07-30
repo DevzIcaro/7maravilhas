@@ -1,7 +1,9 @@
 ---
 import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
 import Layout from "../../layouts/Layout.astro";
 import PlaceholderImage from "../../components/PlaceholderImage.astro";
+import { imagemDoPost } from "../../lib/postImagens";
 
 const posts = (await getCollection("posts")).sort((a, b) => a.data.numero - b.data.numero);
 
@@ -21,15 +23,30 @@ const formatarData = (d: Date) =>
     <h1 class="section-title">Blog</h1>
 
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {posts.map((p) => (
-        <a href={`/blog/ver/${p.data.id}/${p.data.slug}`} class="card cursor-pointer">
-          <PlaceholderImage alt={p.data.titulo} ratio="wide" class="mb-4" />
-          <p class="text-xs font-bold uppercase tracking-wide text-secundaria">{formatarData(p.data.data)}</p>
-          <h2 class="mt-1 text-base font-bold">{p.data.titulo}</h2>
-          <p class="mt-2 text-sm text-texto/80">{p.data.resumo}</p>
-          <span class="mt-4 inline-block text-sm font-bold text-primaria">LER MAIS</span>
-        </a>
-      ))}
+      {posts.map((p) => {
+        const imagem = imagemDoPost(p.data.id);
+        return (
+          <a href={`/blog/ver/${p.data.id}/${p.data.slug}`} class="card cursor-pointer">
+            {imagem ? (
+              <Image
+                src={imagem}
+                alt={p.data.titulo}
+                widths={[320, 480, 640]}
+                sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 30vw"
+                loading="lazy"
+                decoding="async"
+                class="mb-4 aspect-video w-full rounded-[var(--raio)] object-cover"
+              />
+            ) : (
+              <PlaceholderImage alt={p.data.titulo} ratio="wide" class="mb-4" />
+            )}
+            <p class="text-xs font-bold uppercase tracking-wide text-secundaria">{formatarData(p.data.data)}</p>
+            <h2 class="mt-1 text-base font-bold">{p.data.titulo}</h2>
+            <p class="mt-2 text-sm text-texto/80">{p.data.resumo}</p>
+            <span class="mt-4 inline-block text-sm font-bold text-primaria">LER MAIS</span>
+          </a>
+        );
+      })}
     </div>
   </section>
 </Layout>

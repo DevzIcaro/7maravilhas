@@ -162,6 +162,20 @@ a:hover { color: var(--cor-primaria); }
 [data-reveal] > * { opacity: 0; }
 
 /* ---------------------------------------------------------------------
+   Destaque de chegada — pulso suave ao redor do card da unidade quando o
+   usuário chega via scroll animado pelo menu (ver src/lib/scrollTo.ts).
+   --------------------------------------------------------------------- */
+.scroll-destaque {
+  animation: destaque-pulso 1.5s ease-out;
+  border-radius: var(--raio);
+}
+@keyframes destaque-pulso {
+  0% { box-shadow: 0 0 0 0 rgba(200, 155, 60, .45); background-color: rgba(200, 155, 60, .08); }
+  60% { box-shadow: 0 0 0 14px rgba(200, 155, 60, 0); background-color: rgba(200, 155, 60, .08); }
+  100% { box-shadow: 0 0 0 14px rgba(200, 155, 60, 0); background-color: transparent; }
+}
+
+/* ---------------------------------------------------------------------
    Acessibilidade: respeitar preferência de movimento reduzido
    --------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {

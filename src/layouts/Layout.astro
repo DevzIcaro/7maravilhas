@@ -103,7 +103,7 @@ const jsonLdDentists = unidades.map((u) => ({
     <Navbar
       client:load
       logoSrc={logoUrl}
-      unidades={unidades.map((u) => ({ cidade: u.data.cidade, uf: u.data.uf }))}
+      unidades={unidades.map((u) => ({ id: u.data.id, cidade: u.data.cidade, uf: u.data.uf, endereco: u.data.endereco }))}
     />
     <main>
       <slot />

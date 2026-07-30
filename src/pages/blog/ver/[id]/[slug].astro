@@ -1,7 +1,9 @@
 ---
 import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
 import Layout from "../../../../layouts/Layout.astro";
 import PlaceholderImage from "../../../../components/PlaceholderImage.astro";
+import { imagemDoPost } from "../../../../lib/postImagens";
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
@@ -12,6 +14,7 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
+const imagem = imagemDoPost(post.data.id);
 
 const formatarData = (d: Date) =>
   new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" }).format(d);
@@ -24,7 +27,19 @@ const formatarData = (d: Date) =>
       <a href="/blog" class="cursor-pointer hover:text-primaria">Blog</a> <span aria-hidden="true">›</span> {post.data.titulo}
     </nav>
 
-    <PlaceholderImage alt={post.data.titulo} ratio="wide" class="mb-8" />
+    {imagem ? (
+      <Image
+        src={imagem}
+        alt={post.data.titulo}
+        widths={[480, 768, 1024]}
+        sizes="(max-width: 768px) 100vw, 768px"
+        loading="eager"
+        decoding="async"
+        class="mb-8 aspect-video w-full rounded-[var(--raio)] object-cover"
+      />
+    ) : (
+      <PlaceholderImage alt={post.data.titulo} ratio="wide" class="mb-8" />
+    )}
 
     <h1 class="section-title">{post.data.titulo}</h1>
     <p class="mb-8 text-sm text-texto/60">
