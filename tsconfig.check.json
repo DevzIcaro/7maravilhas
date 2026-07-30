@@ -18,6 +18,7 @@
   "files": [
     "src/components/DepoimentosCarousel.tsx",
     "src/components/ui/carousel.tsx",
-    "src/components/ui/button.tsx"
+    "src/components/ui/button.tsx",
+    "src/lib/unidadeLinks.ts"
   ]
 }

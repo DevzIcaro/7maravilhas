@@ -4,12 +4,13 @@ import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import { fotoDoProfissional } from "../lib/equipeFotos";
 import { imagemDoPost } from "../lib/postImagens";
-import { mapaEmbedSrc, linkWhatsapp } from "../lib/unidadeLinks";
+import { mapaEmbedSrc, linkMaps, linkWhatsapp, linkTelefone } from "../lib/unidadeLinks";
 import PlaceholderImage from "../components/PlaceholderImage.astro";
 import correia1 from "../assets/correia1.png";
 import HeroVideo from "../components/HeroVideo.astro";
 import DepoimentosCarousel from "../components/DepoimentosCarousel";
-import { Phone, MessageCircle, Clock, MapPin } from "lucide-react";
+import { Phone, MessageCircle, Clock, MapPin, Navigation } from "lucide-react";
+import { FaInstagram } from "react-icons/fa6";
 
 const unidades = (await getCollection("unidades")).sort((a, b) => a.data.ordem - b.data.ordem);
 const equipe = await getCollection("equipe");
@@ -153,58 +154,85 @@ const equipeHome = equipeIdsHome
       {unidades.map((u) => (
         <div
           id={`unidade-${u.data.id}`}
-          class="scroll-mt-24 grid overflow-hidden rounded-[var(--raio)] border border-borda bg-white lg:grid-cols-2"
+          class="scroll-mt-24 overflow-hidden rounded-[var(--raio)] border border-borda bg-white"
         >
-          {/* Foto + informações */}
-          <div class="flex flex-col">
+          {/* Foto + mapa, lado a lado */}
+          <div class="grid lg:grid-cols-2">
             <PlaceholderImage
               alt={`Unidade ${u.data.cidade}`}
               ratio="wide"
-              class="!rounded-none !border-0"
+              class="!rounded-none !border-0 lg:!aspect-auto lg:h-full"
             />
-            <div class="flex flex-1 flex-col gap-5 p-6">
-              <div>
-                <h3 class="text-lg font-extrabold text-secundaria-forte">
-                  {u.data.cidade}{u.data.uf === "MS" ? " - MS" : ""}
-                </h3>
-                <p class="mt-2 text-sm text-texto">{u.data.descricao}</p>
-              </div>
+            <iframe
+              src={mapaEmbedSrc(u.data)}
+              title={`Mapa da unidade ${u.data.cidade}`}
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              class="min-h-[240px] w-full border-0 lg:h-full lg:min-h-0"
+            />
+          </div>
 
-              <ul class="space-y-1.5 text-sm text-texto/80">
-                <li class="flex items-start gap-2">
-                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-secundaria" aria-hidden="true" client:load />
-                  {u.data.endereco}
-                </li>
-                <li class="flex items-center gap-2">
-                  <Phone className="h-4 w-4 shrink-0 text-secundaria" aria-hidden="true" client:load />
+          {/* Conteúdo — ocupa a largura total do card */}
+          <div class="flex flex-col gap-5 p-6 lg:p-8">
+            <div>
+              <h3 class="text-lg font-extrabold text-secundaria-forte">
+                {u.data.cidade}{u.data.uf === "MS" ? " - MS" : ""}
+              </h3>
+              <p class="mt-2 text-sm text-texto">{u.data.descricao}</p>
+            </div>
+
+            <ul class="grid gap-2 text-sm text-texto/80 sm:grid-cols-2">
+              <li class="flex items-start gap-2">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-secundaria" aria-hidden="true" client:load />
+                {u.data.endereco}
+              </li>
+              <li class="flex items-start gap-2">
+                <Clock className="mt-0.5 h-4 w-4 shrink-0 text-secundaria" aria-hidden="true" client:load />
+                <span>{u.data.horarios}</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <Phone className="h-4 w-4 shrink-0 text-secundaria" aria-hidden="true" client:load />
+                <a
+                  href={linkTelefone(u.data.telefone)}
+                  class="cursor-pointer transition-colors duration-200 hover:text-primaria hover:underline"
+                >
                   Telefone {u.data.telefone}
-                </li>
-                <li class="flex items-start gap-2">
-                  <Clock className="mt-0.5 h-4 w-4 shrink-0 text-secundaria" aria-hidden="true" client:load />
-                  <span>{u.data.horarios}</span>
-                </li>
-              </ul>
+                </a>
+              </li>
+            </ul>
 
+            <div class="flex flex-wrap gap-3">
               <a
                 href={linkWhatsapp(u.data.whatsapp, `Olá! Gostaria de agendar uma consulta na unidade de ${u.data.cidade}.`)}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="mt-auto flex w-fit cursor-pointer items-center gap-2 rounded-[var(--raio)] bg-cta px-5 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:brightness-95"
+                class="flex min-h-11 flex-1 basis-[160px] cursor-pointer items-center justify-center gap-2 rounded-[var(--raio)] bg-[#25D366] px-5 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:brightness-90 active:translate-y-0 active:shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2"
               >
-                <MessageCircle className="h-4 w-4" aria-hidden="true" client:load />
-                Falar no WhatsApp
+                <MessageCircle className="h-4 w-4 shrink-0" aria-hidden="true" client:load />
+                WhatsApp
               </a>
+              <a
+                href={linkMaps(u.data)}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex min-h-11 flex-1 basis-[160px] cursor-pointer items-center justify-center gap-2 rounded-[var(--raio)] bg-[#EA4335] px-5 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:brightness-90 active:translate-y-0 active:shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#EA4335] focus-visible:ring-offset-2"
+              >
+                <Navigation className="h-4 w-4 shrink-0" aria-hidden="true" client:load />
+                Como chegar
+              </a>
+              {u.data.instagram && (
+                <a
+                  href={u.data.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex min-h-11 flex-1 basis-[160px] cursor-pointer items-center justify-center gap-2 rounded-[var(--raio)] bg-[linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5)] px-5 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:brightness-90 active:translate-y-0 active:shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d62976] focus-visible:ring-offset-2"
+                >
+                  <FaInstagram className="h-4 w-4 shrink-0" aria-hidden="true" client:load />
+                  Instagram
+                </a>
+              )}
             </div>
           </div>
-
-          {/* Mapa */}
-          <iframe
-            src={mapaEmbedSrc(u.data)}
-            title={`Mapa da unidade ${u.data.cidade}`}
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            class="min-h-[280px] w-full border-0"
-          />
         </div>
       ))}
     </div>

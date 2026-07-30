@@ -176,7 +176,7 @@ export default function Footer({ logoSrc }: FooterProps) {
             </a>
             <a
               href="/fale-conosco"
-              className="flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-cta px-4 py-3 text-sm font-bold text-branco transition-all duration-200 hover:brightness-95"
+              className="flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-cta px-4 py-3 text-sm font-bold text-texto transition-all duration-200 hover:brightness-95"
             >
               Agende sua consulta
               <ArrowRight size={16} aria-hidden="true" />

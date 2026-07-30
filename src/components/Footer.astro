@@ -35,7 +35,7 @@ const anoAtual = new Date().getFullYear();
       <!-- Marca -->
       <div>
         <Image src={logo} alt="Correia Odontologia" width={212} height={34} class="mb-4 h-9 w-auto" />
-        <p class="max-w-xs text-sm leading-relaxed text-branco/70">
+        <p class="max-w-xs text-sm leading-relaxed text-branco/90">
           Desde 2018 cuidando do seu sorriso, com atendimento humanizado em cinco cidades.
         </p>
         <div class="mt-5 flex gap-3">
@@ -44,7 +44,7 @@ const anoAtual = new Date().getFullYear();
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Facebook da Correia Odontologia"
-            class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-[var(--raio)] border border-branco/20 text-branco/85 transition-colors duration-200 hover:border-primaria hover:text-primaria"
+            class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-[var(--raio)] border border-branco/25 text-branco transition-colors duration-200 hover:border-ouro-claro hover:text-ouro-claro"
           >
             <FacebookIcon class="h-4 w-4" />
           </a>
@@ -53,7 +53,7 @@ const anoAtual = new Date().getFullYear();
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram da Correia Odontologia"
-            class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-[var(--raio)] border border-branco/20 text-branco/85 transition-colors duration-200 hover:border-primaria hover:text-primaria"
+            class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-[var(--raio)] border border-branco/25 text-branco transition-colors duration-200 hover:border-ouro-claro hover:text-ouro-claro"
           >
             <InstagramIcon class="h-4 w-4" />
           </a>
@@ -68,7 +68,7 @@ const anoAtual = new Date().getFullYear();
             <li>
               <a
                 href={l.href}
-                class="cursor-pointer text-sm text-branco/70 transition-colors duration-200 hover:text-branco"
+                class="cursor-pointer text-sm text-branco/90 transition-colors duration-200 hover:text-branco"
               >
                 {l.label}
               </a>
@@ -84,14 +84,14 @@ const anoAtual = new Date().getFullYear();
           {unidades.map((u) => (
             <li class="text-sm leading-snug">
               <span class="font-semibold text-branco">
-                {u.data.cidade} <span class="text-xs text-branco/40">{u.data.uf}</span>
+                {u.data.cidade} <span class="text-xs text-branco/70">{u.data.uf}</span>
               </span>
               <br />
-              <span class="text-branco/60">{u.data.endereco}</span>
+              <span class="text-branco/85">{u.data.endereco}</span>
               <br />
               <a
                 href={`tel:+55${apenasDigitos(u.data.telefone)}`}
-                class="cursor-pointer text-branco/70 transition-colors duration-200 hover:text-primaria"
+                class="cursor-pointer text-branco/90 transition-colors duration-200 hover:text-ouro-claro"
               >
                 {u.data.telefone}
               </a>
@@ -106,30 +106,30 @@ const anoAtual = new Date().getFullYear();
 
         <a
           href="mailto:agendamento@correiaodontologia.com.br"
-          class="mb-3 flex cursor-pointer items-start gap-2.5 text-sm text-branco/70 transition-colors duration-200 hover:text-branco"
+          class="mb-3 flex cursor-pointer items-start gap-2.5 text-sm text-branco/90 transition-colors duration-200 hover:text-branco"
         >
-          <Mail className="mt-0.5 h-4 w-4 shrink-0 text-primaria" aria-hidden="true" />
+          <Mail className="mt-0.5 h-4 w-4 shrink-0 text-ouro-claro" aria-hidden="true" />
           <span class="break-all">agendamento@correiaodontologia.com.br</span>
         </a>
 
         <a
           href="/#unidades"
-          class="mb-5 flex cursor-pointer items-start gap-2.5 text-sm text-branco/70 transition-colors duration-200 hover:text-branco"
+          class="mb-5 flex cursor-pointer items-start gap-2.5 text-sm text-branco/90 transition-colors duration-200 hover:text-branco"
         >
-          <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primaria" aria-hidden="true" />
+          <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-ouro-claro" aria-hidden="true" />
           <span>Ver todas as unidades e horários</span>
         </a>
 
         <a
           href="/fale-conosco"
-          class="mb-2.5 flex cursor-pointer items-center justify-center gap-2 rounded-[var(--raio)] border-2 border-primaria px-4 py-2.5 text-sm font-bold text-primaria transition-colors duration-200 hover:bg-primaria hover:text-branco"
+          class="mb-2.5 flex cursor-pointer items-center justify-center gap-2 rounded-[var(--raio)] border-2 border-ouro-claro px-4 py-2.5 text-sm font-bold text-ouro-claro transition-colors duration-200 hover:bg-ouro-claro hover:text-rodape"
         >
           Fale conosco
         </a>
         <a
           href="#bookform1"
           data-booking-trigger
-          class="flex cursor-pointer items-center justify-center gap-2 rounded-[var(--raio)] bg-cta px-4 py-3 text-sm font-bold text-branco transition-all duration-200 hover:brightness-95"
+          class="flex cursor-pointer items-center justify-center gap-2 rounded-[var(--raio)] bg-cta px-4 py-3 text-sm font-bold text-texto transition-all duration-200 hover:brightness-95"
         >
           Agende sua consulta
           <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -141,7 +141,7 @@ const anoAtual = new Date().getFullYear();
   <!-- Barra inferior — informação legal obrigatória (CRO / responsável técnica) -->
   <div class="border-t border-branco/10">
     <div
-      class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 py-6 text-center text-xs text-branco/50 md:flex-row md:text-left lg:px-8"
+      class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 py-6 text-center text-xs text-branco/75 md:flex-row md:text-left lg:px-8"
     >
       <p>
         © {anoAtual} Correia Odontologia. Todos os direitos reservados. CRO-SP: 20.917 · RT Dra. Leticia S. M.
@@ -153,7 +153,7 @@ const anoAtual = new Date().getFullYear();
           href="https://wa.me/5517992641230"
           target="_blank"
           rel="noopener noreferrer"
-          class="cursor-pointer font-semibold text-branco/70 transition-colors duration-200 hover:text-primaria"
+          class="cursor-pointer font-semibold text-branco/90 transition-colors duration-200 hover:text-ouro-claro"
         >
           Ícaro Carneiro
         </a>

@@ -1,29 +1,39 @@
 # Guia de estilo — Correia Odontologia
 
-Referência rápida de tokens e componentes. A fonte dos estilos é `src/styles/global.css`. Paleta v2 aprovada (ver `PROMPT-DEV-Correia-Odontologia.md`, Seção 10.2).
+Referência rápida de tokens e componentes. A fonte dos estilos é `src/styles/global.css`. Paleta v4 (ver `AGENTS.md`, Seção 2 — CTA reajustado em 2026-07 para amarelo claro a pedido do cliente; evolução da v3, que já havia corrigido contraste AA; evolução da v2 do `PROMPT-DEV-Correia-Odontologia.md`, Seção 10.2).
 
 ## Tokens de cor
 
 | Token CSS | Utilitário Tailwind | Hex | Uso |
 |---|---|---|---|
-| `--cor-primaria` | `primaria` | `#C89B3C` | Ouro satinado. Destaque dominante: títulos de seção, links do menu, ícones, contornos, datas. |
-| `--cor-cta` | `cta` | `#A9762A` | Âmbar bronze. Botão sólido principal (Agende / Enviar), texto branco. |
-| `--cor-secundaria` | `secundaria` | `#3E86A8` | Azul-oceano. Confiança/conforto: kickers, subtítulos, links, ícones (acento). |
-| `--cor-secundaria-forte` | `secundaria-forte` | `#245C74` | Azul profundo. Texto pequeno sobre branco (AA) e fundo de cards de destaque. |
+| `--cor-primaria` | `primaria` | `#946E17` | Dourado profundo. Destaque dominante **sobre fundo claro**: títulos de seção, links, ícones, contornos, datas. Passa 4,66:1 em branco. |
+| `--cor-cta` | `cta` | `#EFBB39` | Amarelo dourado vívido. Botão sólido principal (Agende / Enviar), **texto escuro** (`--cor-texto`) em cima — passa 6,55:1. Nunca use texto branco sobre este fundo. |
+| `--cor-secundaria` | `secundaria` | `#2E7695` | Azul-oceano. Confiança/conforto: kickers, subtítulos, links, ícones (acento). Passa 5,07:1 em branco. |
+| `--cor-secundaria-forte` | `secundaria-forte` | `#245C74` | Azul profundo. Texto pequeno sobre branco (7,35:1) e fundo de cards de destaque. |
 | `--cor-rodape` | `rodape` | `#1C4A5E` | Azul escuro. Rodapé e faixas escuras. |
 | `--cor-superficie` | `superficie` | `#EDF3F6` | Azul-gelo. Fundo alternado de seções. |
-| `--cor-texto` | `texto` | `#2A3B44` | Tinta. Corpo de texto sobre fundo claro. |
-| `--cor-ouro-claro` | `ouro-claro` | `#E7C871` | Título dourado sobre card/rodapé escuro (contraste alto). |
+| `--cor-texto` | `texto` | `#2A3B44` | Tinta. Corpo de texto sobre fundo claro; também texto sobre o CTA amarelo. |
+| `--cor-ouro-claro` | `ouro-claro` | `#E7C871` | Dourado claro. Texto/ícone/contorno **sobre fundo escuro** (rodapé 5,89:1, cards escuros 4,51:1) — nunca `primaria` aqui, veja regra abaixo. |
 | `--cor-borda` | `borda` | `#E3E9EC` | Bordas e divisórias. |
 | `--cor-fundo` | `branco` | `#FFFFFF` | Fundo padrão. |
 
-Estados de hover derivam por escurecimento leve (~7%): `--cor-primaria-hover` `#B48B36`, `--cor-cta-hover` `#986A26`.
+Estados de hover são bem mais escuros/saturados que o tom base, para o hover ficar perceptível: `--cor-primaria-hover` `#7C5C13`, `--cor-cta-hover` `#ECAE13` (passa 5,88:1 com texto escuro). Todo `.btn` também ganha leve elevação no hover (`translateY(-1px)` + sombra).
 
-## Regras de contraste (acessibilidade AA)
+## Regra de direção do dourado (importante)
 
-- `#3E86A8` (azul-oceano) para títulos, links e acentos. Para texto pequeno/corrido use `#245C74`.
-- Texto sobre CTA, cards escuros e rodapé é sempre branco.
+`primaria` é calibrado para texto/ícone/borda **sobre fundo claro** (branco, `superficie`). `ouro-claro` é o par calibrado para **fundo escuro** (`rodape`, `secundaria-forte`). Os dois tons não são intercambiáveis — usar `primaria` sobre o rodapé (como no bug antigo) derruba o contraste para ~2:1. Ver `Footer.astro` para o padrão correto (ícones sociais, títulos de coluna e botão "Fale conosco" usam `ouro-claro`, com hover invertendo para texto escuro sobre preenchimento dourado). `cta` é um caso à parte: é claro como `primaria`, mas leva texto escuro (`--cor-texto`), não branco.
+
+## Regras de contraste (acessibilidade AA — 4.5:1 texto normal, 3:1 texto grande/UI)
+
+- `#2E7695` (azul-oceano) para títulos, links e acentos sobre claro. Para texto pequeno/corrido use `#245C74`.
+- `#946E17` (dourado) para texto/ícone sobre claro; `#E7C871` para texto/ícone sobre escuro.
+- Texto sobre cards escuros e rodapé é sempre branco (ou `ouro-claro`, que já é claro o bastante para ser o próprio texto). **Exceção: texto sobre o CTA (`#EFBB39`) é sempre escuro** (`--cor-texto`), pois o fundo é claro.
 - Foco visível: contorno azul-oceano de 3px (já aplicado via `:focus-visible`).
+- Cores de marca de terceiros (WhatsApp, Google Maps, Instagram) nos botões de contato das unidades são exceção deliberada à paleta — não são tokens do sistema.
+
+## Arquitetura CSS: `@layer` (obrigatório)
+
+Todo CSS solto em `global.css` — resets de elemento (`a`, `body`, `:focus-visible`) e classes de componente (`.btn*`, `.card*`, `.footer*`, `.kicker`, `.section-*`, `.field*`) — fica dentro de `@layer base { }` ou `@layer components { }`. CSS escrito fora de qualquer `@layer` tem prioridade maior que `@layer utilities` do Tailwind, independente de especificidade, e sobrepõe silenciosamente qualquer `text-*`/`bg-*` do HTML. Foi a causa raiz de um bug em que links e botões com `text-white` renderizavam com a cor errada em todo o site. Ao adicionar CSS novo em `global.css`, sempre coloque dentro do `@layer` correspondente.
 
 ## Componentes prontos (classes)
 
@@ -80,7 +90,7 @@ Como o `@theme` do Tailwind v4 expõe a paleta, os utilitários funcionam direto
 ```html
 <h2 class="text-primaria font-extrabold">Serviços</h2>
 <div class="bg-superficie text-texto p-6 rounded-lg">...</div>
-<button class="bg-cta text-branco px-6 py-3 rounded-lg hover:brightness-95">Enviar</button>
+<button class="bg-cta text-texto px-6 py-3 rounded-lg hover:brightness-95">Enviar</button>
 ```
 
 ## Regras (ver AGENTS.md)

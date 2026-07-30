@@ -172,7 +172,7 @@ export default function Navbar({ logoSrc, unidades }: NavbarProps) {
           <a
             href="#bookform1"
             data-booking-trigger
-            className="flex cursor-pointer items-center gap-2 rounded-[var(--raio)] bg-cta px-4 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:brightness-95"
+            className="flex cursor-pointer items-center gap-2 rounded-[var(--raio)] bg-cta px-4 py-2.5 text-sm font-bold text-texto transition-all duration-200 hover:brightness-95"
           >
             Agende sua consulta
             <ArrowRight size={16} aria-hidden="true" />
@@ -288,7 +288,7 @@ export default function Navbar({ logoSrc, unidades }: NavbarProps) {
                   href="#bookform1"
                   data-booking-trigger
                   onClick={() => setOpenMobile(false)}
-                  className="flex cursor-pointer items-center justify-center gap-2 rounded-[var(--raio)] bg-cta px-4 py-3 text-sm font-bold text-white"
+                  className="flex cursor-pointer items-center justify-center gap-2 rounded-[var(--raio)] bg-cta px-4 py-3 text-sm font-bold text-texto"
                 >
                   Agende sua consulta
                   <ArrowRight size={16} aria-hidden="true" />
