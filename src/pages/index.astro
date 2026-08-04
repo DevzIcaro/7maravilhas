@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import { fotoDoProfissional } from "../lib/equipeFotos";
+import { fotoDaUnidade } from "../lib/unidadeFotos";
 import { imagemDoPost } from "../lib/postImagens";
 import { mapaEmbedSrc, linkMaps, linkWhatsapp, linkTelefone } from "../lib/unidadeLinks";
 import PlaceholderImage from "../components/PlaceholderImage.astro";
@@ -151,18 +152,32 @@ const equipeHome = equipeIdsHome
     <p class="section-subtitle">E saiba onde as encontrar!</p>
 
     <div class="mt-10 space-y-10">
-      {unidades.map((u) => (
+      {unidades.map((u) => {
+        const foto = fotoDaUnidade(u.data.id);
+        return (
         <div
           id={`unidade-${u.data.id}`}
           class="scroll-mt-24 overflow-hidden rounded-[var(--raio)] border border-borda bg-white"
         >
           {/* Foto + mapa, lado a lado */}
-          <div class="grid lg:grid-cols-2">
-            <PlaceholderImage
-              alt={`Unidade ${u.data.cidade}`}
-              ratio="wide"
-              class="!rounded-none !border-0 lg:!aspect-auto lg:h-full"
-            />
+          <div class="grid lg:h-[440px] lg:grid-cols-2">
+            {foto ? (
+              <Image
+                src={foto}
+                alt={`Fachada da unidade ${u.data.cidade}`}
+                widths={[480, 640, 880]}
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                loading="lazy"
+                decoding="async"
+                class="aspect-video w-full object-cover lg:aspect-auto lg:h-full lg:min-h-0"
+              />
+            ) : (
+              <PlaceholderImage
+                alt={`Unidade ${u.data.cidade}`}
+                ratio="wide"
+                class="!rounded-none !border-0 lg:!aspect-auto lg:h-full lg:min-h-0"
+              />
+            )}
             <iframe
               src={mapaEmbedSrc(u.data)}
               title={`Mapa da unidade ${u.data.cidade}`}
@@ -234,7 +249,8 @@ const equipeHome = equipeIdsHome
             </div>
           </div>
         </div>
-      ))}
+        );
+      })}
     </div>
   </section>
 
