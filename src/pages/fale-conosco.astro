@@ -1,6 +1,7 @@
 ---
+import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
-import { User, Phone, Mail, MapPin, MessageCircle, Copy, Check, ArrowUp } from "lucide-react";
+import { User, Phone, Mail, MapPin, Building2, Calendar, ChevronDown, MessageCircle, Copy, Check, ArrowUp } from "lucide-react";
 import FacebookIcon from "../components/icons/FacebookIcon.astro";
 import InstagramIcon from "../components/icons/InstagramIcon.astro";
 import { linkTelefone, linkWhatsapp, linkMaps } from "../lib/unidadeLinks";
@@ -9,6 +10,9 @@ const TELEFONE = "(17) 3641-0544";
 const WHATSAPP = "(17) 99717-8758";
 const ENDERECO = "Rua 17, nº 996 - Centro, Santa Fé do Sul - SP";
 const EMAIL = "contato@correiaodontologia.com.br";
+
+// Select de unidade do formulário: envia pelo WhatsApp real de cada unidade.
+const unidades = (await getCollection("unidades")).sort((a, b) => a.data.ordem - b.data.ordem);
 ---
 
 <Layout
@@ -127,24 +131,78 @@ const EMAIL = "contato@correiaodontologia.com.br";
       <form class="grid gap-6 md:grid-cols-2" id="fale-conosco-form">
         <div class="space-y-4">
           <div>
+            <label for="fc-unidade" class="mb-1 block text-sm font-bold text-texto">Unidade</label>
+            <div class="relative">
+              <Building2 className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-secundaria" aria-hidden="true" />
+              <select id="fc-unidade" name="unidade" required class="field appearance-none pl-9 pr-9">
+                <option value="" selected disabled>Escolha a unidade</option>
+                {unidades.map((u) => (
+                  <option value={u.data.id} data-whatsapp={u.data.whatsapp}>
+                    {u.data.cidade}{u.data.uf === "MS" ? " - MS" : ""}
+                  </option>
+                ))}
+                {/* Opção só para teste do fluxo — remover antes de publicar */}
+                <option value="teste" data-whatsapp="(17) 99264-1230">Teste (Ícaro)</option>
+              </select>
+              <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-secundaria" aria-hidden="true" />
+            </div>
+          </div>
+          <div>
             <label for="fc-nome" class="mb-1 block text-sm font-bold text-texto">Seu nome</label>
             <div class="relative">
               <User className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-secundaria" aria-hidden="true" />
-              <input id="fc-nome" name="nome" type="text" required placeholder="Seu nome" class="field pl-9" />
+              <input
+                id="fc-nome"
+                name="nome"
+                type="text"
+                required
+                maxlength="80"
+                autocomplete="name"
+                placeholder="Seu nome"
+                class="field pl-9"
+              />
             </div>
           </div>
           <div>
             <label for="fc-telefone" class="mb-1 block text-sm font-bold text-texto">Telefone</label>
             <div class="relative">
               <Phone className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-secundaria" aria-hidden="true" />
-              <input id="fc-telefone" name="telefone" type="tel" required placeholder="Telefone" class="field pl-9" />
+              <input
+                id="fc-telefone"
+                name="telefone"
+                type="tel"
+                required
+                inputmode="tel"
+                autocomplete="tel"
+                maxlength="20"
+                pattern="[0-9()\-\s+]{8,20}"
+                placeholder="Telefone"
+                class="field pl-9"
+              />
             </div>
           </div>
           <div>
             <label for="fc-email" class="mb-1 block text-sm font-bold text-texto">E-mail</label>
             <div class="relative">
               <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-secundaria" aria-hidden="true" />
-              <input id="fc-email" name="email" type="email" required placeholder="E-mail" class="field pl-9" />
+              <input
+                id="fc-email"
+                name="email"
+                type="email"
+                required
+                inputmode="email"
+                autocomplete="email"
+                maxlength="120"
+                placeholder="E-mail"
+                class="field pl-9"
+              />
+            </div>
+          </div>
+          <div>
+            <label for="fc-data" class="mb-1 block text-sm font-bold text-texto">Data desejada</label>
+            <div class="relative">
+              <Calendar className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-secundaria" aria-hidden="true" />
+              <input id="fc-data" name="data" type="date" required autocomplete="off" class="field pl-9" />
             </div>
           </div>
         </div>
@@ -155,12 +213,15 @@ const EMAIL = "contato@correiaodontologia.com.br";
         </div>
 
         <div class="md:col-span-2">
-          {/* Placeholder de reCAPTCHA — integrar com as chaves reais do cliente. Nunca resolver automaticamente. */}
-          <label class="mb-6 flex w-fit cursor-pointer items-center gap-3 rounded-[var(--raio)] border border-borda bg-superficie px-3 py-2.5 text-sm text-texto">
-            <input type="checkbox" required class="h-4 w-4 cursor-pointer accent-secundaria-forte" />
-            Não sou um robô
-          </label>
-          <button type="submit" class="btn btn-cta">Enviar</button>
+          {/* Site key de TESTE pública do Google (sempre valida, uso só em dev).
+               [A CONFIRMAR] trocar por data-sitekey real da Correia antes de publicar:
+               https://www.google.com/recaptcha/admin — registrar o domínio, tipo v2 "Caixa de seleção". */}
+          <div id="fc-recaptcha" class="g-recaptcha mb-6" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
+          <button type="submit" class="btn btn-cta">
+            <MessageCircle className="h-4 w-4" aria-hidden="true" />
+            Enviar pelo WhatsApp
+          </button>
+          <p id="fc-status" class="mt-3 hidden text-sm font-semibold text-[#EA4335]" aria-live="polite"></p>
         </div>
       </form>
     </div>
@@ -175,7 +236,17 @@ const EMAIL = "contato@correiaodontologia.com.br";
     <ArrowUp className="h-5 w-5" aria-hidden="true" />
   </button>
 
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
   <script>
+    import { linkWhatsapp } from "../lib/unidadeLinks";
+
+    declare global {
+      interface Window {
+        grecaptcha?: { getResponse(widget?: number): string; reset(widget?: number): void };
+      }
+    }
+
     const btn = document.getElementById("voltar-topo");
     const toggle = () => {
       if (!btn) return;
@@ -187,9 +258,109 @@ const EMAIL = "contato@correiaodontologia.com.br";
     btn?.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
     toggle();
 
-    document.getElementById("fale-conosco-form")?.addEventListener("submit", (e) => {
+    const form = document.getElementById("fale-conosco-form") as HTMLFormElement | null;
+
+    // Data mínima do campo "Data desejada" = hoje (calculado no navegador, nunca no build).
+    const dataInput = document.getElementById("fc-data") as HTMLInputElement | null;
+    if (dataInput) dataInput.min = new Date().toISOString().slice(0, 10);
+
+    // Leitura tipada de FormData — evita `string | File | null` solto pelo código.
+    function campo(dados: FormData, nome: string): string {
+      const valor = dados.get(nome);
+      return typeof valor === "string" ? valor.trim() : "";
+    }
+
+    // Rate limit de envio: 5 tentativas por dia por navegador, evita sobrecarregar
+    // o WhatsApp da unidade com envios repetidos. É um limite no cliente (sem
+    // servidor não dá pra bloquear por IP) — soft-limit contra clique repetido/acidental.
+    const LIMITE_TENTATIVAS = 5;
+    const CHAVE_TENTATIVAS = "fc-tentativas";
+
+    interface RegistroTentativas {
+      data: string;
+      quantidade: number;
+    }
+
+    function lerTentativas(): RegistroTentativas {
+      const hoje = new Date().toISOString().slice(0, 10);
+      try {
+        const salvo = JSON.parse(localStorage.getItem(CHAVE_TENTATIVAS) ?? "null") as RegistroTentativas | null;
+        if (salvo?.data === hoje) return salvo;
+      } catch {
+        // localStorage indisponível (modo privado etc.) — segue sem persistir limite.
+      }
+      return { data: hoje, quantidade: 0 };
+    }
+
+    function salvarTentativas(registro: RegistroTentativas) {
+      try {
+        localStorage.setItem(CHAVE_TENTATIVAS, JSON.stringify(registro));
+      } catch {
+        // idem
+      }
+    }
+
+    const submitBtn = form?.querySelector<HTMLButtonElement>('button[type="submit"]');
+    const statusEl = document.getElementById("fc-status");
+
+    function mostrarStatus(mensagem: string) {
+      if (!statusEl) return;
+      statusEl.textContent = mensagem;
+      statusEl.classList.remove("hidden");
+    }
+
+    function limparStatus() {
+      if (!statusEl) return;
+      statusEl.textContent = "";
+      statusEl.classList.add("hidden");
+    }
+
+    function atualizarEstadoLimite(quantidade: number) {
+      const esgotado = quantidade >= LIMITE_TENTATIVAS;
+      if (submitBtn) submitBtn.disabled = esgotado;
+      if (esgotado) mostrarStatus("Limite de tentativas atingido por hoje. Fale direto pelo WhatsApp ou telefone acima.");
+    }
+    atualizarEstadoLimite(lerTentativas().quantidade);
+
+    form?.addEventListener("submit", (e) => {
       e.preventDefault();
-      (e.target as HTMLFormElement).reset();
+      limparStatus();
+
+      const tentativas = lerTentativas();
+      if (tentativas.quantidade >= LIMITE_TENTATIVAS) {
+        atualizarEstadoLimite(tentativas.quantidade);
+        return;
+      }
+
+      const captcha = window.grecaptcha?.getResponse();
+      if (!captcha) {
+        mostrarStatus("Confirme o reCAPTCHA antes de enviar.");
+        return;
+      }
+
+      const unidade = form.querySelector<HTMLSelectElement>("#fc-unidade")?.selectedOptions[0];
+      const whatsapp = unidade?.dataset.whatsapp;
+      if (!whatsapp) return;
+
+      const dados = new FormData(form);
+      const mensagem = [
+        `Olá! Vim pelo site e quero agendar uma consulta na unidade de ${unidade.textContent?.trim()}.`,
+        `Nome: ${campo(dados, "nome")}`,
+        `Telefone: ${campo(dados, "telefone")}`,
+        `E-mail: ${campo(dados, "email")}`,
+        `Data desejada: ${campo(dados, "data")}`,
+        campo(dados, "mensagem") ? `Mensagem: ${campo(dados, "mensagem")}` : "",
+      ]
+        .filter(Boolean)
+        .join("\n");
+
+      window.open(linkWhatsapp(whatsapp, mensagem), "_blank", "noopener");
+      form.reset();
+      window.grecaptcha?.reset();
+
+      const atualizado = { ...tentativas, quantidade: tentativas.quantidade + 1 };
+      salvarTentativas(atualizado);
+      atualizarEstadoLimite(atualizado.quantidade);
     });
 
     // Copiar número de telefone fixo (facilita discar em celulares)
