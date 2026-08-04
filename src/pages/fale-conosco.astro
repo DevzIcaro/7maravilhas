@@ -1,8 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { User, Phone, Mail, MapPin, ArrowUp } from "lucide-react";
+import { User, Phone, Mail, MapPin, MessageCircle, Copy, Check, ArrowUp } from "lucide-react";
 import FacebookIcon from "../components/icons/FacebookIcon.astro";
 import InstagramIcon from "../components/icons/InstagramIcon.astro";
+import { linkTelefone, linkWhatsapp, linkMaps } from "../lib/unidadeLinks";
+
+const TELEFONE = "(17) 3641-0544";
+const WHATSAPP = "(17) 99717-8758";
+const ENDERECO = "Rua 17, nº 996 - Centro, Santa Fé do Sul - SP";
+const EMAIL = "contato@correiaodontologia.com.br";
 ---
 
 <Layout
@@ -16,23 +22,103 @@ import InstagramIcon from "../components/icons/InstagramIcon.astro";
     </nav>
     <h1 class="section-title">Fale Conosco</h1>
 
-    <ul class="mb-10 flex flex-wrap gap-x-8 gap-y-2 text-sm text-texto/80">
-      <li class="flex items-center gap-2"><Phone className="h-4 w-4 text-secundaria" aria-hidden="true" client:load />Tel (17) 3641-0544</li>
-      <li class="flex items-center gap-2"><Phone className="h-4 w-4 text-secundaria" aria-hidden="true" client:load />WhatsApp (17) 99717-8758</li>
-      <li class="flex items-center gap-2"><MapPin className="h-4 w-4 text-secundaria" aria-hidden="true" client:load />Rua 17, nº 996 - Centro, Santa Fé do Sul - SP</li>
-      <li class="flex items-center gap-2">
-        <Mail className="h-4 w-4 text-secundaria" aria-hidden="true" client:load />
-        <a href="mailto:contato@correiaodontologia.com.br" class="cursor-pointer hover:text-primaria">contato@correiaodontologia.com.br</a>
-      </li>
-      <li class="flex items-center gap-2">
-        <FacebookIcon class="h-4 w-4 text-secundaria" />
-        <a href="https://www.facebook.com/clinica.correia" target="_blank" rel="noopener noreferrer" class="cursor-pointer hover:text-primaria">Facebook</a>
-      </li>
-      <li class="flex items-center gap-2">
-        <InstagramIcon class="h-4 w-4 text-secundaria" />
-        <a href="https://www.instagram.com/clinica.correia/" target="_blank" rel="noopener noreferrer" class="cursor-pointer hover:text-primaria">Instagram</a>
-      </li>
-    </ul>
+    <div class="mb-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="card flex items-center gap-3">
+        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-secundaria/10 text-secundaria">
+          <Phone className="h-5 w-5" aria-hidden="true" />
+        </span>
+        <div class="min-w-0 flex-1">
+          <p class="text-xs font-bold uppercase tracking-wide text-texto/60">Telefone</p>
+          <p class="truncate text-sm font-semibold text-texto">{TELEFONE}</p>
+        </div>
+        <a
+          href={linkTelefone(TELEFONE)}
+          aria-label={`Ligar para ${TELEFONE}`}
+          class="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-full text-secundaria transition-colors duration-200 hover:bg-secundaria/10"
+        >
+          <Phone className="h-4 w-4" aria-hidden="true" />
+        </a>
+        <button
+          type="button"
+          data-copiar={TELEFONE}
+          aria-label={`Copiar número ${TELEFONE}`}
+          class="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-full text-secundaria transition-colors duration-200 hover:bg-secundaria/10"
+        >
+          <Copy className="h-4 w-4" aria-hidden="true" data-icone-copiar />
+          <Check className="hidden h-4 w-4" aria-hidden="true" data-icone-copiado />
+        </button>
+      </div>
+
+      <a
+        href={linkWhatsapp(WHATSAPP, "Olá! Gostaria de falar com a Correia Odontologia.")}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="card flex cursor-pointer items-center gap-3"
+      >
+        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#25D366]/10 text-[#25D366]">
+          <MessageCircle className="h-5 w-5" aria-hidden="true" />
+        </span>
+        <div class="min-w-0 flex-1">
+          <p class="text-xs font-bold uppercase tracking-wide text-texto/60">WhatsApp</p>
+          <p class="truncate text-sm font-semibold text-texto">{WHATSAPP}</p>
+        </div>
+      </a>
+
+      <a
+        href={linkMaps({ endereco: ENDERECO, coordenadas: null })}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="card flex cursor-pointer items-center gap-3"
+      >
+        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#EA4335]/10 text-[#EA4335]">
+          <MapPin className="h-5 w-5" aria-hidden="true" />
+        </span>
+        <div class="min-w-0 flex-1">
+          <p class="text-xs font-bold uppercase tracking-wide text-texto/60">Endereço</p>
+          <p class="truncate text-sm font-semibold text-texto">{ENDERECO}</p>
+        </div>
+      </a>
+
+      <a href={`mailto:${EMAIL}`} class="card flex cursor-pointer items-center gap-3">
+        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primaria/10 text-primaria">
+          <Mail className="h-5 w-5" aria-hidden="true" />
+        </span>
+        <div class="min-w-0 flex-1">
+          <p class="text-xs font-bold uppercase tracking-wide text-texto/60">E-mail</p>
+          <p class="truncate text-sm font-semibold text-texto">{EMAIL}</p>
+        </div>
+      </a>
+
+      <a
+        href="https://www.facebook.com/clinica.correia"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="card flex cursor-pointer items-center gap-3"
+      >
+        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#1877F2]/10 text-[#1877F2]">
+          <FacebookIcon class="h-5 w-5" />
+        </span>
+        <div class="min-w-0 flex-1">
+          <p class="text-xs font-bold uppercase tracking-wide text-texto/60">Facebook</p>
+          <p class="truncate text-sm font-semibold text-texto">clinica.correia</p>
+        </div>
+      </a>
+
+      <a
+        href="https://www.instagram.com/clinica.correia/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="card flex cursor-pointer items-center gap-3"
+      >
+        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5)] text-white">
+          <InstagramIcon class="h-5 w-5" />
+        </span>
+        <div class="min-w-0 flex-1">
+          <p class="text-xs font-bold uppercase tracking-wide text-texto/60">Instagram</p>
+          <p class="truncate text-sm font-semibold text-texto">@clinica.correia</p>
+        </div>
+      </a>
+    </div>
 
     <div class="rounded-[var(--raio)] border border-borda p-6 md:p-10">
       <h2 class="text-xl font-extrabold text-secundaria-forte">FALE CONOSCO</h2>
@@ -43,21 +129,21 @@ import InstagramIcon from "../components/icons/InstagramIcon.astro";
           <div>
             <label for="fc-nome" class="mb-1 block text-sm font-bold text-texto">Seu nome</label>
             <div class="relative">
-              <User className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-secundaria" aria-hidden="true" client:load />
+              <User className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-secundaria" aria-hidden="true" />
               <input id="fc-nome" name="nome" type="text" required placeholder="Seu nome" class="field pl-9" />
             </div>
           </div>
           <div>
             <label for="fc-telefone" class="mb-1 block text-sm font-bold text-texto">Telefone</label>
             <div class="relative">
-              <Phone className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-secundaria" aria-hidden="true" client:load />
+              <Phone className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-secundaria" aria-hidden="true" />
               <input id="fc-telefone" name="telefone" type="tel" required placeholder="Telefone" class="field pl-9" />
             </div>
           </div>
           <div>
             <label for="fc-email" class="mb-1 block text-sm font-bold text-texto">E-mail</label>
             <div class="relative">
-              <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-secundaria" aria-hidden="true" client:load />
+              <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-secundaria" aria-hidden="true" />
               <input id="fc-email" name="email" type="email" required placeholder="E-mail" class="field pl-9" />
             </div>
           </div>
@@ -86,7 +172,7 @@ import InstagramIcon from "../components/icons/InstagramIcon.astro";
     aria-label="Voltar ao topo"
     class="fixed bottom-6 right-6 z-30 hidden cursor-pointer items-center justify-center rounded-full bg-cta p-3 text-texto shadow-lg transition-colors duration-200 hover:bg-[var(--cor-cta-hover)] focus-visible:outline-3"
   >
-    <ArrowUp className="h-5 w-5" aria-hidden="true" client:load />
+    <ArrowUp className="h-5 w-5" aria-hidden="true" />
   </button>
 
   <script>
@@ -104,6 +190,26 @@ import InstagramIcon from "../components/icons/InstagramIcon.astro";
     document.getElementById("fale-conosco-form")?.addEventListener("submit", (e) => {
       e.preventDefault();
       (e.target as HTMLFormElement).reset();
+    });
+
+    // Copiar número de telefone fixo (facilita discar em celulares)
+    document.querySelectorAll<HTMLButtonElement>("[data-copiar]").forEach((copiarBtn) => {
+      const rotuloOriginal = copiarBtn.getAttribute("aria-label") ?? "";
+      copiarBtn.addEventListener("click", async () => {
+        const numero = copiarBtn.dataset.copiar;
+        if (!numero) return;
+        await navigator.clipboard.writeText(numero);
+
+        copiarBtn.querySelector("[data-icone-copiar]")?.classList.add("hidden");
+        copiarBtn.querySelector("[data-icone-copiado]")?.classList.remove("hidden");
+        copiarBtn.setAttribute("aria-label", "Número copiado");
+
+        window.setTimeout(() => {
+          copiarBtn.querySelector("[data-icone-copiar]")?.classList.remove("hidden");
+          copiarBtn.querySelector("[data-icone-copiado]")?.classList.add("hidden");
+          copiarBtn.setAttribute("aria-label", rotuloOriginal);
+        }, 1500);
+      });
     });
   </script>
 </Layout>

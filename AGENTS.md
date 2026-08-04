@@ -14,6 +14,17 @@ Se houver conflito, valem os arquivos acima nesta ordem. Nunca sobreponha uma de
 
 ---
 
+## 0. Postura do agente (checar antes de qualquer tarefa)
+
+Você é um desenvolvedor sênior especialista em UX/UI e arquiteto de software. Em toda tarefa neste repositório:
+
+1. Não alucine — não invente API, prop, classe, ícone ou comportamento que você não confirmou existir (ex.: cheque `node_modules` antes de importar um ícone). Se não tem certeza, verifique antes de escrever o código.
+2. Não invente moda — não crie um novo padrão visual/de layout quando já existe um estabelecido no projeto (tokens de `global.css`, `.card`, `data-reveal`/`revealOnScroll`, os componentes de `ui/`). Reutilize o que já existe; só proponha algo novo quando for genuinamente necessário, e nesse caso mantenha a mesma linguagem visual.
+3. Não crie gambiarra — sem workaround frágil, sem duplicar lógica que já existe em `src/lib/`, sem solução paliativa. Resolva a causa raiz.
+4. Código o mais curto e com o melhor desempenho possível — menor JS enviado ao cliente (prefira `.astro` estático e componentes React sem `client:*` quando não há interatividade — ver `Footer.astro`), sem dependência nova se já existe uma equivalente instalada, sem repetição.
+
+---
+
 ## 1. Anti-alucinação (inegociável)
 
 1. Não invente conteúdo. Todo texto, nome, telefone, endereço, horário, CRO, serviço, depoimento ou post vem do `PROMPT-DEV-Correia-Odontologia.md`, na forma literal.
@@ -25,7 +36,7 @@ Se houver conflito, valem os arquivos acima nesta ordem. Nunca sobreponha uma de
 ## 2. Cores
 
 1. A paleta é a **v4** (evolução da v3, ajustada em 2026-07 a pedido do cliente: o CTA v3 `#8A5E12` ficou "marrom apagado" — o cliente pediu explicitamente "cor clara e amarelo"): dourado profundo `#946E17` (texto/ícone sobre claro, inalterado), **CTA amarelo claro `#EFBB39`** (era `#8A5E12` — agora é fundo claro com TEXTO ESCURO, não branco), azul-oceano `#2E7695` (inalterado), azul profundo `#245C74` (inalterado), azul escuro rodapé `#1C4A5E` (inalterado), azul-gelo `#EDF3F6` (inalterado), tinta `#2A3B44` (inalterado), ouro claro `#E7C871` (inalterado), fundo `#FFFFFF`.
-2. Não invente cores fora desta paleta. Definir todos os tokens em `:root`/`@theme` e usar apenas os tokens (sem hex solto no código) — exceção: cores de marca de terceiros (WhatsApp `#25D366`, Google Maps `#EA4335`, gradiente Instagram) nos botões de contato, que não fazem parte da paleta do site.
+2. Não invente cores fora desta paleta. Definir todos os tokens em `:root`/`@theme` e usar apenas os tokens (sem hex solto no código) — exceção: cores de marca de terceiros (WhatsApp `#25D366`, Google Maps `#EA4335`, Facebook `#1877F2`, gradiente Instagram `linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5)`) nos ícones/botões de contato, que não fazem parte da paleta do site.
 3. **Regra de direção do dourado** (a causa raiz do bug de contraste anterior): `primaria` é para texto/ícone/fundo sobre **fundo claro** (branco, superfície). `ouro-claro` é para texto/ícone sobre **fundo escuro** (rodapé, cards escuros). Nunca use `primaria` diretamente sobre `rodape` ou `secundaria-forte` — o contraste quebra. Ver `Footer.astro` como referência do padrão correto.
 4. **CTA (`cta`) é fundo claro, sempre com texto escuro** (`var(--cor-texto)` / classe `text-texto`), nunca branco — `#EFBB39` com texto branco não passa AA. Todo botão `bg-cta`/`.btn-cta` usa texto escuro: ver `.btn-cta` em `global.css`, `Navbar.tsx` (2×), `Footer.astro`, `src/components/ui/button.tsx`, `src/pages/fale-conosco.astro`.
 5. Contraste AA (4.5:1 mínimo, texto normal): `primaria` `#946E17` passa sobre branco; `ouro-claro` `#E7C871` passa sobre `rodape`/`secundaria-forte`; `cta` `#EFBB39` com texto `#2A3B44` em cima passa 6,55:1 (hover `#ECAE13` passa 5,88:1). Título de seção (`section-title`, texto grande) pode usar `primaria` mesmo em `section-alt`, pois entra na exceção de "large text" (≥3:1).

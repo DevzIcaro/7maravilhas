@@ -1,25 +1,47 @@
 ---
+import { getCollection } from "astro:content";
+import { getImage } from "astro:assets";
+import { Camera, Tv, Wifi, Armchair } from "lucide-react";
 import Layout from "../layouts/Layout.astro";
-import PlaceholderImage from "../components/PlaceholderImage.astro";
+import { fotoDaUnidade } from "../lib/unidadeFotos";
+import SobreNosCarousel from "../components/SobreNosCarousel";
 
 const diferenciais = [
   {
+    icon: Camera,
     titulo: "Câmera Intra Oral",
     texto: "Permite ver todos os detalhes que precisam ser feitos em seus dentes, na hora e você confere na TV. Diferentemente dos espelhos convencionais.",
   },
   {
+    icon: Tv,
     titulo: "Escolha o Som",
     texto: "Três salas equipadas com TV's no teto e parede, onde você escolhe o que quer assistir e ouvir durante o tratamento!",
   },
   {
+    icon: Wifi,
     titulo: "Wifi",
     texto: "Navegue enquanto espera",
   },
   {
+    icon: Armchair,
     titulo: "Conforto",
     texto: "Ambiente aconchegante e climatizado",
   },
 ];
+
+// Carousel do topo: fotos de fachada das 5 unidades (src/lib/unidadeFotos.ts)
+const unidades = (await getCollection("unidades")).sort((a, b) => a.data.ordem - b.data.ordem);
+const slides = await Promise.all(
+  unidades
+    .flatMap((u) => {
+      const foto = fotoDaUnidade(u.data.id);
+      return foto ? [{ foto, cidade: u.data.cidade }] : [];
+    })
+    .map(async ({ foto, cidade }) => {
+      const img = await getImage({ src: foto, width: 880 });
+      return { src: img.src, alt: `Fachada da unidade Correia Odontologia em ${cidade}` };
+    })
+);
 ---
 
 <Layout
@@ -31,30 +53,45 @@ const diferenciais = [
     <nav aria-label="Breadcrumb" class="mb-4 text-sm text-texto/60">
       <a href="/" class="cursor-pointer hover:text-primaria">Home</a> <span aria-hidden="true">›</span> Sobre Nós
     </nav>
-    <h1 class="section-title">Sobre Nós</h1>
 
-    <div class="mb-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
-      <PlaceholderImage alt="Clínica Correia Odontologia — ambiente 1" ratio="square" />
-      <PlaceholderImage alt="Clínica Correia Odontologia — ambiente 2" ratio="square" />
-      <PlaceholderImage alt="Clínica Correia Odontologia — ambiente 3" ratio="square" />
-      <PlaceholderImage alt="Clínica Correia Odontologia — ambiente 4" ratio="square" />
-    </div>
-
-    <p class="max-w-3xl text-texto">
-      A Clínica Correia Odontologia surgiu no final de 2018. Temos compromisso constante com excelência em
-      atendimento, utilização das técnicas e tecnologias mais modernas da Odontologia e proporcionar uma vida
-      mais feliz aos nossos pacientes por meio de um novo sorriso. Oferecemos todos os tipos de tratamentos e
-      contamos com nosso grande diferencial: Atendimento humanizado!
-    </p>
-
-    <h2 class="section-title mt-14">Diferenciais</h2>
-    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-      {diferenciais.map((d) => (
-        <div class="card">
-          <h3 class="text-base font-bold">{d.titulo}</h3>
-          <p class="mt-1 text-sm text-texto/80">{d.texto}</p>
-        </div>
-      ))}
+    <div class="grid gap-8 lg:grid-cols-2 lg:items-center">
+      <SobreNosCarousel client:visible slides={slides} />
+      <div>
+        <p class="kicker">Quem somos</p>
+        <h1 class="section-title">Sobre Nós</h1>
+        <p class="text-texto">
+          A Clínica Correia Odontologia surgiu no final de 2018. Temos compromisso constante com excelência em
+          atendimento, utilização das técnicas e tecnologias mais modernas da Odontologia e proporcionar uma vida
+          mais feliz aos nossos pacientes por meio de um novo sorriso. Oferecemos todos os tipos de tratamentos e
+          contamos com nosso grande diferencial: Atendimento humanizado!
+        </p>
+      </div>
     </div>
   </section>
+
+  <section class="section-alt">
+    <div class="mx-auto max-w-7xl px-4 py-16 lg:px-8">
+      <p class="kicker">Por que escolher a Correia</p>
+      <h2 class="section-title">Diferenciais</h2>
+      <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" data-reveal>
+        {diferenciais.map((d) => {
+          const Icon = d.icon;
+          return (
+            <div class="card flex flex-col items-center text-center">
+              <span class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primaria/10 text-primaria">
+                <Icon className="h-6 w-6" aria-hidden="true" />
+              </span>
+              <h3 class="text-base font-bold">{d.titulo}</h3>
+              <p class="mt-1 text-sm text-texto/80">{d.texto}</p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <script>
+    import { revealOnScroll } from "../lib/animations";
+    revealOnScroll();
+  </script>
 </Layout>
