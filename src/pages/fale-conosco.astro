@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
-import { User, Phone, Mail, MapPin, Building2, Calendar, ChevronDown, MessageCircle, Copy, Check, ArrowUp } from "lucide-react";
+import { User, Phone, Mail, MapPin, Building2, Calendar, Clock, ChevronDown, MessageCircle, Copy, Check, ArrowUp } from "lucide-react";
 import FacebookIcon from "../components/icons/FacebookIcon.astro";
 import InstagramIcon from "../components/icons/InstagramIcon.astro";
 import { linkTelefone, linkWhatsapp, linkMaps } from "../lib/unidadeLinks";
@@ -172,11 +172,11 @@ const unidades = (await getCollection("unidades")).sort((a, b) => a.data.ordem -
                 name="telefone"
                 type="tel"
                 required
-                inputmode="tel"
+                inputmode="numeric"
                 autocomplete="tel"
-                maxlength="20"
-                pattern="[0-9()\-\s+]{8,20}"
-                placeholder="Telefone"
+                maxlength="11"
+                pattern="[0-9]{8,11}"
+                placeholder="Telefone (somente números)"
                 class="field pl-9"
               />
             </div>
@@ -198,11 +198,20 @@ const unidades = (await getCollection("unidades")).sort((a, b) => a.data.ordem -
               />
             </div>
           </div>
-          <div>
-            <label for="fc-data" class="mb-1 block text-sm font-bold text-texto">Data desejada</label>
-            <div class="relative">
-              <Calendar className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-secundaria" aria-hidden="true" />
-              <input id="fc-data" name="data" type="date" required autocomplete="off" class="field pl-9" />
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label for="fc-data" class="mb-1 block text-sm font-bold text-texto">Data desejada</label>
+              <div class="relative">
+                <Calendar className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-secundaria" aria-hidden="true" />
+                <input id="fc-data" name="data" type="date" required autocomplete="off" class="field pl-9" />
+              </div>
+            </div>
+            <div>
+              <label for="fc-horario" class="mb-1 block text-sm font-bold text-texto">Horário</label>
+              <div class="relative">
+                <Clock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-secundaria" aria-hidden="true" />
+                <input id="fc-horario" name="horario" type="time" required autocomplete="off" class="field pl-9" />
+              </div>
             </div>
           </div>
         </div>
@@ -236,8 +245,7 @@ const unidades = (await getCollection("unidades")).sort((a, b) => a.data.ordem -
     <ArrowUp className="h-5 w-5" aria-hidden="true" />
   </button>
 
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
+  {/* Script do reCAPTCHA carrega globalmente pelo Layout.astro (também usado pelo BookingModal). */}
   <script>
     import { linkWhatsapp } from "../lib/unidadeLinks";
 
@@ -263,6 +271,12 @@ const unidades = (await getCollection("unidades")).sort((a, b) => a.data.ordem -
     // Data mínima do campo "Data desejada" = hoje (calculado no navegador, nunca no build).
     const dataInput = document.getElementById("fc-data") as HTMLInputElement | null;
     if (dataInput) dataInput.min = new Date().toISOString().slice(0, 10);
+
+    // Telefone só aceita dígitos — remove qualquer outro caractere digitado.
+    const telefoneInput = document.getElementById("fc-telefone") as HTMLInputElement | null;
+    telefoneInput?.addEventListener("input", () => {
+      telefoneInput.value = telefoneInput.value.replace(/\D/g, "");
+    });
 
     // Leitura tipada de FormData — evita `string | File | null` solto pelo código.
     function campo(dados: FormData, nome: string): string {
@@ -349,6 +363,7 @@ const unidades = (await getCollection("unidades")).sort((a, b) => a.data.ordem -
         `Telefone: ${campo(dados, "telefone")}`,
         `E-mail: ${campo(dados, "email")}`,
         `Data desejada: ${campo(dados, "data")}`,
+        `Horário desejado: ${campo(dados, "horario")}`,
         campo(dados, "mensagem") ? `Mensagem: ${campo(dados, "mensagem")}` : "",
       ]
         .filter(Boolean)

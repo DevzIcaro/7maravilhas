@@ -33,6 +33,36 @@ export function revealOnScroll(gridSelector = "[data-reveal]") {
   });
 }
 
+/**
+ * "Pop" de entrada pros ícones de card (ex.: badges de Serviços): escala de 0
+ * a 1 com leve rotação e easing elástico, disparado no mesmo scroll-trigger
+ * do revealOnScroll — dá mais vida ao ícone sem duplicar a animação base do
+ * card (reaproveita animate/stagger/onScroll já usados em revealOnScroll).
+ */
+export function popIconsOnScroll(gridSelector = "[data-reveal-icons]") {
+  const grids = document.querySelectorAll<HTMLElement>(gridSelector);
+  if (!grids.length) return;
+
+  if (prefersReducedMotion()) return;
+
+  grids.forEach((grid) => {
+    const icones = Array.from(grid.querySelectorAll<HTMLElement>("[data-icone-card]"));
+    if (!icones.length) return;
+
+    animate(icones, {
+      scale: [0, 1],
+      rotate: [-15, 0],
+      duration: 600,
+      delay: stagger(90, { start: 150 }),
+      ease: "outElastic(1, .6)",
+      autoplay: onScroll({
+        target: grid,
+        enter: "bottom-=10% top",
+      }),
+    });
+  });
+}
+
 interface FilterSwapOptions {
   hideDuration?: number;
   showDuration?: number;

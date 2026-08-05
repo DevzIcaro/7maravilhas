@@ -110,6 +110,10 @@ const jsonLdDentists = unidades.map((u) => ({
     </main>
     <CTAAgende />
     <Footer />
-    <BookingModal client:load />
+    <BookingModal
+      client:load
+      unidades={unidades.map((u) => ({ id: u.data.id, cidade: u.data.cidade, uf: u.data.uf, whatsapp: u.data.whatsapp }))}
+    />
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   </body>
 </html>
