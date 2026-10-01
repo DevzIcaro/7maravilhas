@@ -51,7 +51,7 @@ jobs:
         run: pnpm run build
 
       - name: Publicar dist/ como artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: dist-${{ github.sha }}
           path: dist/
