@@ -1,0 +1,59 @@
+name: CI
+
+# Validação de qualidade: roda em Pull Requests e em pushes de branches de
+# trabalho. Pushes na `main` são cobertos pelo workflow `deploy.yml`, que
+# repete os mesmos passos antes de publicar.
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches-ignore: [main]
+  workflow_dispatch:
+
+# Um push novo na mesma branch/PR cancela a execução anterior.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  NODE_VERSION: '22.12.0'
+
+jobs:
+  build:
+    name: Typecheck e build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Instalar pnpm
+        uses: pnpm/action-setup@v4
+        # A versão vem do campo "packageManager" do package.json.
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Instalar dependências
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck (astro check)
+        run: pnpm run check
+
+      - name: Build de produção
+        run: pnpm run build
+
+      - name: Publicar dist/ como artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-${{ github.sha }}
+          path: dist/
+          retention-days: 7
+          if-no-files-found: error

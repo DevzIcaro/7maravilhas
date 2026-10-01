@@ -1,5 +1,5 @@
 /* =====================================================================
-   Correia Odontologia — Estilos globais e tokens de design
+   Maravilhas do Mundo — Estilos globais e tokens de design
    Paleta v3 (ver AGENTS.md, Seção 2 — aprofundada em 2026-07 por AA/legibilidade).
    Stack: Astro + Tailwind v4 (@tailwindcss/vite) + shadcn/ui.
    ===================================================================== */
@@ -113,7 +113,7 @@
   .btn:active { transform: translateY(0); box-shadow: none; }
   .btn:focus-visible { outline: 3px solid var(--cor-secundaria); outline-offset: 2px; }
 
-  /* CTA sólido principal (Agende uma consulta / Enviar) — amarelo claro, texto escuro */
+  /* CTA sólido principal (Planeje sua visita / Enviar) — amarelo claro, texto escuro */
   .btn-cta { background: var(--cor-cta); color: var(--cor-texto-sobre-cta); }
   .btn-cta:hover { background: var(--cor-cta-hover); }
 
@@ -140,7 +140,7 @@
   .card:hover { box-shadow: var(--sombra-card); transform: translateY(-2px); }
   .card h3, .card h4 { color: var(--cor-secundaria-forte); margin: 0 0 .5rem; }
 
-  /* Card escuro (serviços em destaque) — fundo azul profundo, título ouro claro */
+  /* Card escuro (destaques) — fundo azul profundo, título ouro claro */
   .card-dark {
     background: var(--cor-secundaria-forte);
     color: #fff;
@@ -173,7 +173,7 @@
 [data-reveal] > * { opacity: 0; }
 
 /* ---------------------------------------------------------------------
-   Destaque de chegada — pulso suave ao redor do card da unidade quando o
+   Destaque de chegada — pulso suave ao redor do card da maravilha quando o
    usuário chega via scroll animado pelo menu (ver src/lib/scrollTo.ts).
    --------------------------------------------------------------------- */
 .scroll-destaque {

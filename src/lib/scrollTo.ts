@@ -1,15 +1,15 @@
 import { animate } from "animejs";
 
 /**
- * Scroll suave e customizado (anime.js) até uma unidade específica, com um
- * leve "pulso" de destaque na chegada — usado pelo menu de unidades da
+ * Scroll suave e customizado (anime.js) até uma maravilha específica, com um
+ * leve "pulso" de destaque na chegada — usado pelo menu de maravilhas da
  * Navbar (desktop e mobile).
  *
  * Cross-page: se o link for clicado fora da home, navegamos para "/" sem
  * hash (evita o salto abrupto padrão do navegador) e guardamos o alvo em
  * sessionStorage; a home lê esse valor no load e completa o scroll animado.
  */
-const STORAGE_KEY = "correia:scroll-target";
+const STORAGE_KEY = "maravilhas:scroll-target";
 
 /** Altura aproximada do header sticky + respiro extra. */
 const OFFSET = 88;
@@ -51,11 +51,11 @@ function irAte(id: string) {
 }
 
 /**
- * Handler de clique para links de unidade. Retorna se o evento foi
+ * Handler de clique para links de maravilha. Retorna se o evento foi
  * interceptado (para o chamador fechar o menu, etc.).
  */
-export function irParaUnidade(id: string, event?: { preventDefault: () => void }) {
-  const alvo = `unidade-${id}`;
+export function irParaMaravilha(id: string, event?: { preventDefault: () => void }) {
+  const alvo = `maravilha-${id}`;
   const naHome = window.location.pathname === "/" || window.location.pathname === "/index.html";
 
   if (naHome) {

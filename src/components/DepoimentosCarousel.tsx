@@ -73,7 +73,7 @@ export default function DepoimentosCarousel({ depoimentos, intervalo = 5000 }: P
         setApi={setApi}
         opts={{ align: "start", loop: true }}
         className="mx-auto w-full lg:px-2"
-        aria-label="Depoimentos de pacientes"
+        aria-label="Depoimentos de visitantes"
       >
         <CarouselContent className="items-stretch">
           {depoimentos.map((d) => (

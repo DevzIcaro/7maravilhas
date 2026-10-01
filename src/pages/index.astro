@@ -3,64 +3,49 @@ import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import { fotoDoProfissional } from "../lib/equipeFotos";
-import { fotoDaUnidade } from "../lib/unidadeFotos";
 import { imagemDoPost } from "../lib/postImagens";
-import { mapaEmbedSrc, linkMaps, linkWhatsapp, linkTelefone } from "../lib/unidadeLinks";
 import PlaceholderImage from "../components/PlaceholderImage.astro";
-import correia1 from "../assets/correia1.png";
-import HeroVideo from "../components/HeroVideo.astro";
+import MaravilhaCard from "../components/MaravilhaCard.astro";
 import DepoimentosCarousel from "../components/DepoimentosCarousel";
-import { Phone, MessageCircle, Clock, MapPin, Navigation } from "lucide-react";
-import { FaInstagram } from "react-icons/fa6";
 
-const unidades = (await getCollection("unidades")).sort((a, b) => a.data.ordem - b.data.ordem);
+const maravilhas = (await getCollection("maravilhas")).sort((a, b) => a.data.ordem - b.data.ordem);
 const equipe = await getCollection("equipe");
 const depoimentos = await getCollection("depoimentos");
 const posts = (await getCollection("posts")).sort((a, b) => a.data.numero - b.data.numero);
 
-const destaques = [
-  {
-    titulo: "Clareamento",
-    texto: "Traga um brilho ao seu sorriso com o clareamento dentário. Dentes bonitos e brancos sem remover a superfície dentária!",
-    categoria: "Clínico Geral",
-  },
-  {
-    titulo: "Implantes",
-    texto: "São estruturas ou suportes de titânio posicionados na maxila e mandíbula para substituir as raízes dentárias.",
-    categoria: "Clínico Geral",
-  },
-  {
-    titulo: "Extrações",
-    texto: "Simples ou cirúrgica.",
-    categoria: "Clínico Geral",
-  },
-  {
-    titulo: "Aparelhos",
-    texto: "Trabalhamos com aparelhos dentários para fins estéticos e ortopédicos, prezando sempre pela saúde do seu sorriso.",
-    categoria: "Clínico Geral",
-  },
-];
+const hrefDoPost = (postId: string) => {
+  const post = posts.find((p) => p.data.id === postId);
+  return post ? `/blog/ver/${post.data.id}/${post.data.slug}` : "/blog";
+};
 
-const equipeIdsHome = [
-  "mario-eugenio-zaparoli--tres-lagoas",
-  "ana-laura-silva-balbino--tres-lagoas",
-  "valdemilson-dos-reis-rodrigues-filho--sao-jose-do-rio-preto",
-  "isabele-fernanda-boldrin--sao-jose-do-rio-preto",
-  "ademar-santana-neto--santa-fe-do-sul",
-  "pablo-henrique-frasson--santa-fe-do-sul",
+const destaques = [
+  { titulo: "Eleitas em 2007", texto: "As Sete Novas Maravilhas foram escolhidas em votação mundial organizada pela fundação New7Wonders." },
+  { titulo: "7 países", texto: "México, Brasil, Peru, Itália, Índia, China e Jordânia reúnem as sete maravilhas." },
+  { titulo: "4 continentes", texto: "América do Norte, América do Sul, Europa e Ásia: cada local com sua própria história." },
+  { titulo: "Maravilhas antigas", texto: "Das sete obras da lista clássica dos gregos, só a Grande Pirâmide de Gizé ainda está de pé." },
 ];
-const equipeHome = equipeIdsHome
-  .map((id) => equipe.find((p) => p.data.id === id))
-  .filter((p): p is NonNullable<typeof p> => Boolean(p));
 ---
 
 <Layout
-  title="Correia Odontologia — Clínicas em Santa Fé do Sul, Jales, Rio Preto, Votuporanga e Três Lagoas"
-  description="Correia Odontologia: atendimento humanizado, tecnologia de ponta e profissionais qualificados em Santa Fé do Sul, Jales, São José do Rio Preto, Votuporanga (SP) e Três Lagoas (MS)."
+  title="Maravilhas do Mundo — História e coordenadas das Sete Maravilhas do Mundo Moderno"
+  description="Conheça a história, a localização e as redes oficiais das Sete Maravilhas do Mundo Moderno: Chichén Itzá, Cristo Redentor, Machu Picchu, Coliseu, Taj Mahal, Muralha da China e Petra."
   path="/"
 >
-  <section class="relative" aria-label="Apresentação da Correia Odontologia">
-    <HeroVideo class="h-[320px] md:h-[440px] lg:h-[520px]" />
+  <section class="bg-rodape text-branco" aria-label="Apresentação do Maravilhas do Mundo">
+    <div class="mx-auto flex max-w-7xl flex-col items-start gap-6 px-4 py-20 lg:px-8 lg:py-28">
+      <p class="text-xs font-extrabold uppercase tracking-[0.18em] text-ouro-claro">Sete Maravilhas do Mundo Moderno</p>
+      <h1 class="max-w-3xl text-4xl font-extrabold leading-tight lg:text-5xl">
+        Histórias, coordenadas e curiosidades dos lugares mais incríveis do planeta
+      </h1>
+      <p class="max-w-2xl text-lg text-branco/90">
+        Do Cristo Redentor a Petra: explore cada maravilha no mapa, leia a sua história e descubra como se
+        preparar para visitá-la.
+      </p>
+      <div class="flex flex-wrap gap-3">
+        <a href="#maravilhas" class="btn btn-cta">Explorar as maravilhas</a>
+        <a href="/blog" class="btn btn-outline !border-branco !text-branco hover:!bg-branco hover:!text-rodape">Ler o blog</a>
+      </div>
+    </div>
   </section>
 
   <section class="mx-auto max-w-7xl px-4 py-14 lg:px-8">
@@ -68,7 +53,7 @@ const equipeHome = equipeIdsHome
       {destaques.map((d) => (
         <div class="card-dark">
           <h3 class="text-lg font-extrabold">{d.titulo}</h3>
-          <p class="text-sm">{d.texto} — <strong>{d.categoria}</strong></p>
+          <p class="text-sm">{d.texto}</p>
         </div>
       ))}
     </div>
@@ -76,192 +61,85 @@ const equipeHome = equipeIdsHome
 
   <section class="section-alt">
     <div class="mx-auto grid max-w-7xl gap-10 px-4 py-16 lg:grid-cols-2 lg:items-center lg:px-8">
-      <Image
-        src={correia1}
-        alt="Recepção da Clínica Correia Odontologia"
-        widths={[480, 768, 1024]}
-        sizes="(max-width: 1024px) 90vw, 45vw"
-        loading="eager"
-        decoding="async"
-        class="aspect-video w-full rounded-[var(--raio)] object-cover"
-      />
+      <PlaceholderImage alt="Mapa-múndi com as Sete Maravilhas do Mundo Moderno" ratio="wide" class="w-full" />
       <div>
         <p class="kicker">Quem somos</p>
-        <h2 class="section-title">Sobre nossa clínica</h2>
+        <h2 class="section-title">Sobre o projeto</h2>
         <p class="section-subtitle">
-          A Clínica Correia Odontologia surgiu no final de 2018. Temos compromisso constante com excelência em
-          atendimento, utilização das técnicas e tecnologias mais modernas da Odontologia e proporcionar uma vida
-          mais feliz aos nossos pacientes por meio de um novo sorriso.
+          O Maravilhas do Mundo reúne a história, a localização e as redes oficiais de cada uma das Sete Novas
+          Maravilhas do Mundo, além de um panorama das maravilhas do mundo antigo. Tudo em linguagem simples, para
+          quem quer aprender ou planejar uma viagem.
         </p>
         <a href="/sobre-nos" class="btn btn-outline mt-6 cursor-pointer">Ler mais</a>
       </div>
     </div>
   </section>
 
-  <section class="mx-auto max-w-7xl px-4 py-16 lg:px-8">
-    <div class="mb-10 flex flex-wrap items-end justify-between gap-4">
-      <div>
-        <p class="kicker">Nossos profissionais</p>
-        <h2 class="section-title">Conheça nossa equipe</h2>
-        <p class="section-subtitle">A Correia Odontologia conta com uma equipe de ponta para atender suas necessidades dentárias!</p>
-      </div>
-      <a href="/equipe" class="btn btn-outline cursor-pointer">Ver todos</a>
-    </div>
-    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-reveal>
-      {equipeHome.map((p) => {
-        const foto = fotoDoProfissional(p.data.id);
-        return (
-          <div class="card text-center">
-            {foto ? (
-              <Image
-                src={foto}
-                alt={`${p.data.nome}, ${p.data.especialidade} na Correia Odontologia`}
-                widths={[320, 480, 640]}
-                sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 30vw"
-                loading="lazy"
-                decoding="async"
-                class="mb-4 aspect-[4/5] w-full rounded-[var(--raio)] bg-superficie object-cover object-top"
-              />
-            ) : (
-              <PlaceholderImage alt={p.data.nome} ratio="portrait" class="mb-4 w-full" />
-            )}
-            <h3 class="text-base font-bold">{p.data.nome}</h3>
-            <p class="text-sm text-secundaria-forte">{p.data.especialidade}</p>
-            <p class="text-xs text-texto/60">{p.data.cro}</p>
-          </div>
-        );
-      })}
+  <section id="maravilhas" class="mx-auto max-w-7xl px-4 py-16 lg:px-8 scroll-mt-20">
+    <p class="kicker">As sete maravilhas</p>
+    <h2 class="section-title">Conheça cada maravilha</h2>
+    <p class="section-subtitle">Veja no mapa, leia a história e siga as redes oficiais de cada lugar.</p>
+
+    <div class="mt-10 grid gap-8">
+      {maravilhas.map((m) => <MaravilhaCard {...m.data} postHref={hrefDoPost(m.data.postId)} />)}
     </div>
   </section>
 
   <section class="section-alt">
     <div class="mx-auto max-w-7xl px-4 py-16 lg:px-8">
-      <p class="kicker">O que dizem de nós</p>
-      <h2 class="section-title">Depoimentos</h2>
-      <p class="section-subtitle max-w-3xl">
-        Na Clínica Correia Odontologia, a sua satisfação é a nossa prioridade. Sabemos que escolher um dentista é
-        uma decisão importante, por isso, ficamos felizes em compartilhar o que nossos pacientes falam sobre a gente.
-      </p>
-      <DepoimentosCarousel client:visible depoimentos={depoimentos.map((d) => d.data)} />
+      <div class="mb-10 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p class="kicker">Quem escreve</p>
+          <h2 class="section-title">Conheça nossa equipe</h2>
+          <p class="section-subtitle">Pesquisadores e guias que transformam cada lugar em uma boa história.</p>
+        </div>
+        <a href="/equipe" class="btn btn-outline cursor-pointer">Ver todos</a>
+      </div>
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-reveal>
+        {equipe.map((p) => {
+          const foto = fotoDoProfissional(p.data.id);
+          return (
+            <div class="card text-center">
+              {foto ? (
+                <Image
+                  src={foto}
+                  alt={`${p.data.nome}, ${p.data.especialidade}`}
+                  widths={[320, 480, 640]}
+                  sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 30vw"
+                  loading="lazy"
+                  decoding="async"
+                  class="mb-4 aspect-[4/5] w-full rounded-[var(--raio)] bg-superficie object-cover object-top"
+                />
+              ) : (
+                <PlaceholderImage alt={p.data.nome} ratio="portrait" class="mb-4 w-full" />
+              )}
+              <h3 class="text-base font-bold">{p.data.nome}</h3>
+              <p class="text-sm text-secundaria-forte">{p.data.especialidade}</p>
+              <p class="text-xs text-texto/60">{p.data.foco}</p>
+            </div>
+          );
+        })}
+      </div>
     </div>
   </section>
 
-  <section id="unidades" class="mx-auto max-w-7xl px-4 py-16 lg:px-8 scroll-mt-20">
-    <p class="kicker">Nossas unidades</p>
-    <h2 class="section-title">Conheça nossas clínicas</h2>
-    <p class="section-subtitle">E saiba onde as encontrar!</p>
-
-    <div class="mt-10 space-y-10">
-      {unidades.map((u) => {
-        const foto = fotoDaUnidade(u.data.id);
-        return (
-        <div
-          id={`unidade-${u.data.id}`}
-          class="scroll-mt-24 overflow-hidden rounded-[var(--raio)] border border-borda bg-white"
-        >
-          {/* Foto + mapa, lado a lado */}
-          <div class="grid lg:h-[440px] lg:grid-cols-2">
-            {foto ? (
-              <Image
-                src={foto}
-                alt={`Fachada da unidade ${u.data.cidade}`}
-                widths={[480, 640, 880]}
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                loading="lazy"
-                decoding="async"
-                class="aspect-video w-full object-cover lg:aspect-auto lg:h-full lg:min-h-0"
-              />
-            ) : (
-              <PlaceholderImage
-                alt={`Unidade ${u.data.cidade}`}
-                ratio="wide"
-                class="!rounded-none !border-0 lg:!aspect-auto lg:h-full lg:min-h-0"
-              />
-            )}
-            <iframe
-              src={mapaEmbedSrc(u.data)}
-              title={`Mapa da unidade ${u.data.cidade}`}
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              class="min-h-[240px] w-full border-0 lg:h-full lg:min-h-0"
-            />
-          </div>
-
-          {/* Conteúdo — ocupa a largura total do card */}
-          <div class="flex flex-col gap-5 p-6 lg:p-8">
-            <div>
-              <h3 class="text-lg font-extrabold text-secundaria-forte">
-                {u.data.cidade}{u.data.uf === "MS" ? " - MS" : ""}
-              </h3>
-              <p class="mt-2 text-sm text-texto">{u.data.descricao}</p>
-            </div>
-
-            <ul class="grid gap-2 text-sm text-texto/80 sm:grid-cols-2">
-              <li class="flex items-start gap-2">
-                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-secundaria" aria-hidden="true" client:load />
-                {u.data.endereco}
-              </li>
-              <li class="flex items-start gap-2">
-                <Clock className="mt-0.5 h-4 w-4 shrink-0 text-secundaria" aria-hidden="true" client:load />
-                <span>{u.data.horarios}</span>
-              </li>
-              <li class="flex items-center gap-2">
-                <Phone className="h-4 w-4 shrink-0 text-secundaria" aria-hidden="true" client:load />
-                <a
-                  href={linkTelefone(u.data.telefone)}
-                  class="cursor-pointer transition-colors duration-200 hover:text-primaria hover:underline"
-                >
-                  Telefone {u.data.telefone}
-                </a>
-              </li>
-            </ul>
-
-            <div class="flex flex-wrap gap-3">
-              <a
-                href={linkWhatsapp(u.data.whatsapp, `Olá! Gostaria de agendar uma consulta na unidade de ${u.data.cidade}.`)}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="flex min-h-11 flex-1 basis-[160px] cursor-pointer items-center justify-center gap-2 rounded-[var(--raio)] bg-[#25D366] px-5 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:brightness-90 active:translate-y-0 active:shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366] focus-visible:ring-offset-2"
-              >
-                <MessageCircle className="h-4 w-4 shrink-0" aria-hidden="true" client:load />
-                WhatsApp
-              </a>
-              <a
-                href={linkMaps(u.data)}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="flex min-h-11 flex-1 basis-[160px] cursor-pointer items-center justify-center gap-2 rounded-[var(--raio)] bg-[#EA4335] px-5 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:brightness-90 active:translate-y-0 active:shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#EA4335] focus-visible:ring-offset-2"
-              >
-                <Navigation className="h-4 w-4 shrink-0" aria-hidden="true" client:load />
-                Como chegar
-              </a>
-              {u.data.instagram && (
-                <a
-                  href={u.data.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="flex min-h-11 flex-1 basis-[160px] cursor-pointer items-center justify-center gap-2 rounded-[var(--raio)] bg-[linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5)] px-5 py-2.5 text-sm font-bold text-white transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:brightness-90 active:translate-y-0 active:shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d62976] focus-visible:ring-offset-2"
-                >
-                  <FaInstagram className="h-4 w-4 shrink-0" aria-hidden="true" client:load />
-                  Instagram
-                </a>
-              )}
-            </div>
-          </div>
-        </div>
-        );
-      })}
-    </div>
+  <section class="mx-auto max-w-7xl px-4 py-16 lg:px-8">
+    <p class="kicker">O que dizem de nós</p>
+    <h2 class="section-title">Depoimentos</h2>
+    <p class="section-subtitle max-w-3xl">
+      Viajantes, estudantes e professores contam como usam o Maravilhas do Mundo para aprender e planejar suas
+      viagens.
+    </p>
+    <DepoimentosCarousel client:visible depoimentos={depoimentos.map((d) => d.data)} />
   </section>
 
   <section class="section-alt">
     <div class="mx-auto max-w-7xl px-4 py-16 lg:px-8">
       <p class="kicker">Blog</p>
-      <h2 class="section-title">Últimas notícias</h2>
+      <h2 class="section-title">Histórias das maravilhas</h2>
       <p class="section-subtitle max-w-3xl">
-        Fique por dentro das novidades da Clínica Correia Odontologia! Encontre dicas de cuidados bucais, conheça
-        as últimas tecnologias em tratamentos, e leia sobre higiene oral e eventos interessantes do mundo da
-        odontologia e saúde.
+        Um artigo para cada maravilha, um panorama das Sete Maravilhas do Mundo Antigo e um texto sobre as
+        maravilhas perdidas, como a Biblioteca de Alexandria e os Jardins Suspensos da Babilônia.
       </p>
       <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-reveal>
         {posts.map((p) => {

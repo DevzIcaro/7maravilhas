@@ -1,0 +1,40 @@
+# Atualizações automáticas de dependências.
+# Abre PRs que passam pelo workflow de CI antes de qualquer merge.
+version: 2
+
+updates:
+  # Dependências do projeto (pnpm usa o ecossistema "npm").
+  - package-ecosystem: npm
+    directory: '/'
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+      timezone: America/Sao_Paulo
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: 'chore(deps)'
+      include: scope
+    groups:
+      # Agrupa patches/minors num PR só para reduzir ruído.
+      minor-e-patch:
+        update-types:
+          - minor
+          - patch
+    ignore:
+      # Majors de React/Astro entram manualmente, nunca por bot.
+      - dependency-name: astro
+        update-types: ['version-update:semver-major']
+      - dependency-name: react
+        update-types: ['version-update:semver-major']
+      - dependency-name: react-dom
+        update-types: ['version-update:semver-major']
+
+  # Versões das actions usadas nos workflows.
+  - package-ecosystem: github-actions
+    directory: '/'
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: 'chore(ci)'

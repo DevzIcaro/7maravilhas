@@ -3,57 +3,53 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Menu, X, ArrowRight, MapPin } from "lucide-react";
-import { irParaUnidade } from "../lib/scrollTo";
+import { irParaMaravilha } from "../lib/scrollTo";
 
 /**
  * Navbar — padrão limpo: logo | links | ações.
- * Substitui TopBar.astro + Header.astro.
- * Decisão aprovada: a barra de topo antiga (endereço, e-mail, redes e lista de
- * telefones das 5 unidades) foi REMOVIDA — esses dados vivem no rodapé e na
- * seção de unidades. Ver PROMPT, Seção 6.1.
  *
- * Menu de unidades: cada item leva à âncora `#unidade-<id>` da home com
+ * Menu de maravilhas: cada item leva à âncora `#maravilha-<id>` da home com
  * scroll suave e animado (src/lib/scrollTo.ts) — inclusive vindo de outra
  * página. No mobile, o painel do hambúrguer cobre a tela toda com rolagem
- * interna, para caber as 5 unidades confortavelmente em qualquer altura.
+ * interna, para caber as 7 maravilhas confortavelmente em qualquer altura.
  */
 
-interface Unidade {
+interface Maravilha {
   id: string;
-  cidade: string;
-  uf: string;
-  endereco?: string;
+  nome: string;
+  pais: string;
+  local: string;
 }
 
 interface NavbarProps {
   /** URL da logo — o Layout importa o asset e passa a URL */
   logoSrc: string;
-  /** Unidades vindas da content collection */
-  unidades: Unidade[];
+  /** Maravilhas vindas da content collection */
+  maravilhas: Maravilha[];
 }
 
 const LINKS = [
   { label: "Home", href: "/" },
   { label: "Sobre", href: "/sobre-nos" },
-  { label: "Serviços", href: "/servicos" },
+  { label: "Maravilhas", href: "/maravilhas" },
   { label: "Equipe", href: "/equipe" },
   { label: "Blog", href: "/blog" },
 ];
 
-export default function Navbar({ logoSrc, unidades }: NavbarProps) {
-  const [openUnidades, setOpenUnidades] = useState(false);
+export default function Navbar({ logoSrc, maravilhas }: NavbarProps) {
+  const [openMaravilhas, setOpenMaravilhas] = useState(false);
   const [openMobile, setOpenMobile] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setOpenUnidades(false);
+        setOpenMaravilhas(false);
       }
     };
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        setOpenUnidades(false);
+        setOpenMaravilhas(false);
         setOpenMobile(false);
       }
     };
@@ -75,10 +71,10 @@ export default function Navbar({ logoSrc, unidades }: NavbarProps) {
     };
   }, [openMobile]);
 
-  const handleUnidadeClick =
+  const handleMaravilhaClick =
     (id: string, fecharMenu: () => void) => (e: React.MouseEvent<HTMLAnchorElement>) => {
       fecharMenu();
-      irParaUnidade(id, e);
+      irParaMaravilha(id, e);
     };
 
   return (
@@ -88,8 +84,8 @@ export default function Navbar({ logoSrc, unidades }: NavbarProps) {
         className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-4 lg:px-8"
       >
         {/* Logo */}
-        <a href="/" className="flex shrink-0 items-center" aria-label="Correia Odontologia — página inicial">
-          <img src={logoSrc} alt="Correia Odontologia" className="h-8 w-auto" />
+        <a href="/" className="flex shrink-0 items-center" aria-label="Maravilhas do Mundo — página inicial">
+          <img src={logoSrc} alt="Maravilhas do Mundo" className="h-8 w-auto" />
         </a>
 
         {/* Links (desktop) */}
@@ -104,25 +100,25 @@ export default function Navbar({ logoSrc, unidades }: NavbarProps) {
             </a>
           ))}
 
-          {/* Dropdown de unidades */}
+          {/* Dropdown de maravilhas */}
           <div className="relative" ref={dropdownRef}>
             <button
               type="button"
-              onClick={() => setOpenUnidades((v) => !v)}
-              aria-expanded={openUnidades}
+              onClick={() => setOpenMaravilhas((v) => !v)}
+              aria-expanded={openMaravilhas}
               aria-haspopup="true"
               className="flex cursor-pointer items-center gap-1 text-sm font-medium text-texto transition-colors duration-200 hover:text-primaria"
             >
-              Unidades
+              Explorar
               <ChevronDown
                 size={16}
-                className={`transition-transform duration-200 ${openUnidades ? "rotate-180" : ""}`}
+                className={`transition-transform duration-200 ${openMaravilhas ? "rotate-180" : ""}`}
                 aria-hidden="true"
               />
             </button>
 
             <AnimatePresence>
-              {openUnidades && (
+              {openMaravilhas && (
                 <motion.div
                   initial={{ opacity: 0, y: -6 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -131,20 +127,18 @@ export default function Navbar({ logoSrc, unidades }: NavbarProps) {
                   className="absolute left-1/2 mt-3 w-72 -translate-x-1/2 overflow-hidden rounded-[var(--raio)] border border-borda bg-white shadow-lg"
                 >
                   <ul className="max-h-[60vh] overflow-y-auto py-2">
-                    {unidades.map((u) => (
-                      <li key={u.id}>
+                    {maravilhas.map((m) => (
+                      <li key={m.id}>
                         <a
-                          href={`/#unidade-${u.id}`}
-                          onClick={handleUnidadeClick(u.id, () => setOpenUnidades(false))}
+                          href={`/#maravilha-${m.id}`}
+                          onClick={handleMaravilhaClick(m.id, () => setOpenMaravilhas(false))}
                           className="flex cursor-pointer items-start justify-between gap-3 px-4 py-2.5 text-sm text-texto transition-colors duration-200 hover:bg-superficie hover:text-secundaria-forte"
                         >
                           <span>
-                            <span className="block font-medium">{u.cidade}</span>
-                            {u.endereco && (
-                              <span className="mt-0.5 block text-xs text-texto/55">{u.endereco}</span>
-                            )}
+                            <span className="block font-medium">{m.nome}</span>
+                            <span className="mt-0.5 block text-xs text-texto/55">{m.local}</span>
                           </span>
-                          <span className="shrink-0 text-xs text-secundaria">{u.uf}</span>
+                          <span className="shrink-0 text-xs text-secundaria">{m.pais}</span>
                         </a>
                       </li>
                     ))}
@@ -174,7 +168,7 @@ export default function Navbar({ logoSrc, unidades }: NavbarProps) {
             data-booking-trigger
             className="flex cursor-pointer items-center gap-2 rounded-[var(--raio)] bg-cta px-4 py-2.5 text-sm font-bold text-texto transition-all duration-200 hover:brightness-95"
           >
-            Agende sua consulta
+            Planeje sua visita
             <ArrowRight size={16} aria-hidden="true" />
           </a>
         </div>
@@ -235,14 +229,14 @@ export default function Navbar({ logoSrc, unidades }: NavbarProps) {
                 transition={{ duration: 0.32, ease: "easeOut" }}
                 className="mb-1 mt-6 text-xs font-bold uppercase tracking-[0.16em] text-secundaria"
               >
-                Escolha sua unidade
+                Escolha uma maravilha
               </motion.p>
 
-              {unidades.map((u) => (
+              {maravilhas.map((m) => (
                 <motion.a
-                  key={u.id}
-                  href={`/#unidade-${u.id}`}
-                  onClick={handleUnidadeClick(u.id, () => setOpenMobile(false))}
+                  key={m.id}
+                  href={`/#maravilha-${m.id}`}
+                  onClick={handleMaravilhaClick(m.id, () => setOpenMobile(false))}
                   variants={{
                     hidden: { opacity: 0, y: 14 },
                     show: { opacity: 1, y: 0 },
@@ -257,10 +251,10 @@ export default function Navbar({ logoSrc, unidades }: NavbarProps) {
                   />
                   <span className="min-w-0 grow">
                     <span className="flex items-baseline gap-2">
-                      <span className="text-sm font-semibold">{u.cidade}</span>
-                      <span className="text-xs text-secundaria">{u.uf}</span>
+                      <span className="text-sm font-semibold">{m.nome}</span>
+                      <span className="text-xs text-secundaria">{m.pais}</span>
                     </span>
-                    {u.endereco && <span className="block truncate text-xs text-texto/55">{u.endereco}</span>}
+                    <span className="block truncate text-xs text-texto/55">{m.local}</span>
                   </span>
                   <ArrowRight
                     size={16}
@@ -290,7 +284,7 @@ export default function Navbar({ logoSrc, unidades }: NavbarProps) {
                   onClick={() => setOpenMobile(false)}
                   className="flex cursor-pointer items-center justify-center gap-2 rounded-[var(--raio)] bg-cta px-4 py-3 text-sm font-bold text-texto"
                 >
-                  Agende sua consulta
+                  Planeje sua visita
                   <ArrowRight size={16} aria-hidden="true" />
                 </a>
               </motion.div>

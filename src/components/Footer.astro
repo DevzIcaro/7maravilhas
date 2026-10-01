@@ -5,27 +5,19 @@ import { Image } from "astro:assets";
 import logo from "../assets/logo.svg";
 import FacebookIcon from "./icons/FacebookIcon.astro";
 import InstagramIcon from "./icons/InstagramIcon.astro";
+import { contato } from "../lib/contato";
 
-/**
- * Rodapé reorganizado (decisão aprovada — ver PROMPT, Seção 6.5.1).
- * O rodapé antigo repetia, para cada uma das 5 unidades: telefone, WhatsApp,
- * horários completos, endereço e redes, além do mapa incorporado.
- * Mantemos o NAP (nome, endereço, telefone) das 5 unidades — relevante para
- * SEO local — e movemos horários e mapa para a seção de unidades na home.
- */
-
-const unidades = (await getCollection("unidades")).sort((a, b) => a.data.ordem - b.data.ordem);
+const maravilhas = (await getCollection("maravilhas")).sort((a, b) => a.data.ordem - b.data.ordem);
 
 const navegacao = [
   { label: "Home", href: "/" },
-  { label: "Sobre nós", href: "/sobre-nos" },
-  { label: "Serviços", href: "/servicos" },
+  { label: "Sobre", href: "/sobre-nos" },
+  { label: "Maravilhas", href: "/maravilhas" },
   { label: "Equipe", href: "/equipe" },
   { label: "Blog", href: "/blog" },
   { label: "Fale conosco", href: "/fale-conosco" },
 ];
 
-const apenasDigitos = (v: string) => v.replace(/\D/g, "");
 const anoAtual = new Date().getFullYear();
 ---
 
@@ -34,30 +26,36 @@ const anoAtual = new Date().getFullYear();
     <div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
       <!-- Marca -->
       <div>
-        <Image src={logo} alt="Correia Odontologia" width={212} height={34} class="mb-4 h-9 w-auto" />
+        <Image src={logo} alt="Maravilhas do Mundo" width={212} height={34} class="mb-4 h-9 w-auto" />
         <p class="max-w-xs text-sm leading-relaxed text-branco/90">
-          Desde 2018 cuidando do seu sorriso, com atendimento humanizado em cinco cidades.
+          Histórias, curiosidades e coordenadas das Sete Maravilhas do Mundo Moderno, em quatro continentes.
         </p>
-        <div class="mt-5 flex gap-3">
-          <a
-            href="https://www.facebook.com/clinica.correia"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Facebook da Correia Odontologia"
-            class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-[var(--raio)] border border-branco/25 text-branco transition-colors duration-200 hover:border-ouro-claro hover:text-ouro-claro"
-          >
-            <FacebookIcon class="h-4 w-4" />
-          </a>
-          <a
-            href="https://www.instagram.com/clinica.correia/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Instagram da Correia Odontologia"
-            class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-[var(--raio)] border border-branco/25 text-branco transition-colors duration-200 hover:border-ouro-claro hover:text-ouro-claro"
-          >
-            <InstagramIcon class="h-4 w-4" />
-          </a>
-        </div>
+        {(contato.facebook || contato.instagram) && (
+          <div class="mt-5 flex gap-3">
+            {contato.facebook && (
+              <a
+                href={contato.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook do Maravilhas do Mundo"
+                class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-[var(--raio)] border border-branco/25 text-branco transition-colors duration-200 hover:border-ouro-claro hover:text-ouro-claro"
+              >
+                <FacebookIcon class="h-4 w-4" />
+              </a>
+            )}
+            {contato.instagram && (
+              <a
+                href={contato.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram do Maravilhas do Mundo"
+                class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-[var(--raio)] border border-branco/25 text-branco transition-colors duration-200 hover:border-ouro-claro hover:text-ouro-claro"
+              >
+                <InstagramIcon class="h-4 w-4" />
+              </a>
+            )}
+          </div>
+        )}
       </div>
 
       <!-- Navegação -->
@@ -77,24 +75,46 @@ const anoAtual = new Date().getFullYear();
         </ul>
       </nav>
 
-      <!-- Unidades (NAP compacto) -->
+      <!-- Maravilhas -->
       <div>
-        <p class="footer-title mb-4 text-xs font-extrabold uppercase tracking-[0.18em]">Unidades</p>
+        <p class="footer-title mb-4 text-xs font-extrabold uppercase tracking-[0.18em]">Maravilhas</p>
         <ul class="space-y-3.5">
-          {unidades.map((u) => (
+          {maravilhas.map((m) => (
             <li class="text-sm leading-snug">
-              <span class="font-semibold text-branco">
-                {u.data.cidade} <span class="text-xs text-branco/70">{u.data.uf}</span>
-              </span>
-              <br />
-              <span class="text-branco/85">{u.data.endereco}</span>
-              <br />
               <a
-                href={`tel:+55${apenasDigitos(u.data.telefone)}`}
-                class="cursor-pointer text-branco/90 transition-colors duration-200 hover:text-ouro-claro"
+                href={`/#maravilha-${m.data.id}`}
+                class="cursor-pointer font-semibold text-branco transition-colors duration-200 hover:text-ouro-claro"
               >
-                {u.data.telefone}
+                {m.data.nome}
               </a>
+              <br />
+              <span class="text-xs text-branco/75">{m.data.local} · {m.data.pais}</span>
+              {(m.data.facebook || m.data.instagram) && (
+                <span class="mt-1 flex gap-3">
+                  {m.data.facebook && (
+                    <a
+                      href={m.data.facebook}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Facebook de ${m.data.nome}`}
+                      class="cursor-pointer text-branco/80 transition-colors duration-200 hover:text-ouro-claro"
+                    >
+                      <FacebookIcon class="h-3.5 w-3.5" />
+                    </a>
+                  )}
+                  {m.data.instagram && (
+                    <a
+                      href={m.data.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Instagram de ${m.data.nome}`}
+                      class="cursor-pointer text-branco/80 transition-colors duration-200 hover:text-ouro-claro"
+                    >
+                      <InstagramIcon class="h-3.5 w-3.5" />
+                    </a>
+                  )}
+                </span>
+              )}
             </li>
           ))}
         </ul>
@@ -104,20 +124,22 @@ const anoAtual = new Date().getFullYear();
       <div>
         <p class="footer-title mb-4 text-xs font-extrabold uppercase tracking-[0.18em]">Fale com a gente</p>
 
-        <a
-          href="mailto:agendamento@correiaodontologia.com.br"
-          class="mb-3 flex cursor-pointer items-start gap-2.5 text-sm text-branco/90 transition-colors duration-200 hover:text-branco"
-        >
-          <Mail className="mt-0.5 h-4 w-4 shrink-0 text-ouro-claro" aria-hidden="true" />
-          <span class="break-all">agendamento@correiaodontologia.com.br</span>
-        </a>
+        {contato.email && (
+          <a
+            href={`mailto:${contato.email}`}
+            class="mb-3 flex cursor-pointer items-start gap-2.5 text-sm text-branco/90 transition-colors duration-200 hover:text-branco"
+          >
+            <Mail className="mt-0.5 h-4 w-4 shrink-0 text-ouro-claro" aria-hidden="true" />
+            <span class="break-all">{contato.email}</span>
+          </a>
+        )}
 
         <a
-          href="/#unidades"
+          href="/#maravilhas"
           class="mb-5 flex cursor-pointer items-start gap-2.5 text-sm text-branco/90 transition-colors duration-200 hover:text-branco"
         >
           <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-ouro-claro" aria-hidden="true" />
-          <span>Ver todas as unidades e horários</span>
+          <span>Ver todas as maravilhas no mapa</span>
         </a>
 
         <a
@@ -131,33 +153,20 @@ const anoAtual = new Date().getFullYear();
           data-booking-trigger
           class="flex cursor-pointer items-center justify-center gap-2 rounded-[var(--raio)] bg-cta px-4 py-3 text-sm font-bold text-texto transition-all duration-200 hover:brightness-95"
         >
-          Agende sua consulta
+          Planeje sua visita
           <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </a>
       </div>
     </div>
   </div>
 
-  <!-- Barra inferior — informação legal obrigatória (CRO / responsável técnica) -->
+  <!-- Barra inferior -->
   <div class="border-t border-branco/10">
     <div
       class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 py-6 text-center text-xs text-branco/75 md:flex-row md:text-left lg:px-8"
     >
-      <p>
-        © {anoAtual} Correia Odontologia. Todos os direitos reservados. CRO-SP: 20.917 · RT Dra. Leticia S. M.
-        Correia CRO/SP 129.476
-      </p>
-      <p>
-        Desenvolvido por
-        <a
-          href="https://wa.me/5517992641230"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="cursor-pointer font-semibold text-branco/90 transition-colors duration-200 hover:text-ouro-claro"
-        >
-          Ícaro Carneiro
-        </a>
-      </p>
+      <p>© {anoAtual} Maravilhas do Mundo. Todos os direitos reservados.</p>
+      <p>Desenvolvido por <span class="font-semibold text-branco/90">Ícaro Carneiro</span></p>
     </div>
   </div>
 </footer>

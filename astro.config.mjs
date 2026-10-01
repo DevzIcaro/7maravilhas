@@ -5,10 +5,15 @@ import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
+// Em CI (GitHub Pages) o workflow injeta SITE_URL e BASE_PATH a partir da
+// própria configuração do Pages. Localmente e na Hostinger valem os padrões.
+const site = process.env.SITE_URL || 'https://correiaodontologia.com.br';
+const base = process.env.BASE_PATH || '/';
+
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://correiaodontologia.com.br',
-  base: '/',
+  site,
+  base,
   integrations: [react(), sitemap()],
   vite: {
     plugins: [tailwindcss()]

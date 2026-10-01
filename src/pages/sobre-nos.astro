@@ -1,52 +1,53 @@
 ---
 import { getCollection } from "astro:content";
 import { getImage } from "astro:assets";
-import { Camera, Tv, Wifi, Armchair } from "lucide-react";
+import { Map as Mapa, BookOpen, Compass, Landmark } from "lucide-react";
 import Layout from "../layouts/Layout.astro";
-import { fotoDaUnidade } from "../lib/unidadeFotos";
+import PlaceholderImage from "../components/PlaceholderImage.astro";
+import { fotoDaMaravilha } from "../lib/maravilhaFotos";
 import SobreNosCarousel from "../components/SobreNosCarousel";
 
 const diferenciais = [
   {
-    icon: Camera,
-    titulo: "Câmera Intra Oral",
-    texto: "Permite ver todos os detalhes que precisam ser feitos em seus dentes, na hora e você confere na TV. Diferentemente dos espelhos convencionais.",
+    icon: Mapa,
+    titulo: "Coordenadas e mapa",
+    texto: "Cada maravilha tem coordenadas exatas, mapa incorporado e link de rota para você chegar lá.",
   },
   {
-    icon: Tv,
-    titulo: "Escolha o Som",
-    texto: "Três salas equipadas com TV's no teto e parede, onde você escolhe o que quer assistir e ouvir durante o tratamento!",
+    icon: BookOpen,
+    titulo: "História detalhada",
+    texto: "Um artigo para cada lugar: quem construiu, quando, como e por que ele ficou famoso.",
   },
   {
-    icon: Wifi,
-    titulo: "Wifi",
-    texto: "Navegue enquanto espera",
+    icon: Landmark,
+    titulo: "Maravilhas antigas",
+    texto: "Um panorama das sete obras do mundo antigo e o que restou de cada uma delas.",
   },
   {
-    icon: Armchair,
-    titulo: "Conforto",
-    texto: "Ambiente aconchegante e climatizado",
+    icon: Compass,
+    titulo: "Redes oficiais",
+    texto: "Links para os perfis oficiais de cada local, quando disponíveis, para acompanhar novidades.",
   },
 ];
 
-// Carousel do topo: fotos de fachada das 5 unidades (src/lib/unidadeFotos.ts)
-const unidades = (await getCollection("unidades")).sort((a, b) => a.data.ordem - b.data.ordem);
+// Carousel do topo: fotos das maravilhas (src/lib/maravilhaFotos.ts). Sem fotos, usa o placeholder.
+const maravilhas = (await getCollection("maravilhas")).sort((a, b) => a.data.ordem - b.data.ordem);
 const slides = await Promise.all(
-  unidades
-    .flatMap((u) => {
-      const foto = fotoDaUnidade(u.data.id);
-      return foto ? [{ foto, cidade: u.data.cidade }] : [];
+  maravilhas
+    .flatMap((m) => {
+      const foto = fotoDaMaravilha(m.data.id);
+      return foto ? [{ foto, nome: m.data.nome }] : [];
     })
-    .map(async ({ foto, cidade }) => {
+    .map(async ({ foto, nome }) => {
       const img = await getImage({ src: foto, width: 880 });
-      return { src: img.src, alt: `Fachada da unidade Correia Odontologia em ${cidade}` };
+      return { src: img.src, alt: `${nome}` };
     })
 );
 ---
 
 <Layout
-  title="Sobre Nós — Correia Odontologia"
-  description="Conheça a história da Correia Odontologia e os diferenciais das clínicas em Santa Fé do Sul, Jales, São José do Rio Preto, Votuporanga e Três Lagoas."
+  title="Sobre Nós — Maravilhas do Mundo"
+  description="Conheça o projeto Maravilhas do Mundo e como reunimos história, coordenadas e redes oficiais das Sete Maravilhas do Mundo Moderno."
   path="/sobre-nos"
 >
   <section class="mx-auto max-w-7xl px-4 py-10 lg:px-8">
@@ -55,15 +56,19 @@ const slides = await Promise.all(
     </nav>
 
     <div class="grid gap-8 lg:grid-cols-2 lg:items-center">
-      <SobreNosCarousel client:visible slides={slides} />
+      {slides.length > 0 ? (
+        <SobreNosCarousel client:visible slides={slides} />
+      ) : (
+        <PlaceholderImage alt="Fotos das Sete Maravilhas do Mundo Moderno" ratio="wide" class="w-full" />
+      )}
       <div>
         <p class="kicker">Quem somos</p>
         <h1 class="section-title">Sobre Nós</h1>
         <p class="text-texto">
-          A Clínica Correia Odontologia surgiu no final de 2018. Temos compromisso constante com excelência em
-          atendimento, utilização das técnicas e tecnologias mais modernas da Odontologia e proporcionar uma vida
-          mais feliz aos nossos pacientes por meio de um novo sorriso. Oferecemos todos os tipos de tratamentos e
-          contamos com nosso grande diferencial: Atendimento humanizado!
+          O Maravilhas do Mundo nasceu para reunir, em um só lugar, a história, a localização e as redes oficiais
+          das Sete Novas Maravilhas do Mundo, eleitas em 2007: Chichén Itzá, Cristo Redentor, Machu Picchu,
+          Coliseu, Taj Mahal, Muralha da China e Petra. Também contamos a história das maravilhas do mundo antigo,
+          com uma meta simples: explicar tudo de forma clara e despertar a vontade de conhecer cada lugar.
         </p>
       </div>
     </div>
@@ -71,8 +76,8 @@ const slides = await Promise.all(
 
   <section class="section-alt">
     <div class="mx-auto max-w-7xl px-4 py-16 lg:px-8">
-      <p class="kicker">Por que escolher a Correia</p>
-      <h2 class="section-title">Diferenciais</h2>
+      <p class="kicker">Por que acompanhar</p>
+      <h2 class="section-title">O que você encontra aqui</h2>
       <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" data-reveal>
         {diferenciais.map((d) => {
           const Icon = d.icon;

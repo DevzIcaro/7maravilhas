@@ -1,108 +1,560 @@
 [
   {
+    "id": "1",
+    "numero": 1,
+    "slug": "chichen-itza-a-cidade-maia-dos-itza",
+    "titulo": "Chichén Itzá: a cidade maia que media o tempo com a luz do sol",
+    "data": "2026-09-01T10:00:00",
+    "resumo": "História, construção e importância da grande cidade maia de Yucatán, da pirâmide de Kukulkán ao Cenote Sagrado.",
+    "autor": "Redação",
+    "corpo": [
+      {
+        "type": "p",
+        "text": "Chichén Itzá fica no norte da península de Yucatán, no México, e foi um dos maiores centros políticos, religiosos e comerciais do mundo maia. O nome costuma ser traduzido como \"na boca do poço dos itzás\": a região não tem rios de superfície, e os cenotes, cavernas de calcário inundadas, eram a principal fonte de água e também locais sagrados."
+      },
+      {
+        "type": "h2",
+        "text": "Contexto histórico"
+      },
+      {
+        "type": "p",
+        "text": "A ocupação do sítio começou por volta do século VI d.C., mas o auge da cidade é situado entre os séculos IX e XII. Nesse período, Chichén Itzá controlou rotas de comércio que ligavam o interior de Yucatán à costa, por onde circulavam sal, cerâmica, obsidiana, jade e ouro. A arquitetura mistura o estilo maia tradicional, visível na parte mais antiga do sítio, com elementos associados ao centro do México, como colunas esculpidas com guerreiros e imagens de serpentes emplumadas. Os historiadores ainda debatem se isso resulta de migrações, de contato comercial ou de uma troca cultural."
+      },
+      {
+        "type": "p",
+        "text": "A partir do século XIII, o poder político passou para outras cidades, como Mayapán, e Chichén Itzá deixou de ser a capital regional. O local, porém, nunca foi esquecido: continuou a receber peregrinos e oferendas no Cenote Sagrado até a chegada dos espanhóis, no século XVI."
+      },
+      {
+        "type": "h2",
+        "text": "Como foi construída"
+      },
+      {
+        "type": "p",
+        "text": "Os maias não usavam ferramentas de metal para esculpir pedra, nem o arado ou a roda para transportar cargas. As construções foram feitas com blocos de calcário talhados com ferramentas de pedra, assentados com argamassa de cal e, em muitos edifícios, cobertos com estuque pintado em cores vivas. A cal era produzida queimando calcário em grandes fornos, o que exigia enorme quantidade de lenha."
+      },
+      {
+        "type": "p",
+        "text": "A pirâmide de Kukulkán, conhecida como El Castillo, tem cerca de 30 metros de altura, contando o templo no topo, e nove plataformas escalonadas. Cada uma das quatro escadarias tem 91 degraus; somados à plataforma superior, chega-se a 365, o número de dias do ano solar. Por dentro, há uma pirâmide mais antiga, menor, que foi encoberta pela construção posterior, prática comum entre os maias, que reconstruíam seus templos sobre os anteriores."
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Efeito da serpente: nos equinócios de março e setembro, a luz do sol cria sombras triangulares na balaustrada norte que lembram uma serpente descendo a escadaria.",
+          "Grande Campo de Jogo de Bola: o maior da Mesoamérica, com cerca de 168 metros de comprimento, onde se praticava um jogo ritual.",
+          "El Caracol: edifício circular de janelas alinhadas a eventos astronômicos, como o movimento de Vênus.",
+          "Cenote Sagrado: poço natural onde foram encontrados objetos de ouro, jade e cerâmica lançados como oferenda."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Por que é importante"
+      },
+      {
+        "type": "p",
+        "text": "Chichén Itzá mostra o grau de conhecimento dos maias em astronomia, matemática e engenharia. A pirâmide de Kukulkán funciona ao mesmo tempo como templo, calendário e marco astronômico. O sítio também é um dos exemplos mais claros de como culturas diferentes se influenciaram na América antes da chegada dos europeus."
+      },
+      {
+        "type": "h2",
+        "text": "Hoje"
+      },
+      {
+        "type": "p",
+        "text": "O sítio é administrado pelo Instituto Nacional de Antropologia e História (INAH) do México e é Patrimônio Mundial da UNESCO desde 1988. Desde 2006 não é mais permitido subir em El Castillo, para proteger os degraus. Chichén Itzá foi eleita uma das Sete Novas Maravilhas do Mundo em 2007."
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "numero": 2,
+    "slug": "cristo-redentor-um-simbolo-no-corcovado",
+    "titulo": "Cristo Redentor: como nasceu o símbolo do Rio de Janeiro",
+    "data": "2026-09-02T10:00:00",
+    "resumo": "Da ideia no século XIX à inauguração em 1931: construção, engenharia e importância da estátua do Corcovado.",
+    "autor": "Redação",
+    "corpo": [
+      {
+        "type": "p",
+        "text": "O Cristo Redentor ergue-se a 710 metros de altitude, no topo do morro do Corcovado, dentro do Parque Nacional da Tijuca, no Rio de Janeiro. É o maior símbolo do Brasil no exterior e uma das esculturas art déco mais famosas do mundo."
+      },
+      {
+        "type": "h2",
+        "text": "Contexto histórico"
+      },
+      {
+        "type": "p",
+        "text": "A ideia de um monumento religioso no Corcovado surgiu ainda no Império: em 1859, o padre Pedro Maria Boss propôs à princesa Isabel uma grande estátua cristã no morro, mas o projeto não saiu do papel. Com a Proclamação da República, em 1889, a Igreja foi separada do Estado, e a ideia só voltou à tona na década de 1920, quando o Círculo Católico do Rio de Janeiro organizou uma campanha popular para levantar fundos e erguer o monumento, em comemoração ao centenário da Independência, em 1922."
+      },
+      {
+        "type": "p",
+        "text": "A campanha arrecadou doações de fiéis de todo o país. A obra ficou sob responsabilidade do engenheiro Heitor da Silva Costa, com concepção artística de Carlos Oswald, escultura do francês Paul Landowski e colaboração do engenheiro francês Albert Caquot. O rosto da estátua é atribuído ao escultor romeno Gheorghe Leonida."
+      },
+      {
+        "type": "h2",
+        "text": "Como foi construída"
+      },
+      {
+        "type": "p",
+        "text": "A construção levou de 1922 a 1931. O desafio era enorme: erguer uma escultura gigantesca no alto de um morro de difícil acesso. Os materiais subiam pelo trem do Corcovado, uma ferrovia de cremalheira inaugurada em 1884, e os operários trabalhavam em andaimes pendurados na encosta."
+      },
+      {
+        "type": "p",
+        "text": "A estrutura é de concreto armado, material moderno para a época e capaz de resistir aos ventos fortes do topo. Sobre ela foi aplicado um revestimento de pequenas peças triangulares de pedra-sabão (esteatito), extraída em Minas Gerais. A pedra-sabão é macia o bastante para ser cortada em formas precisas e, ao mesmo tempo, resistente a chuva e variações de temperatura. A cabeça e as mãos foram modeladas em argila por Landowski, na França, e depois reproduzidas em partes."
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Altura: cerca de 30 metros, sem contar o pedestal de 8 metros.",
+          "Envergadura: aproximadamente 28 metros de uma mão à outra.",
+          "Peso: cerca de 635 toneladas.",
+          "Inauguração: 12 de outubro de 1931, com uma capela dedicada a Nossa Senhora Aparecida na base."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Por que é importante"
+      },
+      {
+        "type": "p",
+        "text": "O Cristo Redentor reúne fé, engenharia e identidade nacional. Foi concluído em apenas nove anos, apesar das condições do terreno, e se tornou o cartão-postal do Rio de Janeiro. Para milhões de pessoas, é um ponto de peregrinação; para outros, um mirante com uma das vistas mais famosas do planeta, sobre a Baía de Guanabara, o Pão de Açúcar e a Lagoa Rodrigo de Freitas."
+      },
+      {
+        "type": "h2",
+        "text": "Hoje"
+      },
+      {
+        "type": "p",
+        "text": "A estátua passa por manutenção regular, porque é frequentemente atingida por raios. Em 2014, uma tempestade danificou os dedos da mão direita, que foram restaurados. O monumento foi eleito uma das Sete Novas Maravilhas do Mundo em 2007."
+      }
+    ]
+  },
+  {
     "id": "3",
     "numero": 3,
-    "slug": "dentes-brancos-e-saudaveis-dicas-para-um-sorriso-radiante",
-    "titulo": "Dentes brancos e saudáveis: Dicas para um sorriso radiante",
-    "data": "2024-03-04T16:57:00",
-    "resumo": "Aprenda dicas simples e eficazes para manter seus dentes brancos e saudáveis, desde a escovação correta até a escolha da pasta de dente ideal.",
-    "imagem": "noticias-3_50509201.png",
-    "autor": "Suporte",
+    "slug": "machu-picchu-a-cidadela-inca-nas-nuvens",
+    "titulo": "Machu Picchu: a cidadela inca escondida entre as nuvens",
+    "data": "2026-09-03T10:00:00",
+    "resumo": "Por que os incas construíram Machu Picchu, como ergueram a cidade em pedra e como ela ficou conhecida no mundo.",
+    "autor": "Redação",
     "corpo": [
-      { "type": "p", "text": "Um sorriso bonito e saudável é um importante cartão de visitas. Para conquistar essa meta, alguns cuidados básicos são essenciais. Neste artigo, você encontrará dicas valiosas para manter seus dentes brancos e saudáveis:" },
-      { "type": "ul", "items": [
-        "Escove os dentes pelo menos três vezes ao dia, com movimentos circulares e por no mínimo dois minutos.",
-        "Utilize fio dental diariamente para remover restos de alimentos entre os dentes.",
-        "Visite seu dentista regularmente para realizar limpezas e exames preventivos.",
-        "Evite o consumo excessivo de alimentos e bebidas que mancham os dentes, como café, chá, vinho e refrigerantes.",
-        "Opte por uma pasta de dente com flúor, que ajuda a fortalecer os dentes e prevenir cáries.",
-        "Consulte um dentista para saber se você é um candidato ao clareamento dental profissional."
-      ] }
+      {
+        "type": "p",
+        "text": "Machu Picchu fica na cordilheira dos Andes, na região de Cusco, no Peru, a cerca de 2.430 metros de altitude, sobre uma crista de montanha entre os picos Machu Picchu (\"montanha velha\") e Huayna Picchu (\"montanha jovem\"). Está sobre o vale do rio Urubamba, em meio à floresta de nuvens."
+      },
+      {
+        "type": "h2",
+        "text": "Contexto histórico"
+      },
+      {
+        "type": "p",
+        "text": "Acredita-se que a cidadela tenha sido construída por ordem do imperador inca Pachacútec, que governou a partir de cerca de 1438 e expandiu o Tahuantinsuyo, o império dos incas. A função mais aceita é a de propriedade real, uma espécie de retiro do imperador e de sua família, com templos, residências e áreas agrícolas. Datações por radiocarbono publicadas em 2021 sugerem que o local já era ocupado por volta de 1420, mais cedo do que se pensava."
+      },
+      {
+        "type": "p",
+        "text": "O Império Inca caiu diante dos espanhóis a partir de 1532. Machu Picchu foi abandonada por volta de 1572, em meio à conquista e às epidemias de doenças trazidas da Europa. Os conquistadores nunca a encontraram, o que ajudou a preservá-la."
+      },
+      {
+        "type": "h2",
+        "text": "Como foi construída"
+      },
+      {
+        "type": "p",
+        "text": "Os incas aproveitaram a própria montanha: o granito foi extraído de uma pedreira no local, o que reduziu o transporte de material. As pedras foram lavradas e encaixadas com tanta precisão que dispensam argamassa, técnica que ajuda as paredes a resistirem aos terremotos comuns na região. Portas e janelas trapezoidais, mais largas na base, também aumentam a estabilidade."
+      },
+      {
+        "type": "p",
+        "text": "Os terraços agrícolas (andenes) estabilizam as encostas e permitem o cultivo em declives. Eles têm camadas de pedras, cascalho, areia e terra, que drenam a água das chuvas e evitam deslizamentos. Canais de pedra levam a água de uma nascente até as fontes da cidade, e a drenagem foi projetada para lidar com chuvas intensas."
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Intihuatana: pedra ritual associada à observação do sol.",
+          "Templo do Sol: construção semicircular com alvenaria refinada e janela alinhada ao solstício de inverno no hemisfério sul.",
+          "Templo das Três Janelas: parede com três grandes janelas trapezoidais.",
+          "Setor agrícola e urbano: a cidade se divide em áreas de cultivo e áreas de moradia e cerimônias."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Por que é importante"
+      },
+      {
+        "type": "p",
+        "text": "Machu Picchu é um dos melhores exemplos da engenharia e do planejamento territorial dos incas, que não conheciam a roda para transporte nem a escrita alfabética, mas construíram estradas, pontes e cidades em terrenos extremos. O sítio também revela como a religião e a observação do céu estavam ligadas à vida cotidiana."
+      },
+      {
+        "type": "h2",
+        "text": "Redescoberta e hoje"
+      },
+      {
+        "type": "p",
+        "text": "Em 1911, o explorador norte-americano Hiram Bingham, da Universidade de Yale, chegou ao local guiado por moradores e divulgou Machu Picchu internacionalmente, embora as famílias da região já conhecessem o lugar. Parte das peças levadas para os Estados Unidos foi devolvida ao Peru nas décadas seguintes. Machu Picchu foi declarada Patrimônio Mundial da UNESCO em 1983 e eleita uma das Sete Novas Maravilhas do Mundo em 2007. Hoje o número diário de visitantes é limitado para proteger as estruturas."
+      }
     ]
   },
   {
     "id": "4",
     "numero": 4,
-    "slug": "a-importancia-da-odontopediatria-para-a-saude-bucal-das-criancas",
-    "titulo": "A importância da odontopediatria para a saúde bucal das crianças",
-    "data": "2024-03-04T17:14:00",
-    "resumo": "Entenda como a odontopediatria pode prevenir problemas bucais e garantir um sorriso saudável para seus filhos.",
-    "imagem": "noticias-4_140516222.png",
-    "autor": "Suporte",
+    "slug": "coliseu-o-grande-anfiteatro-de-roma",
+    "titulo": "Coliseu: a arena que moldou o espetáculo em Roma",
+    "data": "2026-09-04T10:00:00",
+    "resumo": "Construção, engenharia e importância do maior anfiteatro do Império Romano, de Vespasiano à Roma moderna.",
+    "autor": "Redação",
     "corpo": [
-      { "type": "p", "text": "A odontopediatria é a área da odontologia especializada na saúde bucal das crianças. O atendimento odontológico desde cedo é fundamental para prevenir problemas bucais, como cáries, gengivite e má oclusão." },
-      { "type": "p", "text": "Os benefícios da odontopediatria incluem:" },
-      { "type": "ul", "items": [
-        "Prevenção de cáries e outras doenças bucais.",
-        "Detecção precoce de problemas de desenvolvimento dos dentes e da arcada dentária.",
-        "Orientação sobre higiene bucal adequada para crianças.",
-        "Criação de um ambiente positivo e acolhedor para que a criança se sinta confortável no dentista."
-      ] }
+      {
+        "type": "p",
+        "text": "O Coliseu, oficialmente Anfiteatro Flaviano, ocupa o centro de Roma, na Itália. É o maior anfiteatro já construído pelos romanos e um dos monumentos mais reconhecíveis da Antiguidade."
+      },
+      {
+        "type": "h2",
+        "text": "Contexto histórico"
+      },
+      {
+        "type": "p",
+        "text": "Depois do incêndio de Roma e do governo de Nero, o imperador Vespasiano, fundador da dinastia flaviana, quis devolver ao povo uma área que Nero havia tomado para sua residência, a Domus Aurea. No terreno onde havia um lago artificial do palácio de Nero, foi iniciada a construção do anfiteatro, por volta de 70 a 72 d.C. A obra foi financiada em grande parte com o butim da guerra na Judeia, que incluiu a conquista de Jerusalém em 70 d.C."
+      },
+      {
+        "type": "p",
+        "text": "Vespasiano morreu em 79 d.C., e a inauguração ocorreu em 80 d.C., sob seu filho Tito, com jogos que duraram cem dias, segundo os historiadores antigos. O terceiro imperador flaviano, Domiciano, completou a obra e acrescentou o hipogeu, a rede subterrânea sob a arena."
+      },
+      {
+        "type": "h2",
+        "text": "Como foi construído"
+      },
+      {
+        "type": "p",
+        "text": "O Coliseu mede cerca de 189 por 156 metros e tinha por volta de 48 metros de altura. A fachada externa é de travertino, pedra retirada de pedreiras em Tivoli, a cerca de 30 quilômetros de Roma, e transportada por uma estrada construída para esse fim. Os romanos usaram também tufo, tijolo e, sobretudo, concreto, material que dominaram como nenhuma outra civilização da época. Grampos de ferro ligavam os blocos de travertino."
+      },
+      {
+        "type": "p",
+        "text": "A estrutura de arcadas e abóbadas sustentava as arquibancadas para cerca de 50 mil pessoas, com 80 entradas que permitiam esvaziar o edifício em poucos minutos, projeto que inspira estádios até hoje. As três primeiras ordens de arcos usam colunas de estilos diferentes, dórico, jônico e coríntio, e o último andar tem pilastras coríntias. Um grande toldo, o velarium, era manobrado por marinheiros e protegia o público do sol."
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Arena: piso de madeira coberto de areia (em latim, harena, de onde vem a palavra \"arena\").",
+          "Hipogeu: corredores, jaulas e elevadores usados para fazer animais e cenários surgirem na arena.",
+          "Organização social: a posição na arquibancada seguia a classe social do espectador."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Por que é importante"
+      },
+      {
+        "type": "p",
+        "text": "O Coliseu é um símbolo do poder e da engenharia de Roma, e das formas de entretenimento e de controle político da época: combates de gladiadores, caçadas de animais e execuções públicas serviam para impressionar e agradar à população. Sua estrutura mostra o uso avançado de arcos, abóbadas e concreto."
+      },
+      {
+        "type": "h2",
+        "text": "Depois de Roma"
+      },
+      {
+        "type": "p",
+        "text": "Os combates de gladiadores perderam espaço a partir do século V, e as caçadas de animais continuaram até o início do século VI. Terremotos, como os de 847 e 1349, derrubaram parte da estrutura, e muitas pedras foram reaproveitadas em outras construções da cidade. Ao longo da Idade Média, o espaço abrigou moradias, oficinas e até uma fortaleza. Passou a ser protegido a partir do século XVIII, e o centro histórico de Roma, que inclui o Coliseu, é Patrimônio Mundial da UNESCO desde 1980. O monumento foi eleito uma das Sete Novas Maravilhas do Mundo em 2007."
+      }
     ]
   },
   {
     "id": "5",
     "numero": 5,
-    "slug": "aparelho-ortodontico-transformando-sorrisos-e-autoestima",
-    "titulo": "Aparelho ortodôntico: Transformando sorrisos e autoestima",
-    "data": "2024-03-04T17:16:00",
-    "resumo": "Descubra as diferentes opções de aparelhos ortodônticos disponíveis no mercado e como eles podem transformar seu sorriso e sua autoestima.",
-    "imagem": "noticias-5_110518313.png",
-    "autor": "Suporte",
+    "slug": "taj-mahal-um-poema-de-marmore-branco",
+    "titulo": "Taj Mahal: a história de amor em mármore branco",
+    "data": "2026-09-05T10:00:00",
+    "resumo": "Como o imperador Shah Jahan transformou o luto pela esposa em um dos monumentos mais belos do mundo.",
+    "autor": "Redação",
     "corpo": [
-      { "type": "p", "text": "Os aparelhos ortodônticos são utilizados para corrigir problemas de posicionamento dos dentes, como apinhamento, mordida cruzada, diastema e outros. Além de melhorar a estética do sorriso, o tratamento ortodôntico também pode trazer benefícios para a saúde bucal, como a melhora da mastigação e da fonética." },
-      { "type": "p", "text": "Existem diversos tipos de aparelhos ortodônticos disponíveis, como os metálicos, os de cerâmica, os de safira e os invisíveis. A escolha do tipo de aparelho ideal dependerá das necessidades de cada paciente." }
+      {
+        "type": "p",
+        "text": "O Taj Mahal fica em Agra, no estado de Uttar Pradesh, na Índia, às margens do rio Yamuna. É um mausoléu de mármore branco, considerado a maior expressão da arquitetura mogol, que combina influências persas, islâmicas e indianas."
+      },
+      {
+        "type": "h2",
+        "text": "Contexto histórico"
+      },
+      {
+        "type": "p",
+        "text": "O imperador mogol Shah Jahan governou a Índia no século XVII, durante um dos períodos de maior riqueza e produção artística do Império Mogol. Sua esposa favorita, Mumtaz Mahal, morreu em 1631 durante o parto do 14º filho do casal. Em luto, o imperador decidiu construir um túmulo à altura do amor que dizia sentir por ela."
+      },
+      {
+        "type": "p",
+        "text": "A obra começou em 1632. O mausoléu principal ficou pronto por volta de 1643, e o conjunto completo, com mesquita, casa de hóspedes, portal e jardins, foi concluído em torno de 1653. O arquiteto-chefe é geralmente associado a Ustad Ahmad Lahori, em uma equipe com projetistas, calígrafos e artesãos de várias regiões."
+      },
+      {
+        "type": "h2",
+        "text": "Como foi construído"
+      },
+      {
+        "type": "p",
+        "text": "O Taj Mahal assenta sobre uma grande plataforma de alvenaria. Para a fundação, os construtores abriram poços perto do rio e os encheram com pedra e tijolo, uma técnica pensada para suportar o peso do edifício em solo úmido. A obra mobilizou cerca de 20 mil trabalhadores, segundo as estimativas mais citadas, e elefantes e carros de boi para transportar os blocos."
+      },
+      {
+        "type": "p",
+        "text": "O mármore branco veio de Makrana, no Rajastão, a cerca de 400 quilômetros de Agra. Pedras semipreciosas de várias origens foram usadas em incrustações (pietra dura), formando flores e arabescos nas paredes: lápis-lazúli, jade, cristal, turquesa e cornalina, entre outras. Passagens do Corão foram aplicadas em caligrafia ao redor dos portais, e as letras são maiores nas partes mais altas para parecerem do mesmo tamanho para quem olha de baixo."
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Cúpula central: cerca de 35 metros de altura, com uma forma de bulbo.",
+          "Quatro minaretes: inclinados levemente para fora, de modo que, em um terremoto, caiam longe do túmulo.",
+          "Charbagh: jardim dividido em quatro partes, inspirado na tradição persa do paraíso.",
+          "Reflexo: o espelho d'água do jardim reproduz a imagem do mausoléu."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Por que é importante"
+      },
+      {
+        "type": "p",
+        "text": "O Taj Mahal é um marco da arquitetura mundial e um dos monumentos mais visitados da Índia. Mostra a sofisticação das artes mogóis e o poder de um império capaz de reunir materiais, artesãos e engenheiros de regiões distantes. É também um símbolo cultural: o mármore parece mudar de cor ao longo do dia, do rosado ao amanhecer ao dourado no fim da tarde."
+      },
+      {
+        "type": "h2",
+        "text": "Hoje"
+      },
+      {
+        "type": "p",
+        "text": "Shah Jahan foi deposto pelo filho Aurangzeb em 1658 e, ao morrer, foi sepultado ao lado de Mumtaz Mahal. Lendas populares, como a de que o imperador mandou cortar as mãos dos artesãos, não têm comprovação histórica. A poluição do ar escurece o mármore, e a conservação inclui limpezas com argila especial. O Taj Mahal é Patrimônio Mundial da UNESCO desde 1983 e uma das Sete Novas Maravilhas do Mundo, eleitas em 2007."
+      }
     ]
   },
   {
     "id": "6",
     "numero": 6,
-    "slug": "implantes-dentarios-solucao-para-a-perda-de-dentes",
-    "titulo": "Implantes dentários: Solução para a perda de dentes",
-    "data": "2024-03-04T17:19:00",
-    "resumo": "Conheça os benefícios dos implantes dentários e como eles podem restaurar sua qualidade de vida.",
-    "imagem": "noticias-6_100521074.png",
-    "autor": "Suporte",
+    "slug": "muralha-da-china-dois-mil-anos-de-historia",
+    "titulo": "Muralha da China: mais de dois mil anos de construção",
+    "data": "2026-09-06T10:00:00",
+    "resumo": "Como diferentes dinastias ergueram a maior estrutura defensiva já construída e qual foi seu papel na história chinesa.",
+    "autor": "Redação",
     "corpo": [
-      { "type": "p", "text": "Os implantes dentários são uma solução eficaz para a perda de dentes. São estruturas de titânio que são implantadas no osso maxilar ou mandibular para servir de suporte para próteses dentárias." },
-      { "type": "p", "text": "Os implantes dentários oferecem diversos benefícios, como:" },
-      { "type": "ul", "items": [
-        "Restauração da função mastigatória e da fonética.",
-        "Melhora da estética do sorriso.",
-        "Aumento da autoestima e da qualidade de vida.",
-        "Solução duradoura para a perda de dentes."
-      ] }
+      {
+        "type": "p",
+        "text": "A Muralha da China não é uma única parede contínua, mas um conjunto de muros, torres e fortes construídos e reformados por várias dinastias ao longo de mais de dois mil anos. Um levantamento oficial concluído em 2012 estimou a extensão total, somando todos os trechos de diferentes épocas, em mais de 21 mil quilômetros."
+      },
+      {
+        "type": "h2",
+        "text": "Contexto histórico"
+      },
+      {
+        "type": "p",
+        "text": "Os primeiros muros defensivos surgiram ainda no século VII a.C., quando os vários estados chineses se defendiam uns dos outros. Em 221 a.C., Qin Shi Huang, primeiro imperador da China unificada, ordenou que muitos desses trechos fossem conectados e que se erguessem novas defesas ao norte, contra povos nômades das estepes. A dinastia Han estendeu as fortificações para o oeste, protegendo as rotas da Rota da Seda."
+      },
+      {
+        "type": "p",
+        "text": "As seções mais conhecidas hoje foram reconstruídas pela dinastia Ming (1368–1644), depois de séculos de invasões. O general Qi Jiguang aperfeiçoou o sistema com torres de vigia ocas, em que soldados podiam se abrigar e armazenar suprimentos, além de torres de sinalização que transmitiam alertas por fogo e fumaça."
+      },
+      {
+        "type": "h2",
+        "text": "Como foi construída"
+      },
+      {
+        "type": "p",
+        "text": "Os materiais variavam conforme a região: nas planícies, terra batida compactada em camadas; nas montanhas, pedra extraída no próprio local; e, nas partes Ming, tijolo e pedra com argamassa de cal. Estudos científicos identificaram que, em algumas seções, a argamassa levava arroz glutinoso, o que a tornava mais resistente. Soldados, camponeses convocados e prisioneiros trabalhavam na obra, com enormes custos humanos."
+      },
+      {
+        "type": "p",
+        "text": "Cada trecho foi planejado conforme o terreno: no alto das cristas, onde a vista alcançava longe, e com passagens estreitas em desfiladeiros estratégicos. O trecho de Badaling, a cerca de 60 quilômetros de Pequim, foi construído em 1505, durante a dinastia Ming, e restaurado no século XX para receber visitantes."
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Torres de vigia e de sinalização: observavam o território e transmitiam avisos de invasão com rapidez.",
+          "Portões e passos fortificados: controlavam a entrada de pessoas e mercadorias.",
+          "Guarnições: fortes ao longo do muro abrigavam soldados e suprimentos."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Por que é importante"
+      },
+      {
+        "type": "p",
+        "text": "A Muralha é o maior projeto de construção da história da humanidade, e mostra a capacidade de organização de um Estado centralizado. Mais do que uma barreira, funcionava como um sistema de vigilância, de comunicação e de controle de fronteira e de comércio. Também não impediu todas as invasões: em 1644, a dinastia Ming caiu e os manchus atravessaram a muralha pelo passo de Shanhaiguan."
+      },
+      {
+        "type": "h2",
+        "text": "Hoje"
+      },
+      {
+        "type": "p",
+        "text": "Ao contrário do que se diz, a muralha não é visível do espaço a olho nu. Muitos trechos estão degradados pelo tempo, pela erosão e pela retirada de tijolos, e a proteção do patrimônio é um desafio. A Muralha da China é Patrimônio Mundial da UNESCO desde 1987 e foi eleita uma das Sete Novas Maravilhas do Mundo em 2007."
+      }
     ]
   },
   {
     "id": "7",
     "numero": 7,
-    "slug": "clareamento-dental-dicas-para-um-sorriso-mais-branco",
-    "titulo": "Clareamento dental: Dicas para um sorriso mais branco",
-    "data": "2024-03-04T17:21:00",
-    "resumo": "Descubra as diferentes técnicas de clareamento dental disponíveis e como obter um sorriso mais branco e brilhante.",
-    "imagem": "noticias-7_100523325.png",
-    "autor": "Suporte",
+    "slug": "petra-a-cidade-rosa-dos-nabateus",
+    "titulo": "Petra: a cidade talhada na rocha pelos nabateus",
+    "data": "2026-09-07T10:00:00",
+    "resumo": "O povo que fez fortuna no deserto e esculpiu uma cidade inteira em arenito rosado, na Jordânia.",
+    "autor": "Redação",
     "corpo": [
-      { "type": "p", "text": "Manter um sorriso branco e radiante é um desejo comum. O clareamento dental é um procedimento estético que visa clarear a cor dos dentes, tornando-os mais brancos e uniformes. Existem diferentes técnicas de clareamento dental disponíveis, como:" },
-      { "type": "ul", "items": [
-        "Clareamento caseiro: realizado em casa com o uso de moldeiras personalizadas e gel clareador prescritos pelo dentista.",
-        "Clareamento profissional: realizado no consultório odontológico por um profissional qualificado, podendo ser feito em uma única sessão ou em sessões múltiplas."
-      ] }
+      {
+        "type": "p",
+        "text": "Petra, no sul da Jordânia, foi a capital do reino dos nabateus, povo árabe que prosperou entre os séculos IV a.C. e I d.C. O nome vem da palavra grega para \"rocha\". A cidade fica em um vale cercado por montanhas de arenito, e suas fachadas monumentais foram esculpidas diretamente na pedra, que muda de cor ao longo do dia, entre rosa, vermelho e laranja."
+      },
+      {
+        "type": "h2",
+        "text": "Contexto histórico"
+      },
+      {
+        "type": "p",
+        "text": "Os nabateus eram inicialmente nômades do deserto. Aos poucos, passaram a controlar as rotas de caravanas que levavam incenso e mirra do sul da Arábia e especiarias da Índia para os portos do Mediterrâneo, cobrando taxas de passagem e fornecendo água e abrigo. Com essa riqueza, Petra se transformou em uma cidade grande e cosmopolita, com contatos com o Egito, a Grécia e Roma. O auge ocorreu durante o reinado de Aretas IV, entre 9 a.C. e 40 d.C."
+      },
+      {
+        "type": "p",
+        "text": "Em 106 d.C., o território foi anexado ao Império Romano na época do imperador Trajano, e Petra passou a fazer parte da província da Arábia. Mudanças nas rotas comerciais e terremotos, como o de 363 d.C., enfraqueceram a cidade, que foi sendo abandonada. Cruzados medievais construíram fortes na região, e depois Petra caiu no esquecimento para o mundo europeu."
+      },
+      {
+        "type": "h2",
+        "text": "Como foi construída"
+      },
+      {
+        "type": "p",
+        "text": "Os nabateus esculpiam as fachadas de cima para baixo, a partir de andaimes ou de degraus abertos na própria rocha, o que evitava a queda de pedaços já trabalhados. Os túmulos e templos tinham fachadas decoradas com colunas, frontões e esculturas inspirados na arquitetura helenística, mas com elementos próprios da cultura nabateia."
+      },
+      {
+        "type": "p",
+        "text": "A engenharia hídrica foi decisiva. Em uma região árida, os nabateus abriram canais, cisternas e reservatórios, e construíram barragens para controlar enchentes súbitas. Esses sistemas garantiam água para uma população estimada em dezenas de milhares de pessoas e para as caravanas."
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Al-Khazneh (o Tesouro): fachada com cerca de 40 metros de altura, provavelmente um túmulo real; o nome vem de uma lenda sobre um tesouro escondido.",
+          "Siq: desfiladeiro estreito de cerca de 1,2 km que serve de entrada à cidade.",
+          "Ad-Deir (o Mosteiro): monumento de cerca de 47 metros de largura, esculpido no alto de uma montanha.",
+          "Teatro: espaço escavado na rocha com capacidade para milhares de pessoas."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Por que é importante"
+      },
+      {
+        "type": "p",
+        "text": "Petra mostra como um povo do deserto construiu uma cidade rica e sofisticada, e como as rotas comerciais ligavam civilizações distantes. Seu sistema de água e sua arquitetura em pedra são exemplos de adaptação ao ambiente."
+      },
+      {
+        "type": "h2",
+        "text": "Redescoberta e hoje"
+      },
+      {
+        "type": "p",
+        "text": "Em 1812, o explorador suíço Johann Ludwig Burckhardt, disfarçado de peregrino árabe, chegou a Petra e a apresentou ao público europeu. Escavações revelam novas estruturas até hoje, e boa parte da cidade ainda está soterrada. Petra é Patrimônio Mundial da UNESCO desde 1985 e foi eleita uma das Sete Novas Maravilhas do Mundo em 2007."
+      }
     ]
   },
   {
     "id": "8",
     "numero": 8,
-    "slug": "saude-bucal-e-saude-geral-uma-conexao-importante",
-    "titulo": "Saúde bucal e saúde geral: Uma conexão importante",
-    "data": "2024-03-04T17:23:00",
-    "resumo": "Entenda a relação entre a saúde bucal e a saúde geral do corpo e a importância de cuidar dos dentes para uma vida saudável.",
-    "imagem": "noticias-8_60525206.png",
-    "autor": "Suporte",
+    "slug": "as-sete-maravilhas-do-mundo-antigo",
+    "titulo": "As Sete Maravilhas do Mundo Antigo: o que são e o que restou delas",
+    "data": "2026-09-08T10:00:00",
+    "resumo": "Uma viagem pela lista clássica dos gregos: da Grande Pirâmide de Gizé, que ainda existe, ao Farol de Alexandria.",
+    "autor": "Redação",
     "corpo": [
-      { "type": "p", "text": "A saúde bucal é um aspecto fundamental da saúde geral do corpo. Muitas pesquisas demonstram a relação entre a má saúde bucal e o aumento do risco de diversas doenças sistêmicas, como diabetes, doenças cardíacas e AVC." },
-      { "type": "p", "text": "Cuidar da saúde bucal é importante para prevenir problemas bucais e também para promover a sua saúde geral. Ao escovar os dentes regularmente, usar fio dental e visitar o dentista regularmente, você está investindo em sua saúde e bem-estar." }
+      {
+        "type": "p",
+        "text": "Muito antes das Sete Novas Maravilhas, escolhidas em votação mundial em 2007, os gregos já listavam as grandes obras que mereciam ser vistas. A tradição das \"sete maravilhas\" nasceu entre autores helenísticos, como Fílon de Bizâncio, e reunia monumentos do Mediterrâneo e do Oriente Próximo conhecidos pelos viajantes da época."
+      },
+      {
+        "type": "p",
+        "text": "Das sete obras originais, apenas uma resiste de pé até hoje. As demais foram destruídas por terremotos, incêndios ou guerras, e algumas só são conhecidas por descrições antigas."
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Grande Pirâmide de Gizé (Egito), c. 2560 a.C.: túmulo do faraó Quéops e a única maravilha antiga que ainda existe.",
+          "Jardins Suspensos da Babilônia (atual Iraque): descritos por autores gregos, mas sua existência ainda é debatida por historiadores e arqueólogos.",
+          "Estátua de Zeus em Olímpia (Grécia), c. 435 a.C.: obra de Fídias, feita de marfim e ouro, perdida na Antiguidade tardia.",
+          "Templo de Ártemis em Éfeso (atual Turquia): incendiado em 356 a.C., reconstruído e destruído de novo no século III d.C.",
+          "Mausoléu de Halicarnasso (atual Turquia), c. 350 a.C.: túmulo do governante Mausolo, danificado por terremotos ao longo dos séculos.",
+          "Colosso de Rodes (Grécia), c. 292–280 a.C.: estátua do deus Hélio, derrubada por um terremoto por volta de 226 a.C.",
+          "Farol de Alexandria (Egito), c. 280 a.C.: uma das construções mais altas de seu tempo, destruído por terremotos até o século XIV."
+        ]
+      },
+      {
+        "type": "p",
+        "text": "A lista antiga mostra como cada época elege suas maravilhas. Na votação de 2007, organizada pela fundação New7Wonders, milhões de pessoas escolheram Chichén Itzá, o Cristo Redentor, Machu Picchu, o Coliseu, o Taj Mahal, a Muralha da China e Petra. A Grande Pirâmide de Gizé recebeu o título honorário de candidata, por já ser uma maravilha antiga."
+      }
+    ]
+  },
+  {
+    "id": "9",
+    "numero": 9,
+    "slug": "maravilhas-perdidas-biblioteca-de-alexandria-e-jardins-suspensos",
+    "titulo": "Maravilhas perdidas: a Biblioteca de Alexandria, os Jardins Suspensos e outros tesouros que desapareceram",
+    "data": "2026-09-09T10:00:00",
+    "resumo": "O que sabemos, e o que ainda é mistério, sobre a Biblioteca de Alexandria, os Jardins Suspensos da Babilônia, o Colosso de Rodes e outras maravilhas perdidas da humanidade.",
+    "autor": "Redação",
+    "corpo": [
+      {
+        "type": "p",
+        "text": "Algumas das obras mais admiradas da Antiguidade não existem mais. Às vezes, a causa é conhecida, como um terremoto ou um incêndio. Em outras, sobram apenas descrições de autores antigos e muitas dúvidas. Este artigo reúne histórias de maravilhas perdidas: duas delas, a Biblioteca de Alexandria e os Jardins Suspensos da Babilônia, continuam a alimentar o debate de historiadores e arqueólogos."
+      },
+      {
+        "type": "h2",
+        "text": "A Biblioteca de Alexandria"
+      },
+      {
+        "type": "p",
+        "text": "Alexandria, no Egito, foi fundada por Alexandre, o Grande, em 331 a.C. Depois da morte dele, o general Ptolomeu assumiu o governo do Egito e iniciou uma dinastia que apoiou a ciência e as letras. Por volta do século III a.C., os primeiros Ptolomeus criaram o Museion (templo das musas), um centro de pesquisa com uma grande biblioteca ligada a ele. A ideia era reunir, em um só lugar, o conhecimento do mundo conhecido."
+      },
+      {
+        "type": "p",
+        "text": "Para formar o acervo, os reis mandavam copiar livros trazidos por navios que chegavam ao porto: os originais ficavam na biblioteca, e os donos recebiam cópias. Os livros eram rolos de papiro, e o poeta e bibliotecário Calímaco organizou um catálogo, os Pínakes, considerado uma das primeiras obras de bibliografia. Estima-se que a coleção tenha reunido dezenas ou centenas de milhares de rolos, mas os números antigos são incertos e discutidos."
+      },
+      {
+        "type": "p",
+        "text": "Ali trabalharam e estudaram nomes como Euclides, autor dos Elementos de geometria, Eratóstenes, que calculou a circunferência da Terra com notável precisão, e Aristarco de Samos, que propôs que a Terra girava em torno do Sol. A biblioteca era parte de um ambiente de pesquisa em matemática, astronomia, medicina, geografia e literatura."
+      },
+      {
+        "type": "p",
+        "text": "Ao contrário do que se imagina, não existe um único momento em que a biblioteca teria sido destruída. Os historiadores apontam uma sucessão de fatores: crises políticas e a perda de apoio financeiro dos governantes, a expulsão de intelectuais no século II a.C., o incêndio durante a guerra civil de Júlio César em 48 a.C. (que pode ter atingido armazéns de livros no porto), a destruição do bairro do palácio durante o governo do imperador Aureliano, por volta de 272 d.C., e a destruição do Serapeum, templo que abrigava parte dos livros, em 391 d.C. A biblioteca provavelmente já estava em declínio muito antes do seu fim."
+      },
+      {
+        "type": "p",
+        "text": "A memória da biblioteca inspirou a Bibliotheca Alexandrina, inaugurada em 2002 na cidade egípcia, que reúne acervo, museus e centros de pesquisa."
+      },
+      {
+        "type": "h2",
+        "text": "Os Jardins Suspensos da Babilônia"
+      },
+      {
+        "type": "p",
+        "text": "Os Jardins Suspensos são a única das sete maravilhas antigas cuja existência é realmente incerta. Autores gregos e romanos, como Diodoro Sículo, Estrabão e Quinto Cúrcio, os descrevem como terraços elevados cobertos de árvores e flores, irrigados por um engenhoso sistema que levava água do rio Eufrates. A tradição diz que teriam sido construídos pelo rei Nabucodonosor II, por volta de 600 a.C., para agradar sua esposa Amitis, que sentia saudade das montanhas verdes da Média, sua terra natal."
+      },
+      {
+        "type": "p",
+        "text": "Mas há um problema: nenhum texto babilônico em escrita cuneiforme, nem mesmo os registros do próprio Nabucodonosor, menciona os jardins. Escavações arqueológicas em Babilônia, lideradas por Robert Koldewey no início do século XX, encontraram estruturas que ele associou aos jardins, mas essa identificação é contestada. As descrições gregas vieram séculos depois da época em que os jardins teriam existido."
+      },
+      {
+        "type": "p",
+        "text": "Entre as hipóteses atuais está a da pesquisadora Stephanie Dalley, que propõe que os jardins ficavam em Nínive, capital assíria, e teriam sido construídos pelo rei Senaqueribe por volta de 700 a.C. Os registros assírios descrevem um grande jardim irrigado por canais e aquedutos. Outra possibilidade é que o relato seja uma lenda, fruto da memória ou da fantasia dos viajantes. A questão continua aberta."
+      },
+      {
+        "type": "h2",
+        "text": "Outras maravilhas que desapareceram"
+      },
+      {
+        "type": "ul",
+        "items": [
+          "Colosso de Rodes: estátua do deus Hélio com cerca de 30 metros, feita pelo escultor Cares de Lindos por volta de 292–280 a.C. Um terremoto a derrubou por volta de 226 a.C., e as peças permaneceram no chão por séculos.",
+          "Farol de Alexandria: construído por volta de 280 a.C. na ilha de Faros, com mais de 100 metros, segundo as fontes. Terremotos nos séculos XIV o destruíram, e parte de suas pedras foi usada na fortaleza de Qaitbay, erguida no local em 1477.",
+          "Estátua de Zeus em Olímpia: obra do escultor Fídias, de marfim e ouro. Foi levada para Constantinopla e, ao que tudo indica, destruída por um incêndio no século V.",
+          "Templo de Ártemis em Éfeso: incendiado em 356 a.C. por Eróstrato, que queria ficar famoso, reconstruído e destruído pelos godos por volta de 262 d.C.",
+          "Mausoléu de Halicarnasso: túmulo do rei Mausolo, do qual vem a palavra \"mausoléu\". Foi danificado por terremotos, e no século XV os Cavaleiros de São João usaram suas pedras na fortaleza de Bodrum."
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "O que as perdas nos ensinam"
+      },
+      {
+        "type": "p",
+        "text": "As maravilhas perdidas mostram como o patrimônio é frágil. Terremotos, guerras, incêndios, falta de recursos e mesmo a reutilização de pedras para novas construções fizeram desaparecer obras gigantescas. Elas também lembram que parte do que sabemos sobre o passado depende de relatos antigos, que precisam ser comparados com as evidências arqueológicas. Por isso, a preservação das maravilhas que ainda existem, como as Sete Novas Maravilhas, é tão importante: o que ainda está de pé é uma janela rara para o passado."
+      }
     ]
   }
 ]

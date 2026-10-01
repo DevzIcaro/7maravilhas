@@ -34,7 +34,7 @@ export function revealOnScroll(gridSelector = "[data-reveal]") {
 }
 
 /**
- * "Pop" de entrada pros ícones de card (ex.: badges de Serviços): escala de 0
+ * "Pop" de entrada pros ícones de card (ex.: badges de cards): escala de 0
  * a 1 com leve rotação e easing elástico, disparado no mesmo scroll-trigger
  * do revealOnScroll — dá mais vida ao ícone sem duplicar a animação base do
  * card (reaproveita animate/stagger/onScroll já usados em revealOnScroll).

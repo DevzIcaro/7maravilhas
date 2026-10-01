@@ -1,0 +1,66 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import MaravilhaCard from "../components/MaravilhaCard.astro";
+
+const maravilhas = (await getCollection("maravilhas")).sort((a, b) => a.data.ordem - b.data.ordem);
+const posts = await getCollection("posts");
+
+const hrefDoPost = (postId: string) => {
+  const post = posts.find((p) => p.data.id === postId);
+  return post ? `/blog/ver/${post.data.id}/${post.data.slug}` : "/blog";
+};
+
+const filtros = ["Todos", ...new Set(maravilhas.map((m) => m.data.continente))];
+---
+
+<Layout
+  title="Maravilhas — Maravilhas do Mundo"
+  description="As Sete Maravilhas do Mundo Moderno com coordenadas, mapa, história e redes oficiais: Chichén Itzá, Cristo Redentor, Machu Picchu, Coliseu, Taj Mahal, Muralha da China e Petra."
+  path="/maravilhas"
+>
+  <section class="mx-auto max-w-7xl px-4 py-10 lg:px-8">
+    <nav aria-label="Breadcrumb" class="mb-4 text-sm text-texto/60">
+      <a href="/" class="cursor-pointer hover:text-primaria">Home</a> <span aria-hidden="true">›</span> Maravilhas
+    </nav>
+    <h1 class="section-title">As Sete Maravilhas do Mundo Moderno</h1>
+    <p class="section-subtitle mb-8 max-w-3xl">
+      Escolhidas em 2007 por votação mundial, as sete maravilhas estão espalhadas por quatro continentes. Filtre
+      por continente e veja o mapa, a história e as redes oficiais de cada uma.
+    </p>
+
+    <div class="mb-10 flex flex-wrap gap-2" role="group" aria-label="Filtrar maravilhas por continente">
+      {filtros.map((f, i) => (
+        <button
+          type="button"
+          class="btn btn-outline !py-2 !px-4 !text-xs cursor-pointer"
+          data-filtro={f}
+          aria-pressed={i === 0 ? "true" : "false"}
+        >
+          {f}
+        </button>
+      ))}
+    </div>
+
+    <div id="lista-maravilhas" class="grid gap-8" data-reveal>
+      {maravilhas.map((m) => <MaravilhaCard {...m.data} postHref={hrefDoPost(m.data.postId)} />)}
+    </div>
+  </section>
+
+  <script>
+    import { revealOnScroll, animateFilterSwap } from "../lib/animations";
+
+    revealOnScroll();
+
+    const buttons = document.querySelectorAll<HTMLButtonElement>("[data-filtro]");
+    const cards = Array.from(document.querySelectorAll<HTMLElement>("#lista-maravilhas [data-continente]"));
+
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const filtro = btn.dataset.filtro;
+        buttons.forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+        animateFilterSwap(cards, (card) => filtro === "Todos" || card.dataset.continente === filtro);
+      });
+    });
+  </script>
+</Layout>

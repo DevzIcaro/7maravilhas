@@ -1,12 +1,32 @@
 [
-  { "id": "nicole-alves", "autor": "Nicole Alves", "papel": "Cliente", "texto": "Ótimo lugar, atendimento maravilhoso. Profissionalismo extremamente capacitados! Super recomendo. Lugar Limpo, extremamente aconchegante" },
-  { "id": "victor-zete-alyne-ferro", "autor": "Victor Zete Alyne Ferro", "papel": "Cliente", "texto": "É maravilhoso o atendimento. Eles são extremamente cuidadosos e profissionais. Recomendo. Nota mil." },
-  { "id": "elena-camargo", "autor": "Elena Camargo", "papel": "Cliente", "texto": "Eu estou fazendo tratamento, fiz implantes e tô amando o trabalho dos profissionais." },
-  { "id": "rosivani-de-fatima", "autor": "Rosivani De Fatima", "papel": "Cliente", "texto": "Fiz facetas em resina, adorei o tratamento, desde o início até o final. O sorriso melhora bastante e dá mais confiança. Super indico." },
-  { "id": "ana-paula-belan-silva-beian", "autor": "Ana Paula Belan Silva Beian", "papel": "Cliente", "texto": "Excelente atendimento. Muito atencioso todos os profissionais desde a recepção até o último profissional que é o dentista!" },
-  { "id": "edilson-correia", "autor": "Edilson Correia", "papel": "Cliente", "texto": "Excepcional atendimento carinho e profissionalismo resolveu meus problemas. Fico muito feliz pois facilitaram o pagamento do jeito que eu podia e desejava pagar. Obrigado por tudo a Correia ODONTOLOGIA. Recomendo a todos." },
-  { "id": "cleber-thayron", "autor": "Cleber Thayron", "papel": "Cliente", "texto": "A melhor da região...profissionais altamente especializados e o melhor atendimento...top....ah .. preços cabíveis e justos tbm!!!!" },
-  { "id": "bruna-bianca", "autor": "Bruna Bianca", "papel": "Cliente", "texto": "Uma excelente clinica, com atendimento diferenciado e parcelas que cabem no seu bolso." },
-  { "id": "sarah-monteiro-capassi", "autor": "Sarah Monteiro Capassi", "papel": "Cliente", "texto": "Profissionais competentes e especializados, atendimento personalizado, compreensivos para entender o problema do cliente. Preço justo e bons de negociação. Sempre fui muito bem atendida!" },
-  { "id": "lucas-marques", "autor": "Lucas Marques", "papel": "Cliente", "texto": "Clínica excelente, especialista em ajudar realizar sonhos. Se você sonha em ter um sorriso lindo e deixar sua saúde em dia… não perca tempo! Estou muito contente com meu tratamento e meu sorriso. Super indico." }
+  {
+    "id": "viajante-1",
+    "autor": "Camila Ribeiro",
+    "papel": "Viajante",
+    "texto": "Li a história de Machu Picchu antes de planejar a viagem e entendi cada terraço de outro jeito. Os textos são claros e cheios de curiosidades."
+  },
+  {
+    "id": "viajante-2",
+    "autor": "Otávio Lins",
+    "papel": "Professor de História",
+    "texto": "Uso os artigos sobre o Coliseu e as maravilhas antigas nas minhas aulas. Conteúdo bem organizado e fácil de consultar."
+  },
+  {
+    "id": "viajante-3",
+    "autor": "Fernanda Amaral",
+    "papel": "Fotógrafa",
+    "texto": "As coordenadas de cada maravilha me ajudaram a montar o roteiro de fotos. Dica de ouro: o mapa de cada card."
+  },
+  {
+    "id": "viajante-4",
+    "autor": "Daniel Seabra",
+    "papel": "Viajante",
+    "texto": "Descobri detalhes de Petra que nenhum guia de viagem tinha me contado. Já salvei o site nos favoritos."
+  },
+  {
+    "id": "viajante-5",
+    "autor": "Letícia Moraes",
+    "papel": "Estudante",
+    "texto": "O post sobre as maravilhas do mundo antigo ficou ótimo para o meu trabalho da escola. Explica tudo sem complicar."
+  }
 ]

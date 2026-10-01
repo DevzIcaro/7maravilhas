@@ -10,6 +10,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer.astro";
 import CTAAgende from "../components/CTAAgende.astro";
 import BookingModal from "../components/BookingModal";
+import { contato } from "../lib/contato";
 import "../styles/global.css";
 
 interface Props {
@@ -20,44 +21,43 @@ interface Props {
 
 const { title, description, path = "/" } = Astro.props;
 
-const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "https://correiaodontologia.com.br";
+const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "https://coreodontologia.com.br";
 const canonical = new URL(path, siteUrl).toString();
 const ogImage = new URL("/og-image.jpg", siteUrl).toString();
 
-const unidades = (await getCollection("unidades")).sort((a, b) => a.data.ordem - b.data.ordem);
+const maravilhas = (await getCollection("maravilhas")).sort((a, b) => a.data.ordem - b.data.ordem);
+
+const SITE_NOME = "Maravilhas do Mundo";
+const sameAs = [contato.facebook, contato.instagram].filter((url): url is string => Boolean(url));
 
 const jsonLdOrganization = {
   "@context": "https://schema.org",
   "@type": "Organization",
   "@id": `${siteUrl}/#organizacao`,
-  name: "Correia Odontologia",
+  name: SITE_NOME,
   url: siteUrl,
   logo: `${siteUrl}/logo.png`,
-  sameAs: ["https://www.facebook.com/clinica.correia", "https://www.instagram.com/clinica.correia/"],
+  ...(sameAs.length ? { sameAs } : {}),
 };
 
-const jsonLdDentists = unidades.map((u) => ({
+const jsonLdAtracoes = maravilhas.map((m) => ({
   "@context": "https://schema.org",
-  "@type": "Dentist",
-  "@id": `${siteUrl}/#unidade-${u.data.id}`,
-  name: `Correia Odontologia - ${u.data.cidade}`,
-  parentOrganization: { "@id": `${siteUrl}/#organizacao` },
+  "@type": "TouristAttraction",
+  "@id": `${siteUrl}/#maravilha-${m.data.id}`,
+  name: m.data.nome,
+  description: m.data.descricao,
   address: {
     "@type": "PostalAddress",
-    streetAddress: u.data.endereco,
-    addressLocality: u.data.cidade,
-    addressRegion: u.data.uf,
-    addressCountry: "BR",
+    addressLocality: m.data.local,
+    addressCountry: m.data.pais,
   },
-  telephone: u.data.telefone,
-  ...(u.data.coordenadas
-    ? {
-        geo: {
-          "@type": "GeoCoordinates",
-          latitude: u.data.coordenadas.lat,
-          longitude: u.data.coordenadas.lng,
-        },
-      }
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: m.data.coordenadas.lat,
+    longitude: m.data.coordenadas.lng,
+  },
+  ...(m.data.facebook || m.data.instagram
+    ? { sameAs: [m.data.facebook, m.data.instagram].filter(Boolean) }
     : {}),
 }));
 ---
@@ -87,7 +87,7 @@ const jsonLdDentists = unidades.map((u) => ({
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:locale" content="pt_BR" />
-    <meta property="og:site_name" content="Correia Odontologia" />
+    <meta property="og:site_name" content={SITE_NOME} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
@@ -95,7 +95,7 @@ const jsonLdDentists = unidades.map((u) => ({
     <meta name="twitter:image" content={ogImage} />
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLdOrganization)} />
-    {jsonLdDentists.map((entry) => <script type="application/ld+json" set:html={JSON.stringify(entry)} />)}
+    {jsonLdAtracoes.map((entry) => <script type="application/ld+json" set:html={JSON.stringify(entry)} />)}
 
     <noscript><style>[data-reveal] > * { opacity: 1; }</style></noscript>
   </head>
@@ -103,7 +103,7 @@ const jsonLdDentists = unidades.map((u) => ({
     <Navbar
       client:load
       logoSrc={logoUrl}
-      unidades={unidades.map((u) => ({ id: u.data.id, cidade: u.data.cidade, uf: u.data.uf, endereco: u.data.endereco }))}
+      maravilhas={maravilhas.map((m) => ({ id: m.data.id, nome: m.data.nome, pais: m.data.pais, local: m.data.local }))}
     />
     <main>
       <slot />
@@ -112,8 +112,7 @@ const jsonLdDentists = unidades.map((u) => ({
     <Footer />
     <BookingModal
       client:load
-      unidades={unidades.map((u) => ({ id: u.data.id, cidade: u.data.cidade, uf: u.data.uf, whatsapp: u.data.whatsapp }))}
+      maravilhas={maravilhas.map((m) => ({ id: m.data.id, nome: m.data.nome, pais: m.data.pais }))}
     />
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   </body>
 </html>

@@ -14,7 +14,7 @@ interface Props {
 }
 
 /**
- * Carousel de fotos das clínicas — só autoplay, um card por vez, sem setas
+ * Carousel de fotos das maravilhas — só autoplay, um card por vez, sem setas
  * nem paginação (ver PROMPT/pedido do cliente). Pausa no hover/foco e
  * respeita prefers-reduced-motion, mesmo padrão do DepoimentosCarousel.
  */
@@ -38,7 +38,7 @@ export default function SobreNosCarousel({ slides, intervalo = 4000 }: Props) {
       setApi={setApi}
       opts={{ loop: true }}
       className="w-full"
-      aria-label="Fotos das clínicas Correia Odontologia"
+      aria-label="Fotos das maravilhas do mundo"
       onMouseEnter={() => setPausado(true)}
       onMouseLeave={() => setPausado(false)}
       onFocusCapture={() => setPausado(true)}

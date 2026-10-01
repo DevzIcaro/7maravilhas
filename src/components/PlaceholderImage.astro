@@ -1,8 +1,8 @@
 ---
 /**
- * Placeholder visual para slots de imagem sem asset real ainda importado.
- * Ver Apêndice A do PROMPT-DEV: os assets reais devem ser baixados do site
- * atual e colocados em src/assets/, substituindo este componente pela tag <img>.
+ * Placeholder visual para slots de imagem sem asset ainda. Para usar uma imagem
+ * real, importe o asset de src/assets e mapeie-o em equipeFotos.ts,
+ * maravilhaFotos.ts ou postImagens.ts: a página renderiza <Image> no lugar.
  */
 interface Props {
   alt: string;
@@ -11,7 +11,7 @@ interface Props {
   ratio?: "square" | "wide" | "portrait";
 }
 
-const { alt, label = "[A CONFIRMAR]", class: className = "", ratio = "wide" } = Astro.props;
+const { alt, label = "Imagem", class: className = "", ratio = "wide" } = Astro.props;
 
 const ratioClass = {
   square: "aspect-square",

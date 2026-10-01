@@ -1,0 +1,89 @@
+name: Deploy no GitHub Pages
+
+# CD: a cada push na `main` (ou acionamento manual) o site é validado,
+# buildado e publicado no GitHub Pages.
+#
+# PRÉ-REQUISITO (uma vez só):
+#   Settings > Pages > Build and deployment > Source = "GitHub Actions"
+#
+# O `site` e o `base` do Astro são injetados a partir da própria configuração
+# do Pages (passo "configure-pages"), então isto funciona tanto em
+# devzicaro.github.io/odonto-repo quanto num domínio próprio definido em
+# Settings > Pages > Custom domain.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Um deploy por vez; não cancela um deploy já em andamento.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  NODE_VERSION: '22.12.0'
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pages: read
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Instalar pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Instalar dependências
+        run: pnpm install --frozen-lockfile
+
+      - name: Configurar GitHub Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Typecheck (astro check)
+        run: pnpm run check
+
+      - name: Build de produção
+        run: pnpm run build
+        env:
+          # Ex.: https://devzicaro.github.io  (ou o domínio próprio)
+          SITE_URL: ${{ steps.pages.outputs.origin }}
+          # Ex.: /odonto-repo  (ou "/" quando há domínio próprio)
+          BASE_PATH: ${{ steps.pages.outputs.base_path }}
+
+      - name: Empacotar dist/ para o Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Publicar no GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,37 +1,17 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
-import { User, Phone, Mail, Building2, Calendar, Clock, ChevronDown, MessageCircle, X } from "lucide-react";
-import { linkWhatsapp } from "../lib/unidadeLinks";
+import { User, Mail, Landmark, Calendar, ChevronDown, Send, X } from "lucide-react";
+import { dataLocalHoje } from "../lib/data";
+import { linkMailto } from "../lib/mensagem";
 
-// Site key de TESTE pública do Google (sempre valida, uso só em dev/homologação).
-// [A CONFIRMAR] trocar por uma site key real antes de publicar — rotina completa em PENDENCIAS.md.
-const RECAPTCHA_SITE_KEY = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
-
-declare global {
-  interface Window {
-    grecaptcha?: {
-      ready(callback: () => void): void;
-      render(container: HTMLElement, params: { sitekey: string }): number;
-      getResponse(widgetId?: number): string;
-      reset(widgetId?: number): void;
-    };
-  }
-}
-
-// Mantém só dígitos — telefone não deve aceitar letra nem símbolo.
-function somenteDigitos(valor: string): string {
-  return valor.replace(/\D/g, "");
-}
-
-interface UnidadeOpcao {
+interface MaravilhaOpcao {
   id: string;
-  cidade: string;
-  uf: string;
-  whatsapp: string;
+  nome: string;
+  pais: string;
 }
 
 interface Props {
-  unidades: UnidadeOpcao[];
+  maravilhas: MaravilhaOpcao[];
 }
 
 // Leitura tipada de FormData — evita `string | File | null` solto pelo código.
@@ -40,50 +20,15 @@ function campo(dados: FormData, nome: string): string {
   return typeof valor === "string" ? valor.trim() : "";
 }
 
-export default function BookingModal({ unidades }: Props) {
+/**
+ * Modal "Planeje sua visita". Abre por qualquer elemento com
+ * `data-booking-trigger`. O envio monta um e-mail (mailto:) para o endereço
+ * de src/data/contato.json; sem e-mail cadastrado, informa que o envio ainda
+ * não está disponível, sem redirecionar para lugar nenhum.
+ */
+export default function BookingModal({ maravilhas }: Props) {
   const [open, setOpen] = useState(false);
   const [erro, setErro] = useState("");
-  const recaptchaRef = useRef<HTMLDivElement>(null);
-  const widgetId = useRef<number | null>(null);
-
-  // O reCAPTCHA precisa ser renderizado via API (não via classe "g-recaptcha")
-  // porque o Dialog do Radix desmonta o conteúdo ao fechar — o container só
-  // existe no DOM enquanto o modal está aberto, então o auto-render do script
-  // do Google (que só roda uma vez, no carregamento da página) não alcança.
-  // grecaptcha.ready() é a forma oficial de esperar o script terminar de
-  // carregar antes de chamar render() — evita a corrida em que window.grecaptcha
-  // já existe mas ainda não está pronto pra renderizar.
-  useEffect(() => {
-    if (!open) {
-      widgetId.current = null;
-      return;
-    }
-    let cancelado = false;
-
-    const renderizar = () => {
-      if (cancelado || !recaptchaRef.current || widgetId.current !== null) return;
-      try {
-        widgetId.current = window.grecaptcha!.render(recaptchaRef.current, { sitekey: RECAPTCHA_SITE_KEY });
-      } catch (erroRender) {
-        console.error("Falha ao renderizar o reCAPTCHA:", erroRender);
-        setErro("Não foi possível carregar o reCAPTCHA. Recarregue a página e tente novamente.");
-      }
-    };
-
-    const aguardarScript = () => {
-      if (cancelado) return;
-      if (window.grecaptcha?.ready) {
-        window.grecaptcha.ready(renderizar);
-      } else {
-        window.setTimeout(aguardarScript, 200);
-      }
-    };
-    aguardarScript();
-
-    return () => {
-      cancelado = true;
-    };
-  }, [open]);
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
@@ -100,39 +45,36 @@ export default function BookingModal({ unidades }: Props) {
     e.preventDefault();
     setErro("");
 
-    const captcha = widgetId.current !== null ? window.grecaptcha?.getResponse(widgetId.current) : "";
-    if (!captcha) {
-      setErro("Confirme o reCAPTCHA antes de enviar.");
-      return;
-    }
-
     const form = e.currentTarget;
     const dados = new FormData(form);
-    const unidade = unidades.find((u) => u.id === campo(dados, "unidade"));
-    if (!unidade) {
-      setErro("Escolha a unidade.");
+    const maravilha = maravilhas.find((m) => m.id === campo(dados, "maravilha"));
+    if (!maravilha) {
+      setErro("Escolha a maravilha.");
       return;
     }
 
-    const mensagem = [
-      `Olá! Vim pelo site e quero agendar uma consulta na unidade de ${unidade.cidade}${unidade.uf === "MS" ? " - MS" : ""}.`,
+    const corpo = [
+      `Quero planejar uma visita a ${maravilha.nome} (${maravilha.pais}).`,
       `Nome: ${campo(dados, "nome")}`,
-      `Telefone: ${campo(dados, "telefone")}`,
       `E-mail: ${campo(dados, "email")}`,
-      `Data desejada: ${campo(dados, "data")}`,
-      `Horário desejado: ${campo(dados, "horario")}`,
+      `Data prevista: ${campo(dados, "data")}`,
       campo(dados, "mensagem") ? `Mensagem: ${campo(dados, "mensagem")}` : "",
     ]
       .filter(Boolean)
       .join("\n");
 
-    window.open(linkWhatsapp(unidade.whatsapp, mensagem), "_blank", "noopener");
+    const destino = linkMailto(`Planejar visita: ${maravilha.nome}`, corpo);
+    if (!destino) {
+      setErro("Envio indisponível no momento.");
+      return;
+    }
+
+    window.location.href = destino;
     form.reset();
-    if (widgetId.current !== null) window.grecaptcha?.reset(widgetId.current);
     setOpen(false);
   };
 
-  const dataMin = new Date().toISOString().slice(0, 10);
+  const dataMin = dataLocalHoje();
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
@@ -144,7 +86,7 @@ export default function BookingModal({ unidades }: Props) {
         >
           <div className="mb-4 flex items-start justify-between">
             <Dialog.Title className="text-lg font-extrabold uppercase tracking-wide text-secundaria-forte">
-              Agende sua consulta
+              Planeje sua visita
             </Dialog.Title>
             <Dialog.Close
               aria-label="Fechar"
@@ -153,22 +95,24 @@ export default function BookingModal({ unidades }: Props) {
               <X className="h-5 w-5" aria-hidden="true" />
             </Dialog.Close>
           </div>
+          <Dialog.Description className="sr-only">
+            Escolha a maravilha, informe seus dados e a data prevista da visita.
+          </Dialog.Description>
 
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="booking-unidade" className="mb-1 block text-sm font-bold text-texto">
-                Unidade
+              <label htmlFor="booking-maravilha" className="mb-1 block text-sm font-bold text-texto">
+                Maravilha
               </label>
               <div className="relative">
-                <Building2 className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-secundaria" aria-hidden="true" />
-                <select id="booking-unidade" name="unidade" required defaultValue="" className="field appearance-none pl-9 pr-9">
+                <Landmark className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-secundaria" aria-hidden="true" />
+                <select id="booking-maravilha" name="maravilha" required defaultValue="" className="field appearance-none pl-9 pr-9">
                   <option value="" disabled>
-                    Escolha a unidade
+                    Escolha a maravilha
                   </option>
-                  {unidades.map((u) => (
-                    <option key={u.id} value={u.id}>
-                      {u.cidade}
-                      {u.uf === "MS" ? " - MS" : ""}
+                  {maravilhas.map((m) => (
+                    <option key={m.id} value={m.id}>
+                      {m.nome} — {m.pais}
                     </option>
                   ))}
                 </select>
@@ -196,30 +140,6 @@ export default function BookingModal({ unidades }: Props) {
             </div>
 
             <div>
-              <label htmlFor="booking-telefone" className="mb-1 block text-sm font-bold text-texto">
-                Telefone
-              </label>
-              <div className="relative">
-                <Phone className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-secundaria" aria-hidden="true" />
-                <input
-                  id="booking-telefone"
-                  name="telefone"
-                  type="tel"
-                  required
-                  inputMode="numeric"
-                  autoComplete="tel"
-                  maxLength={11}
-                  pattern="[0-9]{8,11}"
-                  placeholder="Telefone (somente números)"
-                  className="field pl-9"
-                  onInput={(e) => {
-                    e.currentTarget.value = somenteDigitos(e.currentTarget.value);
-                  }}
-                />
-              </div>
-            </div>
-
-            <div>
               <label htmlFor="booking-email" className="mb-1 block text-sm font-bold text-texto">
                 E-mail
               </label>
@@ -239,24 +159,13 @@ export default function BookingModal({ unidades }: Props) {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label htmlFor="booking-data" className="mb-1 block text-sm font-bold text-texto">
-                  Data desejada
-                </label>
-                <div className="relative">
-                  <Calendar className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-secundaria" aria-hidden="true" />
-                  <input id="booking-data" name="data" type="date" required min={dataMin} autoComplete="off" className="field pl-9" />
-                </div>
-              </div>
-              <div>
-                <label htmlFor="booking-horario" className="mb-1 block text-sm font-bold text-texto">
-                  Horário
-                </label>
-                <div className="relative">
-                  <Clock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-secundaria" aria-hidden="true" />
-                  <input id="booking-horario" name="horario" type="time" required autoComplete="off" className="field pl-9" />
-                </div>
+            <div>
+              <label htmlFor="booking-data" className="mb-1 block text-sm font-bold text-texto">
+                Data prevista
+              </label>
+              <div className="relative">
+                <Calendar className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-secundaria" aria-hidden="true" />
+                <input id="booking-data" name="data" type="date" required min={dataMin} autoComplete="off" className="field pl-9" />
               </div>
             </div>
 
@@ -266,8 +175,6 @@ export default function BookingModal({ unidades }: Props) {
               </label>
               <textarea id="booking-mensagem" name="mensagem" rows={3} placeholder="Sua mensagem" className="field" />
             </div>
-
-            <div ref={recaptchaRef} />
 
             {erro && (
               <p className="text-sm font-semibold text-[#EA4335]" aria-live="polite">
@@ -282,8 +189,8 @@ export default function BookingModal({ unidades }: Props) {
                 </button>
               </Dialog.Close>
               <button type="submit" className="btn btn-cta">
-                <MessageCircle className="h-4 w-4" aria-hidden="true" />
-                Enviar pelo WhatsApp
+                <Send className="h-4 w-4" aria-hidden="true" />
+                Enviar
               </button>
             </div>
           </form>

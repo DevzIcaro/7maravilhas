@@ -1,0 +1,121 @@
+[
+  {
+    "id": "chichen-itza",
+    "nome": "Chichén Itzá",
+    "local": "Yucatán",
+    "pais": "México",
+    "continente": "América do Norte",
+    "ordem": 1,
+    "ano": "séculos VI a XII d.C.",
+    "descricao": "Antiga cidade maia no norte da península de Yucatán, famosa pela pirâmide de Kukulkán (El Castillo), pelo maior campo de jogo de bola da Mesoamérica e por um observatório astronômico.",
+    "coordenadas": {
+      "lat": 20.6843,
+      "lng": -88.5678
+    },
+    "facebook": null,
+    "instagram": null,
+    "postId": "1"
+  },
+  {
+    "id": "cristo-redentor",
+    "nome": "Cristo Redentor",
+    "local": "Rio de Janeiro, Corcovado",
+    "pais": "Brasil",
+    "continente": "América do Sul",
+    "ordem": 2,
+    "ano": "1922–1931",
+    "descricao": "Estátua art déco de Jesus Cristo de braços abertos no topo do Corcovado, a 710 metros de altitude, vigiando a cidade do Rio de Janeiro desde 1931.",
+    "coordenadas": {
+      "lat": -22.9519,
+      "lng": -43.2105
+    },
+    "facebook": null,
+    "instagram": "https://www.instagram.com/cristoredentoroficial/",
+    "postId": "2"
+  },
+  {
+    "id": "machu-picchu",
+    "nome": "Machu Picchu",
+    "local": "Cusco, Andes",
+    "pais": "Peru",
+    "continente": "América do Sul",
+    "ordem": 3,
+    "ano": "c. 1450 d.C.",
+    "descricao": "Cidadela inca encravada nas montanhas dos Andes a mais de 2.400 metros de altitude, construída em pedra sem argamassa e redescoberta pelo mundo ocidental no início do século XX.",
+    "coordenadas": {
+      "lat": -13.1631,
+      "lng": -72.545
+    },
+    "facebook": "https://www.facebook.com/SHMachupicchu/",
+    "instagram": null,
+    "postId": "3"
+  },
+  {
+    "id": "coliseu",
+    "nome": "Coliseu",
+    "local": "Roma",
+    "pais": "Itália",
+    "continente": "Europa",
+    "ordem": 4,
+    "ano": "70–80 d.C.",
+    "descricao": "Maior anfiteatro do Império Romano, capaz de receber cerca de 50 mil espectadores em combates de gladiadores, caçadas e espetáculos públicos.",
+    "coordenadas": {
+      "lat": 41.8902,
+      "lng": 12.4922
+    },
+    "facebook": "https://www.facebook.com/parcocolosseo/",
+    "instagram": null,
+    "postId": "4"
+  },
+  {
+    "id": "taj-mahal",
+    "nome": "Taj Mahal",
+    "local": "Agra, Uttar Pradesh",
+    "pais": "Índia",
+    "continente": "Ásia",
+    "ordem": 5,
+    "ano": "1632–1653",
+    "descricao": "Mausoléu de mármore branco mandado erguer pelo imperador mogol Shah Jahan em memória de sua esposa Mumtaz Mahal, ícone da arquitetura indo-islâmica.",
+    "coordenadas": {
+      "lat": 27.1751,
+      "lng": 78.0421
+    },
+    "facebook": null,
+    "instagram": null,
+    "postId": "5"
+  },
+  {
+    "id": "muralha-da-china",
+    "nome": "Muralha da China",
+    "local": "Pequim, seção de Badaling",
+    "pais": "China",
+    "continente": "Ásia",
+    "ordem": 6,
+    "ano": "séc. VII a.C. – séc. XVII d.C.",
+    "descricao": "Sistema de fortificações erguido por várias dinastias ao longo de mais de dois mil anos, com mais de 21 mil quilômetros de extensão somando todos os seus trechos.",
+    "coordenadas": {
+      "lat": 40.3587,
+      "lng": 116.02
+    },
+    "facebook": null,
+    "instagram": null,
+    "postId": "6"
+  },
+  {
+    "id": "petra",
+    "nome": "Petra",
+    "local": "Ma'an, Vale de Wadi Musa",
+    "pais": "Jordânia",
+    "continente": "Ásia",
+    "ordem": 7,
+    "ano": "séc. IV a.C. – séc. I d.C.",
+    "descricao": "Capital do reino nabateu, a \"cidade rosa\" tem templos e túmulos esculpidos diretamente na rocha de arenito, como o célebre Al-Khazneh (o Tesouro).",
+    "coordenadas": {
+      "lat": 30.3285,
+      "lng": 35.4444
+    },
+    "facebook": "https://www.facebook.com/PRAPDTRA/",
+    "instagram": null,
+    "postId": "7"
+  }
+]

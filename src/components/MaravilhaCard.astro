@@ -1,0 +1,131 @@
+---
+import { Image } from "astro:assets";
+import { MapPin, Navigation, Calendar, BookOpen, Globe } from "lucide-react";
+import PlaceholderImage from "./PlaceholderImage.astro";
+import FacebookIcon from "./icons/FacebookIcon.astro";
+import InstagramIcon from "./icons/InstagramIcon.astro";
+import { fotoDaMaravilha } from "../lib/maravilhaFotos";
+import { formatarCoordenadas, linkMaps, mapaEmbedSrc } from "../lib/links";
+
+/**
+ * Card completo de uma maravilha: foto (ou placeholder) + mapa pelas
+ * coordenadas, dados básicos, link para a história no blog, "Como chegar"
+ * e as redes sociais oficiais do local (quando cadastradas).
+ */
+interface Props {
+  id: string;
+  nome: string;
+  local: string;
+  pais: string;
+  continente: string;
+  ano: string;
+  descricao: string;
+  coordenadas: { lat: number; lng: number };
+  facebook: string | null;
+  instagram: string | null;
+  /** Rota do post do blog com a história do lugar. */
+  postHref: string;
+}
+
+const { id, nome, local, pais, continente, ano, descricao, coordenadas, facebook, instagram, postHref } = Astro.props;
+const foto = fotoDaMaravilha(id);
+
+const botao =
+  "flex min-h-11 flex-1 basis-[160px] cursor-pointer items-center justify-center gap-2 rounded-[var(--raio)] px-5 py-2.5 text-sm font-bold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:brightness-90 active:translate-y-0 active:shadow-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2";
+---
+
+<div
+  id={`maravilha-${id}`}
+  data-continente={continente}
+  class="scroll-mt-24 overflow-hidden rounded-[var(--raio)] border border-borda bg-white"
+>
+  <div class="grid lg:h-[440px] lg:grid-cols-2">
+    {foto ? (
+      <Image
+        src={foto}
+        alt={`${nome}, ${local}, ${pais}`}
+        widths={[480, 640, 880]}
+        sizes="(max-width: 1024px) 100vw, 50vw"
+        loading="lazy"
+        decoding="async"
+        class="aspect-video w-full object-cover lg:aspect-auto lg:h-full lg:min-h-0"
+      />
+    ) : (
+      <PlaceholderImage
+        alt={`${nome}, ${local}, ${pais}`}
+        ratio="wide"
+        class="!rounded-none !border-0 lg:!aspect-auto lg:h-full lg:min-h-0"
+      />
+    )}
+    <iframe
+      src={mapaEmbedSrc(coordenadas)}
+      title={`Mapa de ${nome}`}
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      class="min-h-[240px] w-full border-0 lg:h-full lg:min-h-0"
+    ></iframe>
+  </div>
+
+  <div class="flex flex-col gap-5 p-6 lg:p-8">
+    <div>
+      <h3 class="text-lg font-extrabold text-secundaria-forte">{nome}</h3>
+      <p class="mt-2 text-sm text-texto">{descricao}</p>
+    </div>
+
+    <ul class="grid gap-2 text-sm text-texto/80 sm:grid-cols-2">
+      <li class="flex items-start gap-2">
+        <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-secundaria" aria-hidden="true" />
+        <span>{local} · {pais}</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <Globe className="mt-0.5 h-4 w-4 shrink-0 text-secundaria" aria-hidden="true" />
+        <span>{continente} · {formatarCoordenadas(coordenadas)}</span>
+      </li>
+      <li class="flex items-start gap-2">
+        <Calendar className="mt-0.5 h-4 w-4 shrink-0 text-secundaria" aria-hidden="true" />
+        <span>Construção: {ano}</span>
+      </li>
+    </ul>
+
+    <div class="flex flex-wrap gap-3">
+      <a href={postHref} class:list={[botao, "bg-cta text-texto focus-visible:ring-cta"]}>
+        <BookOpen className="h-4 w-4 shrink-0" aria-hidden="true" />
+        Ler a história
+      </a>
+      <a
+        href={linkMaps(coordenadas)}
+        target="_blank"
+        rel="noopener noreferrer"
+        class:list={[botao, "bg-[#EA4335] text-white focus-visible:ring-[#EA4335]"]}
+      >
+        <Navigation className="h-4 w-4 shrink-0" aria-hidden="true" />
+        Como chegar
+      </a>
+      {facebook && (
+        <a
+          href={facebook}
+          target="_blank"
+          rel="noopener noreferrer"
+          class:list={[botao, "bg-[#1877F2] text-white focus-visible:ring-[#1877F2]"]}
+        >
+          <FacebookIcon class="h-4 w-4 shrink-0" />
+          Facebook
+        </a>
+      )}
+      {instagram && (
+        <a
+          href={instagram}
+          target="_blank"
+          rel="noopener noreferrer"
+          class:list={[
+            botao,
+            "bg-[linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5)] text-white focus-visible:ring-[#d62976]",
+          ]}
+        >
+          <InstagramIcon class="h-4 w-4 shrink-0" />
+          Instagram
+        </a>
+      )}
+    </div>
+  </div>
+</div>
