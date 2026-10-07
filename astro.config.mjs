@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, passthroughImageService } from 'astro/config';
 
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
@@ -14,6 +14,9 @@ const base = process.env.BASE_PATH || '/';
 export default defineConfig({
   site,
   base,
+  // O pacote `sharp` não é dependência direta (o pnpm não o expõe ao Astro),
+  // então as imagens são publicadas como estão, sem otimização no build.
+  image: { service: passthroughImageService() },
   integrations: [react(), sitemap()],
   vite: {
     plugins: [tailwindcss()]
