@@ -1,5 +1,6 @@
 "use client";
 
+import { url } from "../lib/url";
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Menu, X, ArrowRight, MapPin } from "lucide-react";
@@ -29,11 +30,11 @@ interface NavbarProps {
 }
 
 const LINKS = [
-  { label: "Home", href: "/" },
-  { label: "Sobre", href: "/sobre-nos" },
-  { label: "Maravilhas", href: "/maravilhas" },
-  { label: "Equipe", href: "/equipe" },
-  { label: "Blog", href: "/blog" },
+  { label: "Home", href: url("/") },
+  { label: "Sobre", href: url("/sobre-nos") },
+  { label: "Maravilhas", href: url("/maravilhas") },
+  { label: "Equipe", href: url("/equipe") },
+  { label: "Blog", href: url("/blog") },
 ];
 
 export default function Navbar({ logoSrc, maravilhas }: NavbarProps) {
@@ -84,7 +85,7 @@ export default function Navbar({ logoSrc, maravilhas }: NavbarProps) {
         className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-4 lg:px-8"
       >
         {/* Logo */}
-        <a href="/" className="flex shrink-0 items-center" aria-label="Maravilhas do Mundo — página inicial">
+        <a href={url("/")} className="flex shrink-0 items-center" aria-label="Maravilhas do Mundo — página inicial">
           <img src={logoSrc} alt="Maravilhas do Mundo" className="h-8 w-auto" />
         </a>
 
@@ -130,7 +131,7 @@ export default function Navbar({ logoSrc, maravilhas }: NavbarProps) {
                     {maravilhas.map((m) => (
                       <li key={m.id}>
                         <a
-                          href={`/#maravilha-${m.id}`}
+                          href={url(`/#maravilha-${m.id}`)}
                           onClick={handleMaravilhaClick(m.id, () => setOpenMaravilhas(false))}
                           className="flex cursor-pointer items-start justify-between gap-3 px-4 py-2.5 text-sm text-texto transition-colors duration-200 hover:bg-superficie hover:text-secundaria-forte"
                         >
@@ -144,7 +145,7 @@ export default function Navbar({ logoSrc, maravilhas }: NavbarProps) {
                     ))}
                   </ul>
                   <a
-                    href="/fale-conosco"
+                    href={url("/fale-conosco")}
                     className="block cursor-pointer border-t border-borda px-4 py-3 text-sm font-semibold text-secundaria-forte transition-colors duration-200 hover:bg-superficie"
                   >
                     Fale conosco
@@ -158,7 +159,7 @@ export default function Navbar({ logoSrc, maravilhas }: NavbarProps) {
         {/* Ações (desktop) */}
         <div className="hidden shrink-0 items-center gap-3 lg:flex">
           <a
-            href="/fale-conosco"
+            href={url("/fale-conosco")}
             className="cursor-pointer rounded-[var(--raio)] border-2 border-primaria px-4 py-2 text-sm font-bold text-primaria transition-colors duration-200 hover:bg-primaria hover:text-white"
           >
             Fale conosco
@@ -235,7 +236,7 @@ export default function Navbar({ logoSrc, maravilhas }: NavbarProps) {
               {maravilhas.map((m) => (
                 <motion.a
                   key={m.id}
-                  href={`/#maravilha-${m.id}`}
+                  href={url(`/#maravilha-${m.id}`)}
                   onClick={handleMaravilhaClick(m.id, () => setOpenMobile(false))}
                   variants={{
                     hidden: { opacity: 0, y: 14 },
@@ -273,7 +274,7 @@ export default function Navbar({ logoSrc, maravilhas }: NavbarProps) {
                 className="mt-6 flex flex-col gap-2 pb-4"
               >
                 <a
-                  href="/fale-conosco"
+                  href={url("/fale-conosco")}
                   className="cursor-pointer rounded-[var(--raio)] border-2 border-primaria px-4 py-2.5 text-center text-sm font-bold text-primaria"
                 >
                   Fale conosco

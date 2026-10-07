@@ -1,10 +1,13 @@
 ---
+import { url } from "../lib/url";
 import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import { fotoDoProfissional } from "../lib/equipeFotos";
 import { imagemDoPost } from "../lib/postImagens";
+import { fotoDaMaravilha } from "../lib/maravilhaFotos";
 import PlaceholderImage from "../components/PlaceholderImage.astro";
+import HeroVideo from "../components/HeroVideo.astro";
 import MaravilhaCard from "../components/MaravilhaCard.astro";
 import DepoimentosCarousel from "../components/DepoimentosCarousel";
 
@@ -13,10 +16,16 @@ const equipe = await getCollection("equipe");
 const depoimentos = await getCollection("depoimentos");
 const posts = (await getCollection("posts")).sort((a, b) => a.data.numero - b.data.numero);
 
+// A home mostra só os 3 primeiros posts (Chichén Itzá, Cristo Redentor e Machu Picchu);
+// a lista completa fica em /blog.
+const postsHome = posts.slice(0, 3);
+
 const hrefDoPost = (postId: string) => {
   const post = posts.find((p) => p.data.id === postId);
-  return post ? `/blog/ver/${post.data.id}/${post.data.slug}` : "/blog";
+  return post ? url(`/blog/ver/${post.data.id}/${post.data.slug}`) : url("/blog");
 };
+
+const fotoSobre = fotoDaMaravilha("machu-picchu");
 
 const destaques = [
   { titulo: "Eleitas em 2007", texto: "As Sete Novas Maravilhas foram escolhidas em votação mundial organizada pela fundação New7Wonders." },
@@ -31,8 +40,9 @@ const destaques = [
   description="Conheça a história, a localização e as redes oficiais das Sete Maravilhas do Mundo Moderno: Chichén Itzá, Cristo Redentor, Machu Picchu, Coliseu, Taj Mahal, Muralha da China e Petra."
   path="/"
 >
-  <section class="bg-rodape text-branco" aria-label="Apresentação do Maravilhas do Mundo">
-    <div class="mx-auto flex max-w-7xl flex-col items-start gap-6 px-4 py-20 lg:px-8 lg:py-28">
+  <section class="relative overflow-hidden bg-rodape text-branco" aria-label="Apresentação do Maravilhas do Mundo">
+    <HeroVideo />
+    <div class="relative z-10 mx-auto flex max-w-7xl flex-col items-start gap-6 px-4 py-20 lg:px-8 lg:py-28">
       <p class="text-xs font-extrabold uppercase tracking-[0.18em] text-ouro-claro">Sete Maravilhas do Mundo Moderno</p>
       <h1 class="max-w-3xl text-4xl font-extrabold leading-tight lg:text-5xl">
         Histórias, coordenadas e curiosidades dos lugares mais incríveis do planeta
@@ -43,7 +53,7 @@ const destaques = [
       </p>
       <div class="flex flex-wrap gap-3">
         <a href="#maravilhas" class="btn btn-cta">Explorar as maravilhas</a>
-        <a href="/blog" class="btn btn-outline !border-branco !text-branco hover:!bg-branco hover:!text-rodape">Ler o blog</a>
+        <a href={url("/blog")} class="btn btn-outline !border-branco !text-branco hover:!bg-branco hover:!text-rodape">Ler o blog</a>
       </div>
     </div>
   </section>
@@ -61,7 +71,19 @@ const destaques = [
 
   <section class="section-alt">
     <div class="mx-auto grid max-w-7xl gap-10 px-4 py-16 lg:grid-cols-2 lg:items-center lg:px-8">
-      <PlaceholderImage alt="Mapa-múndi com as Sete Maravilhas do Mundo Moderno" ratio="wide" class="w-full" />
+      {fotoSobre ? (
+        <Image
+          src={fotoSobre}
+          alt="Machu Picchu, uma das Sete Maravilhas do Mundo Moderno"
+          widths={[480, 768, 1024]}
+          sizes="(max-width: 1024px) 90vw, 45vw"
+          loading="lazy"
+          decoding="async"
+          class="aspect-video w-full rounded-[var(--raio)] object-cover"
+        />
+      ) : (
+        <PlaceholderImage alt="As Sete Maravilhas do Mundo Moderno" ratio="wide" class="w-full" />
+      )}
       <div>
         <p class="kicker">Quem somos</p>
         <h2 class="section-title">Sobre o projeto</h2>
@@ -70,7 +92,7 @@ const destaques = [
           Maravilhas do Mundo, além de um panorama das maravilhas do mundo antigo. Tudo em linguagem simples, para
           quem quer aprender ou planejar uma viagem.
         </p>
-        <a href="/sobre-nos" class="btn btn-outline mt-6 cursor-pointer">Ler mais</a>
+        <a href={url("/sobre-nos")} class="btn btn-outline mt-6 cursor-pointer">Ler mais</a>
       </div>
     </div>
   </section>
@@ -93,23 +115,25 @@ const destaques = [
           <h2 class="section-title">Conheça nossa equipe</h2>
           <p class="section-subtitle">Pesquisadores e guias que transformam cada lugar em uma boa história.</p>
         </div>
-        <a href="/equipe" class="btn btn-outline cursor-pointer">Ver todos</a>
+        <a href={url("/equipe")} class="btn btn-outline cursor-pointer">Ver todos</a>
       </div>
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-reveal>
+      <div class="flex flex-wrap justify-center gap-6" data-reveal>
         {equipe.map((p) => {
           const foto = fotoDoProfissional(p.data.id);
           return (
-            <div class="card text-center">
+            <div class="card w-full text-center sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]">
               {foto ? (
-                <Image
-                  src={foto}
-                  alt={`${p.data.nome}, ${p.data.especialidade}`}
-                  widths={[320, 480, 640]}
-                  sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 30vw"
-                  loading="lazy"
-                  decoding="async"
-                  class="mb-4 aspect-[4/5] w-full rounded-[var(--raio)] bg-superficie object-cover object-top"
-                />
+                <div class="mb-4 aspect-[4/5] w-full overflow-hidden rounded-[var(--raio)] bg-superficie">
+                  <Image
+                    src={foto}
+                    alt={`${p.data.nome}, ${p.data.especialidade}`}
+                    widths={[320, 480, 640]}
+                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 30vw"
+                    loading="lazy"
+                    decoding="async"
+                    class="h-full w-full object-cover object-center"
+                  />
+                </div>
               ) : (
                 <PlaceholderImage alt={p.data.nome} ratio="portrait" class="mb-4 w-full" />
               )}
@@ -127,25 +151,32 @@ const destaques = [
     <p class="kicker">O que dizem de nós</p>
     <h2 class="section-title">Depoimentos</h2>
     <p class="section-subtitle max-w-3xl">
-      Viajantes, estudantes e professores contam como usam o Maravilhas do Mundo para aprender e planejar suas
-      viagens.
+      Quem já esteve nas maravilhas conta como foi a experiência e como o Maravilhas do Mundo ajudou a
+      planejar a viagem.
     </p>
-    <DepoimentosCarousel client:visible depoimentos={depoimentos.map((d) => d.data)} />
+    <div class="mt-4 rounded-[var(--raio)] border border-borda bg-superficie px-4 pb-8 sm:px-10 lg:px-14">
+      <DepoimentosCarousel client:visible depoimentos={depoimentos.map((d) => d.data)} />
+    </div>
   </section>
 
   <section class="section-alt">
     <div class="mx-auto max-w-7xl px-4 py-16 lg:px-8">
-      <p class="kicker">Blog</p>
-      <h2 class="section-title">Histórias das maravilhas</h2>
-      <p class="section-subtitle max-w-3xl">
-        Um artigo para cada maravilha, um panorama das Sete Maravilhas do Mundo Antigo e um texto sobre as
-        maravilhas perdidas, como a Biblioteca de Alexandria e os Jardins Suspensos da Babilônia.
-      </p>
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p class="kicker">Blog</p>
+          <h2 class="section-title">Histórias das maravilhas</h2>
+          <p class="section-subtitle max-w-3xl">
+            Um artigo para cada maravilha, um panorama das Sete Maravilhas do Mundo Antigo e um texto sobre as
+            maravilhas perdidas, como a Biblioteca de Alexandria e os Jardins Suspensos da Babilônia.
+          </p>
+        </div>
+        <a href={url("/blog")} class="btn btn-outline cursor-pointer">Ver todos os posts</a>
+      </div>
       <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-reveal>
-        {posts.map((p) => {
+        {postsHome.map((p) => {
           const imagem = imagemDoPost(p.data.id);
           return (
-            <a href={`/blog/ver/${p.data.id}/${p.data.slug}`} class="card cursor-pointer">
+            <a href={url(`/blog/ver/${p.data.id}/${p.data.slug}`)} class="card cursor-pointer">
               {imagem ? (
                 <Image
                   src={imagem}

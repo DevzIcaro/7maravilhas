@@ -7,6 +7,7 @@ import contatoJson from "../data/contato.json";
  */
 export interface Contato {
   email: string | null;
+  whatsapp: string | null;
   facebook: string | null;
   instagram: string | null;
 }

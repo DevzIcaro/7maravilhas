@@ -1,4 +1,5 @@
 ---
+import { url } from "../lib/url";
 import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
 import MaravilhaCard from "../components/MaravilhaCard.astro";
@@ -8,7 +9,7 @@ const posts = await getCollection("posts");
 
 const hrefDoPost = (postId: string) => {
   const post = posts.find((p) => p.data.id === postId);
-  return post ? `/blog/ver/${post.data.id}/${post.data.slug}` : "/blog";
+  return post ? url(`/blog/ver/${post.data.id}/${post.data.slug}`) : url("/blog");
 };
 
 const filtros = ["Todos", ...new Set(maravilhas.map((m) => m.data.continente))];
@@ -21,7 +22,7 @@ const filtros = ["Todos", ...new Set(maravilhas.map((m) => m.data.continente))];
 >
   <section class="mx-auto max-w-7xl px-4 py-10 lg:px-8">
     <nav aria-label="Breadcrumb" class="mb-4 text-sm text-texto/60">
-      <a href="/" class="cursor-pointer hover:text-primaria">Home</a> <span aria-hidden="true">›</span> Maravilhas
+      <a href={url("/")} class="cursor-pointer hover:text-primaria">Home</a> <span aria-hidden="true">›</span> Maravilhas
     </nav>
     <h1 class="section-title">As Sete Maravilhas do Mundo Moderno</h1>
     <p class="section-subtitle mb-8 max-w-3xl">

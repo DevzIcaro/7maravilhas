@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 48" width="300" height="48" role="img" aria-label="Maravilhas do Mundo">
-  <path d="M4 40V22l10-10 10 10v18M0 40h28M9 40V28h10v12" fill="none" stroke="#C89B3C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <text x="38" y="32" font-family="Helvetica, Arial, sans-serif" font-size="24" font-weight="800" fill="#C89B3C">Maravilhas</text>
-  <text x="162" y="32" font-family="Helvetica, Arial, sans-serif" font-size="24" font-weight="800" fill="#2E7695">do Mundo</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 296 48" width="296" height="48" role="img" aria-label="Maravilhas do Mundo">
+  <path d="M4.0 40V28a2 2 0 0 1 4 0V40z" fill="#C89B3C"/><path d="M10.5 40V20a2 2 0 0 1 4 0V40z" fill="#C89B3C"/><path d="M17.0 40V12a2 2 0 0 1 4 0V40z" fill="#C89B3C"/><path d="M23.5 40V2a2 2 0 0 1 4 0V40z" fill="#C89B3C"/><path d="M30.0 40V12a2 2 0 0 1 4 0V40z" fill="#C89B3C"/><path d="M36.5 40V20a2 2 0 0 1 4 0V40z" fill="#C89B3C"/><path d="M43.0 40V28a2 2 0 0 1 4 0V40z" fill="#C89B3C"/><path d="M1.0 42.5h49.0" stroke="#C89B3C" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="56" y="33" font-family="Helvetica, Arial, sans-serif" font-size="24" font-weight="800" fill="#C89B3C" textLength="130" lengthAdjust="spacingAndGlyphs">Maravilhas</text>
+  <text x="190" y="33" font-family="Helvetica, Arial, sans-serif" font-size="24" font-weight="800" fill="#2E7695" textLength="104" lengthAdjust="spacingAndGlyphs">do Mundo</text>
 </svg>

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { User, Mail, Landmark, Calendar, ChevronDown, Send, X } from "lucide-react";
 import { dataLocalHoje } from "../lib/data";
-import { linkMailto } from "../lib/mensagem";
+import { linkMailto, linkWhatsapp } from "../lib/mensagem";
 
 interface MaravilhaOpcao {
   id: string;
@@ -64,12 +64,14 @@ export default function BookingModal({ maravilhas }: Props) {
       .join("\n");
 
     const destino = linkMailto(`Planejar visita: ${maravilha.nome}`, corpo);
-    if (!destino) {
+    const whatsapp = linkWhatsapp(corpo);
+    if (!destino && !whatsapp) {
       setErro("Envio indisponível no momento.");
       return;
     }
 
-    window.location.href = destino;
+    if (whatsapp) window.open(whatsapp, "_blank", "noopener");
+    if (destino) window.location.href = destino;
     form.reset();
     setOpen(false);
   };

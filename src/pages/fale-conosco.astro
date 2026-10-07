@@ -1,12 +1,14 @@
 ---
+import { url } from "../lib/url";
 import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
-import { Mail, User, Landmark, ChevronDown, Send } from "lucide-react";
+import { Mail, MessageCircle, Calendar, User, Landmark, ChevronDown, Send } from "lucide-react";
 import FacebookIcon from "../components/icons/FacebookIcon.astro";
 import InstagramIcon from "../components/icons/InstagramIcon.astro";
 import { contato } from "../lib/contato";
 
-const { email, facebook, instagram } = contato;
+const { email, whatsapp, facebook, instagram } = contato;
+const whatsappHref = whatsapp ? `https://wa.me/55${whatsapp.replace(/\D/g, "")}` : null;
 const maravilhas = (await getCollection("maravilhas")).sort((a, b) => a.data.ordem - b.data.ordem);
 ---
 
@@ -17,11 +19,11 @@ const maravilhas = (await getCollection("maravilhas")).sort((a, b) => a.data.ord
 >
   <section class="mx-auto max-w-7xl px-4 py-10 lg:px-8">
     <nav aria-label="Breadcrumb" class="mb-4 text-sm text-texto/60">
-      <a href="/" class="cursor-pointer hover:text-primaria">Home</a> <span aria-hidden="true">›</span> Fale Conosco
+      <a href={url("/")} class="cursor-pointer hover:text-primaria">Home</a> <span aria-hidden="true">›</span> Fale Conosco
     </nav>
     <h1 class="section-title">Fale Conosco</h1>
 
-    {(email || facebook || instagram) && (
+    {(email || whatsapp || facebook || instagram) && (
       <div class="mb-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {email && (
           <a href={`mailto:${email}`} class="card flex cursor-pointer items-center gap-3">
@@ -31,6 +33,18 @@ const maravilhas = (await getCollection("maravilhas")).sort((a, b) => a.data.ord
             <div class="min-w-0 flex-1">
               <p class="text-xs font-bold uppercase tracking-wide text-texto/60">E-mail</p>
               <p class="truncate text-sm font-semibold text-texto">{email}</p>
+            </div>
+          </a>
+        )}
+
+        {whatsapp && whatsappHref && (
+          <a href={whatsappHref} target="_blank" rel="noopener noreferrer" class="card flex cursor-pointer items-center gap-3">
+            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#25D366]/10 text-[#25D366]">
+              <MessageCircle className="h-5 w-5" aria-hidden="true" />
+            </span>
+            <div class="min-w-0 flex-1">
+              <p class="text-xs font-bold uppercase tracking-wide text-texto/60">WhatsApp</p>
+              <p class="truncate text-sm font-semibold text-texto">{whatsapp}</p>
             </div>
           </a>
         )}
@@ -111,6 +125,13 @@ const maravilhas = (await getCollection("maravilhas")).sort((a, b) => a.data.ord
               />
             </div>
           </div>
+          <div>
+            <label for="fc-data" class="mb-1 block text-sm font-bold text-texto">Data prevista</label>
+            <div class="relative">
+              <Calendar className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-secundaria" aria-hidden="true" />
+              <input id="fc-data" name="data" type="date" required autocomplete="off" class="field pl-9" />
+            </div>
+          </div>
         </div>
 
         <div class="flex flex-col">
@@ -130,9 +151,11 @@ const maravilhas = (await getCollection("maravilhas")).sort((a, b) => a.data.ord
   </section>
 
   <script>
-    import { linkMailto } from "../lib/mensagem";
+    import { linkMailto, linkWhatsapp } from "../lib/mensagem";
+    import { dataLocalHoje } from "../lib/data";
 
     const form = document.getElementById("fale-conosco-form") as HTMLFormElement | null;
+    document.getElementById("fc-data")?.setAttribute("min", dataLocalHoje());
     const statusEl = document.getElementById("fc-status");
 
     // Leitura tipada de FormData — evita `string | File | null` solto pelo código.
@@ -160,18 +183,21 @@ const maravilhas = (await getCollection("maravilhas")).sort((a, b) => a.data.ord
         `Maravilha de interesse: ${maravilha}`,
         `Nome: ${campo(dados, "nome")}`,
         `E-mail: ${campo(dados, "email")}`,
+        `Data prevista: ${campo(dados, "data").split("-").reverse().join("/")}`,
         campo(dados, "mensagem") ? `Mensagem: ${campo(dados, "mensagem")}` : "",
       ]
         .filter(Boolean)
         .join("\n");
 
       const destino = linkMailto("Contato pelo site", corpo);
-      if (!destino) {
+      const whatsapp = linkWhatsapp(corpo);
+      if (!destino && !whatsapp) {
         mostrarStatus("Envio indisponível no momento.");
         return;
       }
 
-      window.location.href = destino;
+      if (whatsapp) window.open(whatsapp, "_blank", "noopener");
+      if (destino) window.location.href = destino;
       form.reset();
     });
   </script>

@@ -1,0 +1,96 @@
+---
+import { url } from "../lib/url";
+/**
+ * Vídeo de fundo do hero. Preenche o elemento pai (que precisa ser `relative`
+ * e `overflow-hidden`) e aplica uma camada escura para o texto ficar legível.
+ * Exibição pura: sem controles, sem áudio, sem interação.
+ *
+ * Os arquivos ficam em public/media/ (áudio removido, moov atom no início, o
+ * que permite range requests): maravilhas.mp4 (1280x720, desktop) e
+ * maravilhas-mobile.mp4 (640x360). O original está em src/assets/. A fonte é
+ * escolhida por JS (menor em telas pequenas) porque o atributo `media` em
+ * <source> é ignorado dentro de <video>. Com movimento reduzido ou economia de
+ * dados, fica só o poster.
+ */
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+---
+
+<div
+  class={`hero-video absolute inset-0 overflow-hidden bg-rodape ${className}`}
+  aria-hidden="true"
+  data-src-desktop={url("/media/maravilhas.mp4")}
+  data-src-mobile={url("/media/maravilhas-mobile.mp4")}
+>
+  <video
+    class="h-full w-full object-cover object-center"
+    poster={url("/media/maravilhas-poster.jpg")}
+    muted
+    loop
+    playsinline
+    preload="none"
+    tabindex="-1"
+    disablepictureinpicture
+    disableremoteplayback
+    controlslist="nodownload noplaybackrate nofullscreen noremoteplayback"></video>
+
+  <!-- Camada escura: garante contraste do texto branco sobre o vídeo -->
+  <div class="absolute inset-0 bg-gradient-to-r from-rodape/90 via-rodape/65 to-rodape/30"></div>
+</div>
+
+<style>
+  .hero-video video {
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .hero-video video::-webkit-media-controls,
+  .hero-video video::-webkit-media-controls-enclosure,
+  .hero-video video::-webkit-media-controls-panel,
+  .hero-video video::-webkit-media-controls-start-playback-button {
+    display: none !important;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>(".hero-video").forEach((bloco) => {
+    const video = bloco.querySelector("video");
+    if (!video) return;
+
+    // Sem movimento e sem download em conexões limitadas ou por preferência do usuário
+    const conexao = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
+    const economizarDados = Boolean(conexao?.saveData) || /2g/.test(conexao?.effectiveType ?? "");
+    const semAnimacao = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (semAnimacao || economizarDados) return; // fica apenas o poster
+
+    const mobile = window.matchMedia("(max-width: 768px)").matches;
+    const fonte = mobile ? bloco.dataset.srcMobile : bloco.dataset.srcDesktop;
+    if (!fonte) return;
+
+    video.muted = true;
+    video.src = fonte;
+
+    const tocar = () => {
+      video.muted = true;
+      const p = video.play();
+      if (p && typeof p.catch === "function") p.catch(() => {});
+    };
+
+    video.addEventListener("loadeddata", tocar, { once: true });
+    tocar();
+
+    // Pausa quando o hero sai da tela (economiza bateria)
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(
+        (entradas) => entradas.forEach((e) => (e.isIntersecting ? tocar() : video.pause())),
+        { threshold: 0.1 }
+      ).observe(bloco);
+    }
+  });
+</script>

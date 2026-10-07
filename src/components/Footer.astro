@@ -1,4 +1,5 @@
 ---
+import { url } from "../lib/url";
 import { getCollection } from "astro:content";
 import { Mail, MapPin, ArrowRight } from "lucide-react";
 import { Image } from "astro:assets";
@@ -10,12 +11,12 @@ import { contato } from "../lib/contato";
 const maravilhas = (await getCollection("maravilhas")).sort((a, b) => a.data.ordem - b.data.ordem);
 
 const navegacao = [
-  { label: "Home", href: "/" },
-  { label: "Sobre", href: "/sobre-nos" },
-  { label: "Maravilhas", href: "/maravilhas" },
-  { label: "Equipe", href: "/equipe" },
-  { label: "Blog", href: "/blog" },
-  { label: "Fale conosco", href: "/fale-conosco" },
+  { label: "Home", href: url("/") },
+  { label: "Sobre", href: url("/sobre-nos") },
+  { label: "Maravilhas", href: url("/maravilhas") },
+  { label: "Equipe", href: url("/equipe") },
+  { label: "Blog", href: url("/blog") },
+  { label: "Fale conosco", href: url("/fale-conosco") },
 ];
 
 const anoAtual = new Date().getFullYear();
@@ -26,7 +27,7 @@ const anoAtual = new Date().getFullYear();
     <div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
       <!-- Marca -->
       <div>
-        <Image src={logo} alt="Maravilhas do Mundo" width={212} height={34} class="mb-4 h-9 w-auto" />
+        <Image src={logo} alt="Maravilhas do Mundo" width={197} height={32} class="mb-4 h-9 w-auto" />
         <p class="max-w-xs text-sm leading-relaxed text-branco/90">
           Histórias, curiosidades e coordenadas das Sete Maravilhas do Mundo Moderno, em quatro continentes.
         </p>
@@ -82,7 +83,7 @@ const anoAtual = new Date().getFullYear();
           {maravilhas.map((m) => (
             <li class="text-sm leading-snug">
               <a
-                href={`/#maravilha-${m.data.id}`}
+                href={url(`/#maravilha-${m.data.id}`)}
                 class="cursor-pointer font-semibold text-branco transition-colors duration-200 hover:text-ouro-claro"
               >
                 {m.data.nome}
@@ -135,7 +136,7 @@ const anoAtual = new Date().getFullYear();
         )}
 
         <a
-          href="/#maravilhas"
+          href={url("/#maravilhas")}
           class="mb-5 flex cursor-pointer items-start gap-2.5 text-sm text-branco/90 transition-colors duration-200 hover:text-branco"
         >
           <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-ouro-claro" aria-hidden="true" />
@@ -143,7 +144,7 @@ const anoAtual = new Date().getFullYear();
         </a>
 
         <a
-          href="/fale-conosco"
+          href={url("/fale-conosco")}
           class="mb-2.5 flex cursor-pointer items-center justify-center gap-2 rounded-[var(--raio)] border-2 border-ouro-claro px-4 py-2.5 text-sm font-bold text-ouro-claro transition-colors duration-200 hover:bg-ouro-claro hover:text-rodape"
         >
           Fale conosco

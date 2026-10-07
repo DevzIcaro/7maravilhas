@@ -1,3 +1,4 @@
+import { url } from "./url";
 import { animate } from "animejs";
 
 /**
@@ -56,7 +57,7 @@ function irAte(id: string) {
  */
 export function irParaMaravilha(id: string, event?: { preventDefault: () => void }) {
   const alvo = `maravilha-${id}`;
-  const naHome = window.location.pathname === "/" || window.location.pathname === "/index.html";
+  const naHome = [url("/"), url("/index.html")].includes(window.location.pathname);
 
   if (naHome) {
     event?.preventDefault();
@@ -68,7 +69,7 @@ export function irParaMaravilha(id: string, event?: { preventDefault: () => void
 
   event?.preventDefault();
   sessionStorage.setItem(STORAGE_KEY, alvo);
-  window.location.assign("/");
+  window.location.assign(url("/"));
 }
 
 /** Chamar no load da home: completa o scroll pendente vindo de outra página. */

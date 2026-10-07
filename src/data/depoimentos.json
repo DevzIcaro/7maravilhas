@@ -1,32 +1,44 @@
 [
   {
-    "id": "viajante-1",
+    "id": "camila-ribeiro",
     "autor": "Camila Ribeiro",
-    "papel": "Viajante",
-    "texto": "Li a história de Machu Picchu antes de planejar a viagem e entendi cada terraço de outro jeito. Os textos são claros e cheios de curiosidades."
+    "papel": "Viajante · visitou Machu Picchu",
+    "texto": "Subi a trilha ao amanhecer e vi a neblina abrir sobre os terraços. Ler a história da cidadela antes da viagem fez cada pedra ter sentido. Foi a viagem da minha vida."
   },
   {
-    "id": "viajante-2",
-    "autor": "Otávio Lins",
-    "papel": "Professor de História",
-    "texto": "Uso os artigos sobre o Coliseu e as maravilhas antigas nas minhas aulas. Conteúdo bem organizado e fácil de consultar."
-  },
-  {
-    "id": "viajante-3",
-    "autor": "Fernanda Amaral",
-    "papel": "Fotógrafa",
-    "texto": "As coordenadas de cada maravilha me ajudaram a montar o roteiro de fotos. Dica de ouro: o mapa de cada card."
-  },
-  {
-    "id": "viajante-4",
+    "id": "daniel-seabra",
     "autor": "Daniel Seabra",
-    "papel": "Viajante",
-    "texto": "Descobri detalhes de Petra que nenhum guia de viagem tinha me contado. Já salvei o site nos favoritos."
+    "papel": "Viajante · visitou Petra",
+    "texto": "Caminhar pelo Siq e dar de cara com o Tesouro é de arrepiar. A luz do fim da tarde deixa a rocha cor-de-rosa mesmo. Recomendo reservar mais de um dia."
   },
   {
-    "id": "viajante-5",
+    "id": "fernanda-amaral",
+    "autor": "Fernanda Amaral",
+    "papel": "Fotógrafa · visitou o Taj Mahal",
+    "texto": "Cheguei antes do sol nascer e o mármore mudou de cor a cada minuto. As coordenadas do site me ajudaram a escolher o melhor ponto para fotografar o reflexo."
+  },
+  {
+    "id": "otavio-lins",
+    "autor": "Otávio Lins",
+    "papel": "Viajante · visitou o Coliseu",
+    "texto": "Entrar na arena e imaginar 50 mil pessoas gritando é impressionante. Visitar o hipogeu mostrou como tudo funcionava por baixo do piso. Vale cada minuto da fila."
+  },
+  {
+    "id": "leticia-moraes",
     "autor": "Letícia Moraes",
-    "papel": "Estudante",
-    "texto": "O post sobre as maravilhas do mundo antigo ficou ótimo para o meu trabalho da escola. Explica tudo sem complicar."
+    "papel": "Viajante · visitou Chichén Itzá",
+    "texto": "Estive lá perto do equinócio e vi a sombra da serpente descer a escadaria. Até o eco de uma palma na pirâmide é de outro mundo."
+  },
+  {
+    "id": "rafael-guedes",
+    "autor": "Rafael Guedes",
+    "papel": "Viajante · visitou a Muralha da China",
+    "texto": "Caminhei por um trecho de Badaling e as subidas são bem mais puxadas do que parecem nas fotos. A vista das montanhas compensa o cansaço."
+  },
+  {
+    "id": "marina-cardoso",
+    "autor": "Marina Cardoso",
+    "papel": "Viajante · visitou o Cristo Redentor",
+    "texto": "Fui de trem pelo Corcovado e o Rio inteiro aparece lá de cima. Vale chegar cedo para evitar a fila e pegar o céu aberto."
   }
 ]

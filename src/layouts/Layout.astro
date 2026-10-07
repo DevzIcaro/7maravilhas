@@ -1,4 +1,5 @@
 ---
+import { url } from "../lib/url";
 import { getCollection } from "astro:content";
 import faviconSvg from "../assets/favicon.svg?url";
 import favicon16 from "../assets/favicon-16x16.png?url";
@@ -21,29 +22,30 @@ interface Props {
 
 const { title, description, path = "/" } = Astro.props;
 
-const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "https://coreodontologia.com.br";
-const canonical = new URL(path, siteUrl).toString();
-const ogImage = new URL("/og-image.jpg", siteUrl).toString();
+const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "https://devzicaro.github.io";
+const siteRoot = siteUrl + url("/").replace(/\/$/, "");
+const canonical = siteRoot + (path === "/" ? "/" : path);
+const ogImage = `${siteRoot}/og-image.jpg`;
 
 const maravilhas = (await getCollection("maravilhas")).sort((a, b) => a.data.ordem - b.data.ordem);
 
 const SITE_NOME = "Maravilhas do Mundo";
-const sameAs = [contato.facebook, contato.instagram].filter((url): url is string => Boolean(url));
+const sameAs = [contato.facebook, contato.instagram].filter((link): link is string => Boolean(link));
 
 const jsonLdOrganization = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "@id": `${siteUrl}/#organizacao`,
+  "@id": `${siteRoot}/#organizacao`,
   name: SITE_NOME,
-  url: siteUrl,
-  logo: `${siteUrl}/logo.png`,
+  url: siteRoot,
+  logo: `${siteRoot}/logo.png`,
   ...(sameAs.length ? { sameAs } : {}),
 };
 
 const jsonLdAtracoes = maravilhas.map((m) => ({
   "@context": "https://schema.org",
   "@type": "TouristAttraction",
-  "@id": `${siteUrl}/#maravilha-${m.data.id}`,
+  "@id": `${siteRoot}/#maravilha-${m.data.id}`,
   name: m.data.nome,
   description: m.data.descricao,
   address: {
@@ -68,12 +70,12 @@ const jsonLdAtracoes = maravilhas.map((m) => ({
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href={faviconSvg} />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2" sizes="any" />
+    <link rel="icon" type="image/x-icon" href={url("/favicon.ico?v=2")} sizes="any" />
     <link rel="icon" type="image/png" sizes="32x32" href={favicon32} />
     <link rel="icon" type="image/png" sizes="16x16" href={favicon16} />
     <link rel="icon" type="image/png" sizes="96x96" href={favicon96} />
     <link rel="apple-touch-icon" sizes="180x180" href={appleTouchIcon} />
-    <link rel="manifest" href="/site.webmanifest?v=2" />
+    <link rel="manifest" href={url("/site.webmanifest?v=2")} />
     <meta name="theme-color" content="#9a7526" />
     <meta name="generator" content={Astro.generator} />
 

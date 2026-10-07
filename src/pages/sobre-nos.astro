@@ -1,4 +1,5 @@
 ---
+import { url } from "../lib/url";
 import { getCollection } from "astro:content";
 import { getImage } from "astro:assets";
 import { Map as Mapa, BookOpen, Compass, Landmark } from "lucide-react";
@@ -52,7 +53,7 @@ const slides = await Promise.all(
 >
   <section class="mx-auto max-w-7xl px-4 py-10 lg:px-8">
     <nav aria-label="Breadcrumb" class="mb-4 text-sm text-texto/60">
-      <a href="/" class="cursor-pointer hover:text-primaria">Home</a> <span aria-hidden="true">›</span> Sobre Nós
+      <a href={url("/")} class="cursor-pointer hover:text-primaria">Home</a> <span aria-hidden="true">›</span> Sobre Nós
     </nav>
 
     <div class="grid gap-8 lg:grid-cols-2 lg:items-center">
